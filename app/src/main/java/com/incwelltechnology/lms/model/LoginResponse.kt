@@ -1,4 +1,7 @@
 package com.incwelltechnology.lms.model
 
-class LoginResponse {
-}
+data class LoginResponse(
+    var status: Boolean,
+    var data: UserProfile,
+    var error:String
+)

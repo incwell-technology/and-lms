@@ -1,23 +1,31 @@
-package com.incwelltechnology.lms
+package com.incwelltechnology.lms.activity.navigationActivity
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.Menu
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
+import com.incwelltechnology.lms.R
+import com.incwelltechnology.lms.activity.profileActivity.UserFragment
+import com.incwelltechnology.lms.model.UserProfile
 
 class NavigationDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-
+    lateinit var mUser: UserProfile
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation_drawer)
+
+        mUser = intent.getParcelableExtra("user")
+        Log.d("SecondTesssst", "" + mUser.full_name)
+
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -29,13 +37,16 @@ class NavigationDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawerLayout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
     }
+
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -66,21 +77,46 @@ class NavigationDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSel
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_home -> {
-                // Handle the camera action
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.replaceFragment,
+                        UserFragment.getInstance(mUser)
+                    )
+                    .commit()
             }
             R.id.nav_gallery -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, UserFragment())
+                    .commit()
 
             }
             R.id.nav_slideshow -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, UserFragment())
+                    .commit()
 
             }
             R.id.nav_tools -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, UserFragment())
+                    .commit()
 
             }
             R.id.nav_share -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, UserFragment())
+                    .commit()
 
             }
             R.id.nav_send -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, UserFragment())
+                    .commit()
 
             }
         }
