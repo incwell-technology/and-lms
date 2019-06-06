@@ -1,4 +1,4 @@
-package com.incwelltechnology.lms.activity.navigationActivity
+package com.incwelltechnology.lms.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -13,11 +13,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.incwelltechnology.lms.R
-import com.incwelltechnology.lms.activity.profileActivity.UserFragment
-import com.incwelltechnology.lms.model.UserProfile
+import com.incwelltechnology.lms.model.Profile
+import com.incwelltechnology.lms.view.fragment.DashboardFragment
+import com.incwelltechnology.lms.view.fragment.UserFragment
 
-class NavigationDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    lateinit var mUser: UserProfile
+class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var mUser: Profile
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation_drawer)
@@ -45,6 +46,11 @@ class NavigationDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSel
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.replaceFragments, DashboardFragment())
+            .commit()
     }
 
 
@@ -54,6 +60,7 @@ class NavigationDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSel
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+
         }
     }
 
@@ -79,44 +86,29 @@ class NavigationDrawer : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.nav_home -> {
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.replaceFragment,
-                        UserFragment.getInstance(mUser)
-                    )
+                    .replace(R.id.replaceFragments, DashboardFragment())
                     .commit()
             }
             R.id.nav_gallery -> {
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.container, UserFragment())
+                    .replace(R.id.replaceFragments, UserFragment.getInstance(mUser))
                     .commit()
-
             }
             R.id.nav_slideshow -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, UserFragment())
-                    .commit()
+
 
             }
             R.id.nav_tools -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, UserFragment())
-                    .commit()
+
 
             }
             R.id.nav_share -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, UserFragment())
-                    .commit()
+
 
             }
             R.id.nav_send -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, UserFragment())
-                    .commit()
+
 
             }
         }

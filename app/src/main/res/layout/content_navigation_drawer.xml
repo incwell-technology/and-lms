@@ -7,9 +7,12 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="@drawable/pattern">
+
     <FrameLayout
-            android:id="@+id/replaceFragment"
+            android:id="@+id/replaceFragments"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-    </FrameLayout>
+
+     </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,10 +7,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object ServiceBuilder {
-    private const val URL = "http://192.168.1.118:8000/api/"
+    private const val URL = "http://192.168.1.81:8000/v1/api/"
 
     //create okHttp client
-    private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder().addInterceptor(getHttpLogger())
+    private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder()
+        .addInterceptor(getHttpLogger())
+        .addInterceptor {
+            var request = it.request()
+            var newRequest = request.newBuilder()
+                .addHeader("Authorization","Token 12708097ff495e54aa8a15a4e830b886892f9e12")
+                .build()
+            it.proceed(newRequest)
+        }
 
 
     //create Retrofit builder

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.incwelltechnology.lms">
+
     <uses-permission android:name="android.Manifest.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -11,12 +12,12 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppThemeLight"
             android:usesCleartextTraffic="true">
-
-
+        <activity android:name=".activity.LeaveActivity">
+        </activity>
         <activity
-                android:name=".activity.navigationActivity.NavigationDrawer"
+                android:name=".activity.NavigationDrawerActivity"
                 android:label="@string/title_activity_navigation_drawer"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -26,18 +27,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-
-        <!-- Broadcast receiver declaration in manifest file and make sure to enable it -->
+        </activity> <!-- Broadcast receiver declaration in manifest file and make sure to enable it -->
         <receiver android:name=".util.BroadCastActivity">
             <intent-filter>
+
                 <!-- Intent filters for broadcast receiver -->
                 <action android:name="com.incwelltechnology.CUSTOM_INTENT"/>
             </intent-filter>
         </receiver>
 
-
-        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
+        <meta-data
+                android:name="preloaded_fonts"
+                android:resource="@array/preloaded_fonts"/>
     </application>
 
 </manifest>

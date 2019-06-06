@@ -29,11 +29,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="annual">Annual</string>
-    <string name="compensation">Compensation</string>
-    <string name="sick">Sick</string>
+    <string name="annual">Annual Leave</string>
+    <string name="compensation">Compensation Leave</string>
+    <string name="sick">Sick Leave</string>
 
     <string name="noInternet">No Internet Connection</string>
+    <string name="forgot_password">Forgot Password?</string>
 
 
 </resources>

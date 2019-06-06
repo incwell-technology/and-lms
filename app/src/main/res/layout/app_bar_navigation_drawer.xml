@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/mainBodyContainer"
-        tools:context=".activity.navigationActivity.NavigationDrawer">
+        tools:context=".activity.NavigationDrawerActivity">
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_height="wrap_content"

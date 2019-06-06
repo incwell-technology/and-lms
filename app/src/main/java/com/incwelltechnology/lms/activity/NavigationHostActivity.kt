@@ -1,7 +1,7 @@
-package com.incwelltechnology.lms.activity.navigationActivity
+package com.incwelltechnology.lms.activity
 
 import androidx.fragment.app.Fragment
 
-interface NavigationHost {
+interface NavigationHostActivity {
     fun navigateTo(fragment: Fragment, addToBackstack: Boolean)
 }
