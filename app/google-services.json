@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "153314675777",
+    "firebase_url": "https://leave-mgmt-34e2d.firebaseio.com",
+    "project_id": "leave-mgmt-34e2d",
+    "storage_bucket": "leave-mgmt-34e2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153314675777:android:37dfc83bf4e3bfff",
+        "android_client_info": {
+          "package_name": "com.incwelltechnology.lms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153314675777-e91k3knj5gum6b5s3tvmkkqujgpvbjuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.incwelltechnology.lms",
+            "certificate_hash": "cdae831a9b6e149f88b69e1f6563545b3a685289"
+          }
+        },
+        {
+          "client_id": "153314675777-76fnnr54rufknq6b49qq665eeb53mifc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB9VpsfK24CcQLCPFUk6O3jfDvm05Gsrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153314675777-76fnnr54rufknq6b49qq665eeb53mifc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
