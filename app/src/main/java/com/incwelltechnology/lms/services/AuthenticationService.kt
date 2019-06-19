@@ -15,8 +15,11 @@ interface AuthenticationService {
     fun getLeaveToday(): Call<BaseResponse<Leave>>
 
     @GET("birthday")
-    fun getBirthday(): Call<BaseResponse<Birthday>>
+    fun getBirthday(): Call<BaseResponse<List<Birthday>>>
 
     @GET("holiday")
     fun getHoliday(): Call<BaseResponse<Holiday>>
+
+    @GET("users")
+    fun getEmployee(): Call<BaseResponse<List<Employee>>>
 }

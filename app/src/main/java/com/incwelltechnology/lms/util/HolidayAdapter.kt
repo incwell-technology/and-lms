@@ -6,22 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.model.Holiday
+import kotlinx.android.synthetic.main.list_user_leave.view.*
 
-class HolidayAdapter(private val holidayList:ArrayList<Holiday>): RecyclerView.Adapter<HolidayAdapter.HolidayAdapterViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolidayAdapterViewHolder {
-        val v= LayoutInflater.from(parent.context).inflate(R.layout.list_public_holidays,parent,false)
-        return HolidayAdapterViewHolder(v)
+class HolidayAdapter(private val holidayList: ArrayList<Holiday>) : RecyclerView.Adapter<HolidayHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolidayHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.list_public_holidays, parent, false)
+        return HolidayHolder(v)
     }
 
     override fun getItemCount(): Int {
         return holidayList.size
     }
 
-    override fun onBindViewHolder(holder: HolidayAdapterViewHolder, position: Int) {
-
-    }
-
-    class HolidayAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    override fun onBindViewHolder(holder: HolidayHolder, position: Int) {
+        holder.itemView.user_at_leave_name.text = holidayList[position].title
     }
 }
+
+class HolidayHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

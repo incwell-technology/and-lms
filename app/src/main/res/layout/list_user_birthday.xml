@@ -4,15 +4,17 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content">
 
-    <ImageView android:layout_width="40dp"
-               android:layout_height="40dp"
-               android:id="@+id/imageBirthday"
-               android:src="@drawable/ic_spa_black_24dp"
-               android:contentDescription="Birthday"/>
+    <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageBirthday"
+            android:contentDescription="Birthday"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:id="@+id/user_at_leave_name"
-              android:layout_gravity="center"/>
+              android:id="@+id/user_birthday_name"
+              android:gravity="center"
+              android:layout_gravity="center"
+              android:textColor="#fff"/>
 
 </LinearLayout>

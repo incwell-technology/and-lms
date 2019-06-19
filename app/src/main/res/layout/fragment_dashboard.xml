@@ -54,30 +54,33 @@
 
         <!--for showing birthday-->
         <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
-            <LinearLayout
-                    android:layout_width="match_parent"
+
+            <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Leave Today"
-                        android:textSize="20sp"
+                    android:text="Birthdays"
+                    android:textSize="20sp"
+                    android:layout_gravity="start"
+                    android:gravity="start"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_card_birthday"
                         android:layout_weight="1"
-                        android:layout_gravity="start"
-                        android:gravity="start"/>
+                        android:layout_marginTop="30dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_card_birthday"
-                    android:layout_marginTop="30dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-            </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.cardview.widget.CardView>
 

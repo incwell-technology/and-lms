@@ -56,4 +56,7 @@ dependencies {
 //progressbar
     implementation 'com.github.kalaganov:circularprogressview:1.0.16'
 
+    //hawk
+    implementation 'com.orhanobut:hawk:2.0.1'
+
 }

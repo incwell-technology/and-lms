@@ -1,5 +1,7 @@
 package com.incwelltechnology.lms.services
 
+import android.preference.PreferenceManager
+import com.incwelltechnology.lms.App
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,20 +9,27 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object ServiceBuilder {
-    private const val URL = "http://192.168.1.81:8000/v1/api/"
+    private const val URL = "http://192.168.1.104:8000/v1/api/"
 
     //create okHttp client
     private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder()
         .addInterceptor(getHttpLogger())
         .addInterceptor {
-            var request = it.request()
-            var newRequest = request.newBuilder()
-                .addHeader("Authorization","Token 12708097ff495e54aa8a15a4e830b886892f9e12")
+            val sharedPref= PreferenceManager.getDefaultSharedPreferences(App.get())
+            val token=sharedPref.getString("TOKEN","12708097ff495e54aa8a15a4e830b886892f9e12")
+            val request = it.request()
+            val newRequest = request.newBuilder()
+                .addHeader("Authorization", "Token $token")
                 .build()
-            it.proceed(newRequest)
+            val defaultRequest = request.newBuilder()
+                .addHeader("Authorization", "Token $token")
+                .build()
+            if(token!=""){
+                it.proceed(newRequest)
+            }else{
+                it.proceed(defaultRequest)
+            }
         }
-
-
     //create Retrofit builder
     private val builder = Retrofit.Builder().baseUrl(URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -34,6 +43,7 @@ object ServiceBuilder {
     }
 
     private fun getHttpLogger(): HttpLoggingInterceptor {
+
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return logging

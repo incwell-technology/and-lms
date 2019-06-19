@@ -24,9 +24,11 @@ import retrofit2.Response
 
 class DashboardFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
         val leave = ArrayList<Leave>()
-        val birthday=ArrayList<Birthday>()
-        var mService: AuthenticationService = ServiceBuilder
+        val birthday = ArrayList<Birthday>()
+
+        val mService: AuthenticationService = ServiceBuilder
             .buildService(AuthenticationService::class.java)
         super.onActivityCreated(savedInstanceState)
         recycler_card_leave.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -42,7 +44,15 @@ class DashboardFragment : Fragment() {
                     if (response.body()!!.status) {
                         val output = response.body()!!.data
                         if (output != null) {
-                            leave.add((Leave(output.image, output.name,output.department,output.leave_type,output.half_day)))
+                            leave.add(
+                                (Leave(
+                                    output.image,
+                                    output.name,
+                                    output.department,
+                                    output.leave_type,
+                                    output.half_day
+                                ))
+                            )
                             val adapter = LeaveAdapter(leave)
                             recycler_card_leave.adapter = adapter
                         }
@@ -55,19 +65,35 @@ class DashboardFragment : Fragment() {
 
         //for getting list of birthdays
         mService.getBirthday()
-            .enqueue(object : Callback<BaseResponse<Birthday>> {
-                override fun onFailure(call: Call<BaseResponse<Birthday>>, t: Throwable) {
-
+            .enqueue(object : Callback<BaseResponse<List<Birthday>>> {
+                override fun onFailure(call: Call<BaseResponse<List<Birthday>>>, t: Throwable) {
+                    Log.d("testBirthday", "" + t)
                 }
 
-                override fun onResponse(call: Call<BaseResponse<Birthday>>, response: Response<BaseResponse<Birthday>>) {
+                override fun onResponse(
+                    call: Call<BaseResponse<List<Birthday>>>,
+                    response: Response<BaseResponse<List<Birthday>>>
+                ) {
                     if (response.body()!!.status) {
                         val output = response.body()!!.data
                         if (output != null) {
-                            birthday.add((Birthday(output.full_name,output.image,output.department)))
+                            output.indices.forEach { index: Int ->
+                                Log.d("testBirthday", output[index].full_name)
+                                birthday.add(
+                                    (Birthday(
+                                        output[index].full_name,
+                                        output[index].image,
+                                        output[index].department
+                                    ))
+                                )
+                            }
                             val adapter = BirthdayAdapter(birthday)
-                            recycler_card_leave.adapter = adapter
-                            Log.d("testBirthday", output.full_name)
+                            recycler_card_birthday.apply {
+                                this!!.adapter = adapter
+                                layoutManager = LinearLayoutManager(context).apply {
+                                    orientation = LinearLayoutManager.HORIZONTAL
+                                }
+                            }
                         }
                     } else {
                         Toast.makeText(activity, "" + response.body()!!.error, Toast.LENGTH_LONG).show()

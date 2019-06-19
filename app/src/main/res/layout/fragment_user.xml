@@ -10,8 +10,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="#fff">
+            android:orientation="vertical">
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -29,11 +28,11 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginBottom="60dp"
-                    app:civ_border_color="#EEEEEE"
-                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorAccent"
+                    app:civ_border_width="10dp"
                     app:civ_shadow="true"
-                    app:civ_shadow_radius="2"
-                    app:civ_shadow_color="#f0f0f5"/>
+                    app:civ_shadow_radius="5"
+                    app:civ_shadow_color="@color/colorText"/>
 
             <TextView
                     android:id="@+id/edit_photo"
@@ -45,7 +44,7 @@
                     android:text="Edit Photo"
                     android:clickable="true"
                     android:focusable="true"
-                    android:textColor="#0066ff"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp"/>
 
             <TextView
@@ -55,7 +54,7 @@
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
+                    android:textColor="@color/colorText"
                     android:textSize="20sp"/>
         </RelativeLayout>
 
@@ -75,10 +74,11 @@
             <TextView
                     android:layout_marginTop="10dp"
                     android:id="@+id/phone_number"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
+                    android:drawableEnd="@drawable/ic_local_phone_black_24dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#0066ff"
+                    android:textColor="@color/colorText"
                     android:layout_marginBottom="10dp"
                     android:textSize="20sp"/>
 
@@ -113,10 +113,9 @@
                         android:layout_margin="5dp"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:textColor="#000"
+                        android:textColor="@color/colorPrimary"
                         app:progressBackgroundStrokeWidth="10dp"
-                        app:progressStrokeWidth="8dp"
-                        app:showProgressOnTip="true"/>
+                        app:progressStrokeWidth="8dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -139,10 +138,9 @@
                         android:layout_margin="5dp"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:textColor="#000"
+                        android:textColor="@color/colorPrimary"
                         app:progressBackgroundStrokeWidth="10dp"
-                        app:progressStrokeWidth="8dp"
-                        app:showProgressOnTip="true"/>
+                        app:progressStrokeWidth="8dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -165,10 +163,9 @@
                         android:layout_margin="5dp"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:textColor="#000"
+                        android:textColor="@color/colorPrimary"
                         app:progressBackgroundStrokeWidth="10dp"
-                        app:progressStrokeWidth="8dp"
-                        app:showProgressOnTip="true"/>
+                        app:progressStrokeWidth="8dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -207,6 +204,7 @@
                           android:layout_height="wrap_content"
                           android:layout_marginStart="20dp"
                           android:text="Birthday"
+                          android:drawableEnd="@drawable/ic_cake_black_24dp"
                           android:textColor="#cccccc"/>
             </LinearLayout>
 
@@ -226,10 +224,11 @@
                         android:textSize="18sp"
                         android:textColor="@color/colorText"/>
 
-                <TextView android:layout_width="match_parent"
+                <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_marginStart="20dp"
                           android:text="Joined Date"
+                          android:drawableRight="@drawable/ic_date_range_black_24dp"
                           android:textColor="#cccccc"/>
 
             </LinearLayout>
@@ -250,9 +249,10 @@
                         android:textSize="18sp"
                         android:text="@string/inc1"
                         android:textColor="@color/colorText"/>
-                <TextView android:layout_width="match_parent"
+                <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_marginStart="20dp"
+                          android:drawableEnd="@drawable/ic_business_black_24dp"
                           android:text="Company"
                           android:textColor="#cccccc"/>
 
@@ -274,10 +274,11 @@
                         android:layout_marginStart="20dp"
                         android:textSize="18sp"
                         android:textColor="@color/colorText"/>
-                <TextView android:layout_width="match_parent"
+                <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_marginStart="20dp"
                           android:text="Leave Issuer"
+                          android:drawableEnd="@drawable/ic_perm_identity_black_24dp"
                           android:textColor="#cccccc"/>
 
             </LinearLayout>
@@ -299,10 +300,11 @@
                         android:layout_marginStart="20dp"
                         android:textSize="18sp"
                         android:textColor="@color/colorText"/>
-                <TextView android:layout_width="match_parent"
+                <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_marginStart="20dp"
                           android:text="Email Addresss"
+                          android:drawableEnd="@drawable/ic_email_black_24dp"
                           android:textColor="#cccccc"/>
             </LinearLayout>
         </RelativeLayout>

@@ -1,66 +1,89 @@
 package com.incwelltechnology.lms.activity
 
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.model.Profile
 import com.incwelltechnology.lms.view.fragment.DashboardFragment
 import com.incwelltechnology.lms.view.fragment.UserFragment
+import com.mikhaellopez.circularimageview.CircularImageView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.toolbar.*
+
 
 class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    lateinit var mUser: Profile
+    private lateinit var mUser: Profile
+    lateinit var dialog: Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation_drawer)
 
-        mUser = intent.getParcelableExtra("user")
-        Log.d("SecondTesssst", "" + mUser.full_name)
+        //makes DashboardFragment as default landing fragment
+        addFragment(DashboardFragment(), true, "DashboardFragment")
 
+        mUser = intent.getParcelableExtra("user")
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        fab.setOnClickListener {
+            val intent = Intent(this, LeaveActivity::class.java)
+            startActivity(intent)
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+
         val navView: NavigationView = findViewById(R.id.nav_view)
+
+        //done to get access to view of drawable navigation
+        val v: View = navView.getHeaderView(0)
+        v.findViewById<TextView>(R.id.nav_user_name).text = mUser.full_name
+        v.findViewById<TextView>(R.id.nav_user_email).text = mUser.email
+        val image = v.findViewById<CircularImageView>(R.id.nav_user_image)
+        Picasso.get()
+            .load(mUser.image)
+            .placeholder(R.drawable.dummy)
+            .error(R.drawable.dummy)
+            .into(image)
+
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
+        toggle.isDrawerIndicatorEnabled = false
+
+
+        toggle.setToolbarNavigationClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        toggle.setHomeAsUpIndicator(R.drawable.ic_hamburg)
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.replaceFragments, DashboardFragment())
-            .commit()
     }
-
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
-
+            openDialog(this)
         }
     }
 
@@ -83,37 +106,49 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_home -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.replaceFragments, DashboardFragment())
-                    .commit()
+            R.id.nav_home->{
+                addFragment(DashboardFragment(), true, "DashboardFragment")
+                toolbar.title = "Home"
             }
-            R.id.nav_gallery -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.replaceFragments, UserFragment.getInstance(mUser))
-                    .commit()
+           R.id.nav_my_profile -> {
+                addFragment(UserFragment.getInstance(mUser), true, "UserFragment")
+                toolbar.title = "My Profile"
             }
-            R.id.nav_slideshow -> {
-
-
+            R.id.nav_users -> {
+                val intent = Intent(this, EmployeeActivity::class.java)
+                startActivity(intent)
             }
-            R.id.nav_tools -> {
-
-
-            }
-            R.id.nav_share -> {
-
-
-            }
-            R.id.nav_send -> {
-
+            R.id.nav_apply_compensation -> {
 
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    //adds fragment to stack allowing push and pop
+    private fun addFragment(fragment: Fragment, addToBackStack: Boolean, tag: String) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(tag)
+        }
+        fragmentTransaction.replace(R.id.replaceFragments, fragment, tag)
+        fragmentTransaction.commit()
+    }
+
+    private fun openDialog(context: Context?) {
+        dialog = Dialog(context!!) // Context, this, etc.
+        dialog.setContentView(R.layout.alert_dialog_exit)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setCancelable(true)
+        dialog.show()
+    }
+    fun cancel(view: View){
+        dialog.dismiss()
+    }
+    fun exitFromActivity(view: View){
+        this.finish()
     }
 }
