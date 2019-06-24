@@ -120,6 +120,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
             <com.google.android.material.textfield.TextInputEditText
                     android:inputType="textLongMessage|textMultiLine"
+                    android:height="200dp"
+                    android:gravity="start"
                     android:textColor="@color/colorPrimary"
                     android:id="@+id/reason"
                     android:layout_width="match_parent"

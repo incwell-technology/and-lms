@@ -9,29 +9,33 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.incwelltechnology.lms.App
+import com.incwelltechnology.lms.adapters.BirthdayAdapter
+import com.incwelltechnology.lms.adapters.LeaveAdapter
 import com.incwelltechnology.lms.model.Birthday
 import com.incwelltechnology.lms.model.Leave
-import com.incwelltechnology.lms.services.AuthenticationService
-import com.incwelltechnology.lms.services.BaseResponse
-import com.incwelltechnology.lms.services.ServiceBuilder
-import com.incwelltechnology.lms.util.BirthdayAdapter
-import com.incwelltechnology.lms.util.LeaveAdapter
+import com.incwelltechnology.lms.authenticationServices.AuthenticationService
+import com.incwelltechnology.lms.authenticationServices.BaseResponse
+import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
+import kotlinx.android.synthetic.main.activity_employee.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class DashboardFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-
         val leave = ArrayList<Leave>()
         val birthday = ArrayList<Birthday>()
-
         val mService: AuthenticationService = ServiceBuilder
             .buildService(AuthenticationService::class.java)
+
         super.onActivityCreated(savedInstanceState)
-        recycler_card_leave.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        val layoutManager = LinearLayoutManager(App.context)
+        layoutManager.orientation = RecyclerView.HORIZONTAL
+        recycler_card_employee.layoutManager = layoutManager
 
         //for getting list of users who are at leave
         mService.getLeaveToday()
@@ -39,7 +43,6 @@ class DashboardFragment : Fragment() {
                 override fun onFailure(call: Call<BaseResponse<Leave>>, t: Throwable) {
 
                 }
-
                 override fun onResponse(call: Call<BaseResponse<Leave>>, response: Response<BaseResponse<Leave>>) {
                     if (response.body()!!.status) {
                         val output = response.body()!!.data
@@ -60,7 +63,6 @@ class DashboardFragment : Fragment() {
                         Toast.makeText(activity, "" + response.body()!!.error, Toast.LENGTH_LONG).show()
                     }
                 }
-
             })
 
         //for getting list of birthdays
@@ -69,7 +71,6 @@ class DashboardFragment : Fragment() {
                 override fun onFailure(call: Call<BaseResponse<List<Birthday>>>, t: Throwable) {
                     Log.d("testBirthday", "" + t)
                 }
-
                 override fun onResponse(
                     call: Call<BaseResponse<List<Birthday>>>,
                     response: Response<BaseResponse<List<Birthday>>>
@@ -88,12 +89,7 @@ class DashboardFragment : Fragment() {
                                 )
                             }
                             val adapter = BirthdayAdapter(birthday)
-                            recycler_card_birthday.apply {
-                                this!!.adapter = adapter
-                                layoutManager = LinearLayoutManager(context).apply {
-                                    orientation = LinearLayoutManager.HORIZONTAL
-                                }
-                            }
+                            recycler_card_birthday.adapter=adapter
                         }
                     } else {
                         Toast.makeText(activity, "" + response.body()!!.error, Toast.LENGTH_LONG).show()

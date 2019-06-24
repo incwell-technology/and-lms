@@ -36,5 +36,6 @@
     <string name="noInternet">No Internet Connection</string>
     <string name="forgot_password">Forgot Password?</string>
 
+    <string name="default_notification_channel_id"></string>
 
 </resources>

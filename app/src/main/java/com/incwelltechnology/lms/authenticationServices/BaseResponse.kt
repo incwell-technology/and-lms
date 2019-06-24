@@ -1,4 +1,4 @@
-package com.incwelltechnology.lms.services
+package com.incwelltechnology.lms.authenticationServices
 
 class BaseResponse<T> {
     var status: Boolean = false

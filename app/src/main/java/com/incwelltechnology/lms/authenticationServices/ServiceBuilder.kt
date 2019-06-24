@@ -1,4 +1,4 @@
-package com.incwelltechnology.lms.services
+package com.incwelltechnology.lms.authenticationServices
 
 import android.preference.PreferenceManager
 import com.incwelltechnology.lms.App
@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object ServiceBuilder {
-    private const val URL = "http://192.168.1.104:8000/v1/api/"
+    private const val URL = "http://192.168.1.120:8000/v1/api/"
 
     //create okHttp client
     private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder()

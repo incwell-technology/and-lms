@@ -1,4 +1,4 @@
-package com.incwelltechnology.lms.util
+package com.incwelltechnology.lms.adapters
 
 import android.view.LayoutInflater
 import android.view.View

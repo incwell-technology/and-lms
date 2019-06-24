@@ -9,17 +9,20 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import com.incwelltechnology.lms.App.Companion.context
+import com.incwelltechnology.lms.authenticationServices.AuthenticationService
+import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
 import com.incwelltechnology.lms.model.Login
 import com.incwelltechnology.lms.model.LoginResponse
 import com.incwelltechnology.lms.model.Profile
-import com.incwelltechnology.lms.services.AuthenticationService
-import com.incwelltechnology.lms.services.ServiceBuilder
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -36,19 +39,43 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.incwelltechnology.lms.R.layout.activity_main)
 
+        FirebaseMessaging.getInstance().isAutoInitEnabled = true
+
         Hawk.init(context).build()
 
         if (Hawk.contains("TOKEN")) {
-            val value:Profile = Hawk.get("TOKEN")
+            val value: Profile = Hawk.get("TOKEN")
             val intent = Intent(this@MainActivity, NavigationDrawerActivity::class.java)
             intent.putExtra("user", value)
             startActivity(intent)
             finish()
-//            Hawk.delete("TOKEN")
-            Log.d("token","$value")
-            Toast.makeText(this,"Welcome back ${value.full_name}",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Welcome back ${value.full_name}", Toast.LENGTH_LONG).show()
         } else {
             login.setOnClickListener {
+                //eliminating error hint when editext is filled
+                username.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+
+                    }
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                    }
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        layout_username.isErrorEnabled=false
+                    }
+                })
+                password.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+
+                    }
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                    }
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        layout_password.isErrorEnabled=false
+                    }
+                })
+
                 val username = username.text.toString()
                 val password = password.text.toString()
 
@@ -71,7 +98,23 @@ class MainActivity : AppCompatActivity() {
                 service.userLogin(login).enqueue(object : Callback<LoginResponse> {
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                         progress_horizontal.visibility = View.GONE
-                        Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_LONG).show()
+
+                        // build alert dialog
+                        val dialogBuilder = AlertDialog.Builder(this@MainActivity)
+
+                        // set message of alert dialog
+                        dialogBuilder.setMessage("Please try again later")
+                            // if the dialog is cancelable
+                            .setCancelable(false)
+                            // negative button text and action
+                            .setNegativeButton("ok") { dialog, _ -> dialog.cancel()
+                            }
+                        // create dialog box
+                        val alert = dialogBuilder.create()
+                        // set title for alert dialog box
+                        alert.setTitle("Something went wrong!")
+                        // show alert dialog
+                        alert.show()
                     }
 
                     override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
@@ -83,8 +126,15 @@ class MainActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         } else {
-                            Toast.makeText(this@MainActivity, response.body()?.error, Toast.LENGTH_LONG).show()
                             progress_horizontal.visibility = View.GONE
+
+                            val dialogBuilder = AlertDialog.Builder(this@MainActivity)
+                            dialogBuilder.setMessage("Invalid Credentials!!")
+                                .setCancelable(false)
+                                .setNegativeButton("Try again") { dialog, _ -> dialog.cancel()
+                                }
+                            val alert = dialogBuilder.create()
+                            alert.show()
                         }
                     }
                 })
@@ -93,17 +143,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     //saving user's credential using hawk
-    fun saveCredentials(values:Profile){
-        Hawk.put("TOKEN",values)
+    fun saveCredentials(values: Profile) {
+        Hawk.put("TOKEN", values)
     }
-
-    //for saving user's token when login is successful
-//    private fun saveCredentials(token: String) {
-//        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-//        val editor = sharedPref.edit()
-//        editor.putString("TOKEN", token)
-//            .apply()
-//    }
 
     private val wifiReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -111,12 +153,10 @@ class MainActivity : AppCompatActivity() {
             val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
             val isConnected: Boolean = activeNetwork?.isConnected == true
             if (isConnected) {
-
                 if (::dialog.isInitialized) {
                     dialog.dismiss()
                 }
             } else {
-                Toast.makeText(this@MainActivity, "No Internet Connection", Toast.LENGTH_LONG).show()
                 openDialog(this@MainActivity)
             }
         }
@@ -135,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         this.finish()
     }
 
-
     override fun onResume() {
         super.onResume()
         registerReceiver(wifiReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
@@ -145,7 +184,5 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         unregisterReceiver(wifiReceiver)
     }
-
-
 }
 
