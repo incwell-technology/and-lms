@@ -9,16 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.incwelltechnology.lms.App
 import com.incwelltechnology.lms.adapters.BirthdayAdapter
 import com.incwelltechnology.lms.adapters.LeaveAdapter
-import com.incwelltechnology.lms.model.Birthday
-import com.incwelltechnology.lms.model.Leave
 import com.incwelltechnology.lms.authenticationServices.AuthenticationService
 import com.incwelltechnology.lms.authenticationServices.BaseResponse
 import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
-import kotlinx.android.synthetic.main.activity_employee.*
+import com.incwelltechnology.lms.model.Birthday
+import com.incwelltechnology.lms.model.Leave
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,9 +30,7 @@ class DashboardFragment : Fragment() {
 
         super.onActivityCreated(savedInstanceState)
 
-        val layoutManager = LinearLayoutManager(App.context)
-        layoutManager.orientation = RecyclerView.HORIZONTAL
-        recycler_card_employee.layoutManager = layoutManager
+        recycler_card_leave.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         //for getting list of users who are at leave
         mService.getLeaveToday()
