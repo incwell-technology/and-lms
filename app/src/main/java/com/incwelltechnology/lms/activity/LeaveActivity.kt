@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
@@ -11,13 +12,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import com.incwelltechnology.lms.R
+import com.incwelltechnology.lms.authenticationServices.AuthenticationService
+import com.incwelltechnology.lms.authenticationServices.BaseResponse
+import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
+import com.incwelltechnology.lms.model.LeaveCreate
 import com.incwelltechnology.lms.view.fragment.DatePickerFragment
 import kotlinx.android.synthetic.main.activity_leave.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.DateFormat
 import java.util.*
 
 class LeaveActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     var tagNumber:Int=1
+    private val mService: AuthenticationService = ServiceBuilder
+        .buildService(AuthenticationService::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leave)
@@ -44,6 +55,36 @@ class LeaveActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             val datePicker: DialogFragment = DatePickerFragment()
             datePicker.show(supportFragmentManager, "end date picker")
             tagNumber=1
+        }
+
+        apply_leave.setOnClickListener {
+            val type = type_of_leave_dropdown.text.toString()
+            val to_date = start_date.text.toString()
+            val from_date = end_date.text.toString()
+            val leave = leave_dropdown.text.toString()
+            val leave_reason = reason.text.toString()
+            val half_day:Boolean
+
+            half_day = when (leave) {
+                "Half Day" -> true
+                "Full Day" -> false
+                else -> return@setOnClickListener
+            }
+
+            val applyLeave=LeaveCreate(type,from_date,to_date,half_day,leave_reason)
+
+            mService.createLeave(applyLeave).enqueue(object : Callback<BaseResponse<LeaveCreate>> {
+                override fun onFailure(call: Call<BaseResponse<LeaveCreate>>, t: Throwable) {
+                    Log.d("apply", "$t")
+                }
+                override fun onResponse(call: Call<BaseResponse<LeaveCreate>>, response: Response<BaseResponse<LeaveCreate>>) {
+                    if (response.body()?.status==true) {
+                        Log.d("apply","${response.body()!!.data}")
+                    } else {
+                        Log.d("apply", "Problem")
+                    }
+                }
+            })
         }
     }
 

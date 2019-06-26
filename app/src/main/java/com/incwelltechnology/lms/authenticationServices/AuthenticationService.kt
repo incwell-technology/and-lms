@@ -11,15 +11,18 @@ interface AuthenticationService {
     @POST("login")
     fun userLogin(@Body login: Login): Call<LoginResponse>
 
-    @GET("leave")
+    @GET("leaves")
     fun getLeaveToday(): Call<BaseResponse<Leave>>
 
-    @GET("birthday")
+    @GET("birthdays")
     fun getBirthday(): Call<BaseResponse<List<Birthday>>>
 
-    @GET("holiday")
+    @GET("holidays")
     fun getHoliday(): Call<BaseResponse<Holiday>>
 
     @GET("users")
     fun getEmployee(): Call<BaseResponse<List<Employee>>>
+
+    @POST("leaves/create")
+    fun createLeave(@Body leaveApply: LeaveCreate): Call<BaseResponse<LeaveCreate>>
 }

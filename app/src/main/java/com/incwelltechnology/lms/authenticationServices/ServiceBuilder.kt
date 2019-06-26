@@ -9,14 +9,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object ServiceBuilder {
-    private const val URL = "http://192.168.1.120:8000/v1/api/"
+    private const val URL = "http://192.168.1.81:8000/v1/api/"
 
     //create okHttp client
     private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder()
         .addInterceptor(getHttpLogger())
         .addInterceptor {
             val sharedPref= PreferenceManager.getDefaultSharedPreferences(App.get())
-            val token=sharedPref.getString("TOKEN","12708097ff495e54aa8a15a4e830b886892f9e12")
+            val token=sharedPref.getString("TOKEN","acfd78729800353a484e70288f6d0777b81bfac7")
             val request = it.request()
             val newRequest = request.newBuilder()
                 .addHeader("Authorization", "Token $token")

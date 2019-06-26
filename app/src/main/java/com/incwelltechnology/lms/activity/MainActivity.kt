@@ -11,12 +11,13 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.iid.FirebaseInstanceId
 import com.incwelltechnology.lms.App.Companion.context
 import com.incwelltechnology.lms.authenticationServices.AuthenticationService
 import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
@@ -31,7 +32,7 @@ import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
-
+    val TAG: String = MainActivity::class.java.simpleName
     lateinit var dialog: Dialog
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.incwelltechnology.lms.R.layout.activity_main)
 
-        FirebaseMessaging.getInstance().isAutoInitEnabled = true
+        FirebaseInstanceId
+            .getInstance()
+            .instanceId
+            .addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    return@addOnCompleteListener
+                }
+                val token = it.result?.token
+                Log.d(TAG, "" + token)
+            }
 
         Hawk.init(context).build()
 
@@ -57,22 +67,26 @@ class MainActivity : AppCompatActivity() {
                     override fun afterTextChanged(s: Editable?) {
 
                     }
+
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
                     }
+
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        layout_username.isErrorEnabled=false
+                        layout_username.isErrorEnabled = false
                     }
                 })
                 password.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
 
                     }
+
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
                     }
+
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        layout_password.isErrorEnabled=false
+                        layout_password.isErrorEnabled = false
                     }
                 })
 
@@ -107,7 +121,8 @@ class MainActivity : AppCompatActivity() {
                             // if the dialog is cancelable
                             .setCancelable(false)
                             // negative button text and action
-                            .setNegativeButton("ok") { dialog, _ -> dialog.cancel()
+                            .setNegativeButton("ok") { dialog, _ ->
+                                dialog.cancel()
                             }
                         // create dialog box
                         val alert = dialogBuilder.create()
@@ -121,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                         if (response.body()?.status == true) {
                             progress_horizontal.visibility = View.GONE
                             saveCredentials(response.body()!!.data)
+
                             val intent = Intent(this@MainActivity, NavigationDrawerActivity::class.java)
                             intent.putExtra("user", response.body()!!.data)
                             startActivity(intent)
@@ -131,7 +147,8 @@ class MainActivity : AppCompatActivity() {
                             val dialogBuilder = AlertDialog.Builder(this@MainActivity)
                             dialogBuilder.setMessage("Invalid Credentials!!")
                                 .setCancelable(false)
-                                .setNegativeButton("Try again") { dialog, _ -> dialog.cancel()
+                                .setNegativeButton("Try again") { dialog, _ ->
+                                    dialog.cancel()
                                 }
                             val alert = dialogBuilder.create()
                             alert.show()

@@ -2,14 +2,12 @@ package com.incwelltechnology.lms.view.fragment
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.incwelltechnology.lms.adapters.BirthdayAdapter
 import com.incwelltechnology.lms.adapters.LeaveAdapter
 import com.incwelltechnology.lms.authenticationServices.AuthenticationService
 import com.incwelltechnology.lms.authenticationServices.BaseResponse
@@ -31,6 +29,7 @@ class DashboardFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         recycler_card_leave.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recycler_card_birthday.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         //for getting list of users who are at leave
         mService.getLeaveToday()
@@ -61,36 +60,36 @@ class DashboardFragment : Fragment() {
             })
 
         //for getting list of birthdays
-        mService.getBirthday()
-            .enqueue(object : Callback<BaseResponse<List<Birthday>>> {
-                override fun onFailure(call: Call<BaseResponse<List<Birthday>>>, t: Throwable) {
-                    Log.d("testBirthday", "" + t)
-                }
-                override fun onResponse(
-                    call: Call<BaseResponse<List<Birthday>>>,
-                    response: Response<BaseResponse<List<Birthday>>>
-                ) {
-                    if (response.body()!!.status) {
-                        val output = response.body()!!.data
-                        if (output != null) {
-                            output.indices.forEach { index: Int ->
-                                Log.d("testBirthday", output[index].full_name)
-                                birthday.add(
-                                    (Birthday(
-                                        output[index].full_name,
-                                        output[index].image,
-                                        output[index].department
-                                    ))
-                                )
-                            }
-                            val adapter = BirthdayAdapter(birthday)
-                            recycler_card_birthday.adapter=adapter
-                        }
-                    } else {
-                        Toast.makeText(activity, "" + response.body()!!.error, Toast.LENGTH_LONG).show()
-                    }
-                }
-            })
+//        mService.getBirthday()
+//            .enqueue(object : Callback<BaseResponse<List<Birthday>>> {
+//                override fun onFailure(call: Call<BaseResponse<List<Birthday>>>, t: Throwable) {
+//                    Log.d("testBirthday", "" + t)
+//                }
+//                override fun onResponse(
+//                    call: Call<BaseResponse<List<Birthday>>>,
+//                    response: Response<BaseResponse<List<Birthday>>>
+//                ) {
+//                    if (response.body()!!.status) {
+//                        val output = response.body()!!.data
+//                        if (output != null) {
+//                            output.indices.forEach { index: Int ->
+//                                Log.d("testBirthday", output[index].full_name)
+//                                birthday.add(
+//                                    (Birthday(
+//                                        output[index].full_name,
+//                                        output[index].image,
+//                                        output[index].department
+//                                    ))
+//                                )
+//                            }
+//                            val adapter = BirthdayAdapter(birthday)
+//                            recycler_card_birthday.adapter=adapter
+//                        }
+//                    } else {
+//                        Toast.makeText(activity, "" + response.body()!!.error, Toast.LENGTH_LONG).show()
+//                    }
+//                }
+//            })
 
         //for getting list of holidays
 
