@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
@@ -21,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_leave.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.DateFormat
 import java.util.*
 
 class LeaveActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
@@ -59,8 +59,8 @@ class LeaveActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
         apply_leave.setOnClickListener {
             val type = type_of_leave_dropdown.text.toString()
-            val to_date = start_date.text.toString()
-            val from_date = end_date.text.toString()
+            val from_date = start_date.text.toString()
+            val to_date = end_date.text.toString()
             val leave = leave_dropdown.text.toString()
             val leave_reason = reason.text.toString()
             val half_day:Boolean
@@ -70,21 +70,50 @@ class LeaveActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
                 "Full Day" -> false
                 else -> return@setOnClickListener
             }
-
-            val applyLeave=LeaveCreate(type,from_date,to_date,half_day,leave_reason)
-
-            mService.createLeave(applyLeave).enqueue(object : Callback<BaseResponse<LeaveCreate>> {
-                override fun onFailure(call: Call<BaseResponse<LeaveCreate>>, t: Throwable) {
-                    Log.d("apply", "$t")
+            when {
+                from_date.isEmpty() -> {
+                    layout_start_date.error = "Start Date Field is Empty"
+                    layout_start_date.requestFocus()
+                    return@setOnClickListener
                 }
-                override fun onResponse(call: Call<BaseResponse<LeaveCreate>>, response: Response<BaseResponse<LeaveCreate>>) {
-                    if (response.body()?.status==true) {
-                        Log.d("apply","${response.body()!!.data}")
-                    } else {
-                        Log.d("apply", "Problem")
-                    }
+                to_date.isEmpty() -> {
+                    layout_end_date.error = "End Date Field is Empty"
+                    layout_end_date.requestFocus()
+                    return@setOnClickListener
                 }
-            })
+                leave.isEmpty() -> {
+                    layout_duration.error="Duration Field is Empty"
+                    layout_duration.requestFocus()
+                    return@setOnClickListener
+                }
+                type.isEmpty() -> {
+                    layout_type_of_leave.error="Leave Type Field is Empty"
+                    layout_type_of_leave.requestFocus()
+                    return@setOnClickListener
+                }
+                leave_reason.isEmpty() -> {
+                    layout_leave_reason.error="Leave Reason Field is Empty"
+                    layout_leave_reason.requestFocus()
+                    return@setOnClickListener
+                }
+                else -> {
+                    val applyLeave=LeaveCreate(type,from_date,to_date,half_day,leave_reason)
+
+                    mService.createLeave(applyLeave).enqueue(object : Callback<BaseResponse<LeaveCreate>> {
+                        override fun onFailure(call: Call<BaseResponse<LeaveCreate>>, t: Throwable) {
+                            Log.d("applyLeave", "$t")
+                        }
+
+                        override fun onResponse(call: Call<BaseResponse<LeaveCreate>>, response: Response<BaseResponse<LeaveCreate>>) {
+                            if (response.body()!!.status) {
+                                Toast.makeText(this@LeaveActivity,"Your request has been sent.",Toast.LENGTH_LONG).show()
+                            } else {
+                                Log.d("apply", "Problem")
+                            }
+                        }
+                    })
+                }
+            }
         }
     }
 
@@ -93,7 +122,8 @@ class LeaveActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        val currentDate = DateFormat.getDateInstance().format(calendar.time)
+//        val currentDate = DateFormat.getDateInstance().format(calendar.time)
+        val currentDate= "$year-$month-$dayOfMonth"
         if(tagNumber==0){
             start_date.text = Editable.Factory.getInstance().newEditable(currentDate)
         }else{

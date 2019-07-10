@@ -29,6 +29,7 @@
             <TextView
                     android:id="@+id/email"
                     android:text=""
+                    android:textColor="@color/colorTextSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
@@ -41,13 +42,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/dept_icon"
+                android:id="@+id/departmentLogo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/dummy"/>
         <LinearLayout
+                android:layout_toEndOf="@+id/departmentLogo"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/dept_icon"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -61,6 +62,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorTextSecondary"
                     android:text="Department"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="18sp"/>
@@ -72,13 +74,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/phone_icon"
+                android:id="@+id/phoneLogo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/dummy"/>
         <LinearLayout
+                android:layout_toEndOf="@+id/phoneLogo"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/phone_icon"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -92,6 +94,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorTextSecondary"
                     android:text="Phone"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="18sp"/>
@@ -103,13 +106,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/leave_issuer_icon"
+                android:id="@+id/leaveIssuerLogo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/dummy"/>
         <LinearLayout
+                android:layout_toEndOf="@+id/leaveIssuerLogo"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/leave_issuer_icon"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -123,6 +126,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorTextSecondary"
                     android:text="Leave Issuer"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="18sp"/>

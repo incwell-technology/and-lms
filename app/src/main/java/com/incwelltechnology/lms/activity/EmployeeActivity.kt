@@ -22,10 +22,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.incwelltechnology.lms.App.Companion.context
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.adapters.EmployeeAdapter
-import com.incwelltechnology.lms.model.Employee
 import com.incwelltechnology.lms.authenticationServices.AuthenticationService
 import com.incwelltechnology.lms.authenticationServices.BaseResponse
 import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
+import com.incwelltechnology.lms.model.Employee
 import kotlinx.android.synthetic.main.activity_employee.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,8 +35,8 @@ open class EmployeeActivity : AppCompatActivity() {
     private val MY_PERMISSIONS_REQUEST_CALL_PHONE = 101
     private lateinit var messageIcon: Drawable
     private lateinit var callIcon: Drawable
-    private var swipeBackgroundColorRight: ColorDrawable = ColorDrawable(Color.parseColor("#20A6E1"))
-    private var swipeBackgroundColorLeft: ColorDrawable = ColorDrawable(Color.parseColor("#20A6E1"))
+    private var swipeBackgroundColorRight: ColorDrawable = ColorDrawable(Color.parseColor("#0099ff"))
+    private var swipeBackgroundColorLeft: ColorDrawable = ColorDrawable(Color.parseColor("#0099ff"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val employee = ArrayList<Employee>()

@@ -39,6 +39,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         //makes DashboardFragment as default landing fragment
         addFragment(DashboardFragment(), true, "DashboardFragment")
 
+
         mUser = intent.getParcelableExtra("user")
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -72,6 +73,8 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+        //sets menu item activated on start itself
+        navView.menu.getItem(0).isChecked = true
     }
 
     override fun onBackPressed() {

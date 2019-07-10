@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Exit"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimaryVariant"
             android:textSize="15sp"
             android:layout_gravity="center"
             android:onClick="exit"

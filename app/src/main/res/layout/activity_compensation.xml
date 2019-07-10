@@ -17,7 +17,7 @@
             android:orientation="vertical">
         <com.google.android.material.textfield.TextInputLayout
                 app:boxStrokeColor="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorTextSecondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Number of Days"
@@ -31,7 +31,7 @@
                 android:layout_marginStart="16dp">
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/number_of_days"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -39,11 +39,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 app:boxStrokeColor="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorTextSecondary"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                     android:height="200dp"
                     android:gravity="start"
                     android:inputType="textLongMessage|textMultiLine"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorText"
                     android:id="@+id/compensation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

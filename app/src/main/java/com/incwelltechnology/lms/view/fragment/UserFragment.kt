@@ -9,6 +9,9 @@ import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.model.Profile
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_user.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class UserFragment : Fragment() {
@@ -31,12 +34,8 @@ class UserFragment : Fragment() {
 
         val user = arguments!!.getParcelable<Profile>("user")
 
-        birthDate= user.date_of_birth
-        joinedDate=user.joined_date
-
-        //formatting dates
-//        birthDate=DateFormat.getDateInstance(DateFormat.FULL).format(birthDate).toString()
-//        joinedDate=DateFormat.getDateInstance(DateFormat.FULL).format(joinedDate).toString()
+        birthDate = user.date_of_birth
+        joinedDate = user.joined_date
 
         annual_leave.progress = "${user.annual_leaves}".toFloat()
         compensation_leave.progress = "${user.compensation_leaves}".toFloat()
@@ -44,8 +43,8 @@ class UserFragment : Fragment() {
         user_name.text = user.full_name
         phone_number.text = user.phone_number
         email.text = user.email
-        date_of_birth.text = birthDate
-        joined_date.text = joinedDate
+        date_of_birth.text = dateFormatter(birthDate)
+        joined_date.text = dateFormatter(joinedDate)
         leave_issuer.text = user.leave_issuer
         Picasso.get()
             .load(user.image)
@@ -60,5 +59,11 @@ class UserFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user, container, false)
+    }
+
+    //convert string of format "yyyy-MM-dd" to date of format "Jul 8, 2019"
+    private fun dateFormatter(date:String):String{
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(date)
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(formatter)
     }
 }

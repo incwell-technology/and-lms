@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.iid.FirebaseInstanceId
 import com.incwelltechnology.lms.App.Companion.context
+import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.authenticationServices.AuthenticationService
 import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
 import com.incwelltechnology.lms.model.Login
@@ -33,6 +34,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     val TAG: String = MainActivity::class.java.simpleName
+    private var fcmToken:String=" "
     lateinit var dialog: Dialog
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +49,8 @@ class MainActivity : AppCompatActivity() {
                 if (!it.isSuccessful) {
                     return@addOnCompleteListener
                 }
-                val token = it.result?.token
-                Log.d(TAG, "" + token)
+                fcmToken = it.result!!.token
+                Log.d(TAG, "" + fcmToken)
             }
 
         Hawk.init(context).build()
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                 progress_horizontal.isIndeterminate = true
                 progress_horizontal.visibility = View.VISIBLE
 
-                val login = Login(username, password)
+                val login = Login(username, password,fcmToken)
                 val service = ServiceBuilder.buildService(AuthenticationService::class.java)
                 service.userLogin(login).enqueue(object : Callback<LoginResponse> {
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -156,6 +158,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             }
+
+            forgot_password.setOnClickListener {
+                val intent = Intent(this@MainActivity, ForgotpasswordActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -181,7 +188,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openDialog(context: Context?) {
         dialog = Dialog(context!!) // Context, this, etc.
-        dialog.setContentView(com.incwelltechnology.lms.R.layout.alert_dialog)
+        dialog.setContentView(R.layout.alert_dialog)
         dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
         dialog.setTitle("No internet connectivity")

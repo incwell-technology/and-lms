@@ -18,11 +18,17 @@ interface AuthenticationService {
     fun getBirthday(): Call<BaseResponse<List<Birthday>>>
 
     @GET("holidays")
-    fun getHoliday(): Call<BaseResponse<Holiday>>
+    fun getHoliday(): Call<BaseResponse<List<Holiday>>>
 
     @GET("users")
     fun getEmployee(): Call<BaseResponse<List<Employee>>>
 
     @POST("leaves/create")
     fun createLeave(@Body leaveApply: LeaveCreate): Call<BaseResponse<LeaveCreate>>
+
+    @POST("compensation/create")
+    fun createCompensation(@Body compensationApply: CompensationCreate): Call<BaseResponse<CompensationCreate>>
+
+    @POST("users/password-reset")
+    fun verifyEmail(@Body resetPassword: ResetPassword):Call<BaseResponse<ResetPassword>>
 }

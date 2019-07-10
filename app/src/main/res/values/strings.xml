@@ -37,5 +37,7 @@
     <string name="forgot_password">Forgot Password?</string>
 
     <string name="default_notification_channel_id"></string>
+    <string name="company_holidays">Company Holidays</string>
+    <string name="days_remaining">Days Remaining</string>
 
 </resources>

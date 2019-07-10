@@ -30,19 +30,18 @@
                 android:text="@string/inc"
                 android:textColor="@color/colorPrimary"
                 android:textSize="32sp"
-                android:fontFamily="@font/roboto_medium"/>
+                android:fontFamily="@font/berkshire_swash"/>
 
         <com.google.android.material.textfield.TextInputLayout
-                android:focusableInTouchMode="true"
-                app:boxStrokeColor="@color/colorPrimary"
+                android:focusableInTouchMode="false"
+                app:boxStrokeColor="@color/colorAccent"
                 android:id="@+id/layout_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorTextSecondary"
                 app:errorEnabled="true"
                 android:hint="@string/username">
 
@@ -50,12 +49,12 @@
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:fontFamily="@font/roboto_medium"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorText"
                     android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-                android:focusableInTouchMode="true"
+                android:focusableInTouchMode="false"
                 app:boxStrokeColor="@color/colorPrimary"
                 android:id="@+id/layout_password"
                 android:layout_width="match_parent"
@@ -63,7 +62,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorTextSecondary"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:hint="@string/password"
                 app:passwordToggleEnabled="true"
@@ -73,7 +72,7 @@
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorText"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
                     android:inputType="textPassword"/>
@@ -84,14 +83,13 @@
                 android:layout_height="wrap_content">
             <ProgressBar
                     android:id="@+id/progress_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:visibility="gone"
-                    android:background="@color/colorText"
                     android:progress="30"/>
             <com.google.android.material.button.MaterialButton
                     android:layout_centerInParent="true"
@@ -103,17 +101,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorPrimaryVariant"
                     android:fontFamily="@font/roboto_medium"
+                    app:rippleColor="@color/colorTextSecondary"
                     android:text="@string/signIn"/>
             <com.google.android.material.button.MaterialButton
+                    android:id="@+id/forgot_password"
                     android:layout_below="@id/login"
                     android:layout_marginTop="50dp"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    app:rippleColor="@color/colorText"
+                    android:textColor="@color/colorText"
+                    app:rippleColor="@color/colorTextSecondary"
                     android:focusable="true"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/forgot_password"/>
