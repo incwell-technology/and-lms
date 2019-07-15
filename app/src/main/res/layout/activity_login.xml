@@ -99,7 +99,7 @@
                         android:visibility="gone"
                         android:progress="30"/>
                 <com.google.android.material.button.MaterialButton
-                        android:onClick="@{viewmodel::onLoginButtonClick}"
+                        android:onClick="@{() -> viewmodel.onLoginButtonClick()}"
                         android:layout_centerInParent="true"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
