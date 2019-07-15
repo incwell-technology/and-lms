@@ -1,7 +1,8 @@
 package com.incwelltechnology.lms.data.network
 
+import com.incwelltechnology.lms.data.model.BaseResponse
 import com.incwelltechnology.lms.data.model.LoginRequest
-import com.incwelltechnology.lms.data.model.LoginResponse
+import com.incwelltechnology.lms.data.model.User
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,7 +14,7 @@ interface LmsApi {
     @POST("login")
     fun userLogin(
         @Body login: LoginRequest
-    ): Call<LoginResponse>
+    ): Call<BaseResponse<User>>
 
     companion object{
         operator fun invoke():LmsApi{
