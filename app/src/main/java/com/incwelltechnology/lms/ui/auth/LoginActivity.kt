@@ -9,7 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityLoginBinding
+import com.incwelltechnology.lms.util.hide
+import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.toast
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), AuthListener {
     val TAG = LoginActivity::class.java.simpleName
@@ -23,19 +26,19 @@ class LoginActivity : AppCompatActivity(), AuthListener {
     }
 
     override fun onStarted() {
-        //progress_bar.show()
+        progress_bar.show()
     }
 
     override fun onSuccess(loginResponse: LiveData<String>) {
         loginResponse.observe(this, Observer {
-            //progress_bar.hide()
+            progress_bar.hide()
             toast(it)
             Log.d(TAG, it)
         })
     }
 
     override fun onFailure(message: String) {
-        //progress_bar.hide()
+        progress_bar.show()
         toast(message)
     }
 }

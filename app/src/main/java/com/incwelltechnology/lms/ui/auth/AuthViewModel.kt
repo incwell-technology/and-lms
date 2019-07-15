@@ -1,6 +1,5 @@
 package com.incwelltechnology.lms.ui.auth
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import com.incwelltechnology.lms.data.repository.UserRepository
 
@@ -10,7 +9,7 @@ class AuthViewModel : ViewModel() {
 
     var authListener: AuthListener? = null
 
-    fun onLoginButtonClick(view: View) {
+    fun onLoginButtonClick() {
         authListener!!.onStarted()
         if (username.isNullOrEmpty() || password.isNullOrEmpty()) {
             //failure

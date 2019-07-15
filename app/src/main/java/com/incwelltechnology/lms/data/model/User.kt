@@ -1,6 +1,6 @@
 package com.incwelltechnology.lms.data.model
 
-data class Profile(
+data class User(
     val full_name : String = "",
     val phone_number: String = "",
     var email: String= "",
