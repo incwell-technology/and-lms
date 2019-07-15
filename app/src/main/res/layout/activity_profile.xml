@@ -248,7 +248,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="20dp"
                         android:textSize="18sp"
-                        android:text="@string/inc1"
+                        android:text="@string/incwell_venture"
                         android:textColor="@color/colorText"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"

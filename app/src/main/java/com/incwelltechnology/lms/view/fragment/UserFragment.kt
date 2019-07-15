@@ -34,7 +34,7 @@ class UserFragment : Fragment() {
 
         val user = arguments!!.getParcelable<Profile>("user")
 
-        birthDate = user.date_of_birth
+        birthDate = user!!.date_of_birth
         joinedDate = user.joined_date
 
         annual_leave.progress = "${user.annual_leaves}".toFloat()

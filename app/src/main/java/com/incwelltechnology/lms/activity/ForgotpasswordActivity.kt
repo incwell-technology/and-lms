@@ -1,5 +1,6 @@
 package com.incwelltechnology.lms.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -24,9 +25,7 @@ class ForgotpasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_forgotpassword)
 
         submit_email.setOnClickListener {
-//            val intent=Intent(this@ForgotpasswordActivity, VerifycodeActivity::class.java)
-//            startActivity(intent)
-//            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_in_left)
+
             val email = verified_email.text.toString()
             val verifiedEmail = ResetPassword(email)
 
@@ -40,7 +39,9 @@ class ForgotpasswordActivity : AppCompatActivity() {
                         response: Response<BaseResponse<ResetPassword>>
                     ) {
                         if (response.body()!!.status) {
-                            Toast.makeText(this@ForgotpasswordActivity, "Success", Toast.LENGTH_LONG).show()
+                            val intent= Intent(this@ForgotpasswordActivity, VerifycodeActivity::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_in_left)
                         } else {
                             Toast.makeText(this@ForgotpasswordActivity, "Error", Toast.LENGTH_LONG)
                                 .show()

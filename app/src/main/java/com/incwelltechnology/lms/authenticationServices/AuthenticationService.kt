@@ -27,8 +27,11 @@ interface AuthenticationService {
     fun createLeave(@Body leaveApply: LeaveCreate): Call<BaseResponse<LeaveCreate>>
 
     @POST("compensation/create")
-    fun createCompensation(@Body compensationApply: CompensationCreate): Call<BaseResponse<CompensationCreate>>
+    fun createCompensation(@Body compensationApply: Compensation): Call<BaseResponse<Compensation>>
 
     @POST("users/password-reset")
     fun verifyEmail(@Body resetPassword: ResetPassword):Call<BaseResponse<ResetPassword>>
+
+    @POST("users/verify-code")
+    fun verifyCode(@Body code: Code):Call<BaseResponse<Code>>
 }

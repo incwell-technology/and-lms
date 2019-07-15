@@ -13,6 +13,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -36,22 +38,27 @@ class MainActivity : AppCompatActivity() {
     val TAG: String = MainActivity::class.java.simpleName
     private var fcmToken:String=" "
     lateinit var dialog: Dialog
+    lateinit var downtoup1:Animation
+    lateinit var downtoup2:Animation
+    lateinit var mUsername:String
+    lateinit var mPassword:String
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(com.incwelltechnology.lms.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-        FirebaseInstanceId
-            .getInstance()
-            .instanceId
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    return@addOnCompleteListener
-                }
-                fcmToken = it.result!!.token
-                Log.d(TAG, "" + fcmToken)
-            }
+        //translate animation for layout
+        downtoup1=AnimationUtils.loadAnimation(this,R.anim.downtoup)
+        downtoup1.duration=800L
+        l1.animation=downtoup1
+
+        downtoup2=AnimationUtils.loadAnimation(this,R.anim.downtoup)
+        downtoup2.duration=500L
+        l2.animation=downtoup2
+
+
 
         Hawk.init(context).build()
 
@@ -69,11 +76,9 @@ class MainActivity : AppCompatActivity() {
                     override fun afterTextChanged(s: Editable?) {
 
                     }
-
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
                     }
-
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                         layout_username.isErrorEnabled = false
                     }
@@ -82,81 +87,97 @@ class MainActivity : AppCompatActivity() {
                     override fun afterTextChanged(s: Editable?) {
 
                     }
-
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
                     }
-
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                         layout_password.isErrorEnabled = false
                     }
                 })
 
-                val username = username.text.toString()
-                val password = password.text.toString()
+                mUsername = username.text.toString()
+                mPassword = password.text.toString()
 
-                if (username.isEmpty()) {
-                    layout_username.error = "Usename is Empty"
-                    layout_username.requestFocus()
-                    return@setOnClickListener
-                }
-                if (password.isEmpty()) {
-                    layout_password.error = "Password is Empty"
-                    layout_password.requestFocus()
-                    return@setOnClickListener
-                }
-                progress_horizontal.max = 100
-                progress_horizontal.isIndeterminate = true
-                progress_horizontal.visibility = View.VISIBLE
+                when {
+                    mUsername.isEmpty() -> {
+                        layout_username.error = "Usename is Empty"
+                        layout_username.requestFocus()
+                        return@setOnClickListener
+                    }
+                    mPassword.isEmpty() -> {
+                        layout_password.error = "Password is Empty"
+                        layout_password.requestFocus()
+                        return@setOnClickListener
+                    }
+                    else -> {
+                        progress_horizontal.max = 100
+                        progress_horizontal.isIndeterminate = true
+                        progress_horizontal.visibility = View.VISIBLE
 
-                val login = Login(username, password,fcmToken)
-                val service = ServiceBuilder.buildService(AuthenticationService::class.java)
-                service.userLogin(login).enqueue(object : Callback<LoginResponse> {
-                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                        progress_horizontal.visibility = View.GONE
+                        val login = Login(mUsername, mPassword,fcmToken)
 
-                        // build alert dialog
-                        val dialogBuilder = AlertDialog.Builder(this@MainActivity)
+                        val service = ServiceBuilder.buildService(AuthenticationService::class.java)
+                        service.userLogin(login).enqueue(object : Callback<LoginResponse> {
+                            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                                progress_horizontal.visibility = View.GONE
 
-                        // set message of alert dialog
-                        dialogBuilder.setMessage("Please try again later")
-                            // if the dialog is cancelable
-                            .setCancelable(false)
-                            // negative button text and action
-                            .setNegativeButton("ok") { dialog, _ ->
-                                dialog.cancel()
+                                // build alert dialog
+                                val dialogBuilder = AlertDialog.Builder(this@MainActivity)
+
+                                // set message of alert dialog
+                                dialogBuilder.setMessage("Please try again later")
+                                    // if the dialog is cancelable
+                                    .setCancelable(false)
+                                    // negative button text and action
+                                    .setNegativeButton("ok") { dialog, _ ->
+                                        dialog.cancel()
+                                    }
+                                // create dialog box
+                                val alert = dialogBuilder.create()
+                                // set title for alert dialog box
+                                alert.setTitle("Something went wrong!")
+                                // show alert dialog
+                                alert.show()
                             }
-                        // create dialog box
-                        val alert = dialogBuilder.create()
-                        // set title for alert dialog box
-                        alert.setTitle("Something went wrong!")
-                        // show alert dialog
-                        alert.show()
-                    }
 
-                    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                        if (response.body()?.status == true) {
-                            progress_horizontal.visibility = View.GONE
-                            saveCredentials(response.body()!!.data)
+                            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                                if (response.body()?.status == true) {
+                                    progress_horizontal.visibility = View.GONE
+                                    saveCredentials(response.body()!!.data)
 
-                            val intent = Intent(this@MainActivity, NavigationDrawerActivity::class.java)
-                            intent.putExtra("user", response.body()!!.data)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            progress_horizontal.visibility = View.GONE
+                                    FirebaseInstanceId
+                                        .getInstance()
+                                        .instanceId
+                                        .addOnCompleteListener {
+                                            if (!it.isSuccessful) {
+                                                return@addOnCompleteListener
+                                            }
+                                            fcmToken = it.result!!.token
+                                            Log.d(TAG, "" + fcmToken)
+                                        }
 
-                            val dialogBuilder = AlertDialog.Builder(this@MainActivity)
-                            dialogBuilder.setMessage("Invalid Credentials!!")
-                                .setCancelable(false)
-                                .setNegativeButton("Try again") { dialog, _ ->
-                                    dialog.cancel()
+                                    val intent = Intent(this@MainActivity, NavigationDrawerActivity::class.java)
+                                    intent.putExtra("user", response.body()!!.data)
+                                    startActivity(intent)
+                                    //make transition animation
+                                    overridePendingTransition(R.anim.slide_in_right,R.anim.slide_in_left)
+                                    finish()
+                                } else {
+                                    progress_horizontal.visibility = View.GONE
+
+                                    val dialogBuilder = AlertDialog.Builder(this@MainActivity)
+                                    dialogBuilder.setMessage("Invalid Credentials!!")
+                                        .setCancelable(false)
+                                        .setNegativeButton("Try again") { dialog, _ ->
+                                            dialog.cancel()
+                                        }
+                                    val alert = dialogBuilder.create()
+                                    alert.show()
                                 }
-                            val alert = dialogBuilder.create()
-                            alert.show()
-                        }
+                            }
+                        })
                     }
-                })
+                }
             }
 
             forgot_password.setOnClickListener {

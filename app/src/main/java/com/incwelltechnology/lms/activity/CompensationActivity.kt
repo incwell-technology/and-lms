@@ -9,7 +9,7 @@ import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.authenticationServices.AuthenticationService
 import com.incwelltechnology.lms.authenticationServices.BaseResponse
 import com.incwelltechnology.lms.authenticationServices.ServiceBuilder
-import com.incwelltechnology.lms.model.CompensationCreate
+import com.incwelltechnology.lms.model.Compensation
 import kotlinx.android.synthetic.main.activity_compensation.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,15 +36,15 @@ class CompensationActivity : AppCompatActivity() {
 
 
 
-            val applyCompensation= CompensationCreate(days,leave_reason)
+            val applyCompensation= Compensation(days,leave_reason)
 
-            mService.createCompensation(applyCompensation).enqueue(object : Callback<BaseResponse<CompensationCreate>> {
-                override fun onFailure(call: Call<BaseResponse<CompensationCreate>>, t: Throwable) {
+            mService.createCompensation(applyCompensation).enqueue(object : Callback<BaseResponse<Compensation>> {
+                override fun onFailure(call: Call<BaseResponse<Compensation>>, t: Throwable) {
 
                 }
                 override fun onResponse(
-                    call: Call<BaseResponse<CompensationCreate>>,
-                    response: Response<BaseResponse<CompensationCreate>>
+                    call: Call<BaseResponse<Compensation>>,
+                    response: Response<BaseResponse<Compensation>>
                 ) {
                     if (response.body()!!.status) {
                         Toast.makeText(this@CompensationActivity,"Your request has been sent.", Toast.LENGTH_LONG).show()
