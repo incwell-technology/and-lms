@@ -5,5 +5,5 @@ import com.incwelltechnology.lms.data.model.User
 interface AuthListener {
     fun onStarted()
     fun onSuccess(user: User)
-    fun onFailure(message:String)
+    fun onFailure(code:Int,message:String)
 }

@@ -1,7 +1,7 @@
 package com.incwelltechnology.lms
 
 import android.app.Application
-import com.incwelltechnology.lms.module.myModule
+import com.incwelltechnology.lms.module.lmsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -12,7 +12,7 @@ class App:Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(myModule)
+            modules(lmsModule)
         }
     }
 }
