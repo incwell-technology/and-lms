@@ -1,13 +1,11 @@
 package com.incwelltechnology.lms.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.incwelltechnology.lms.R
+import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.databinding.ActivityLoginBinding
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.show
@@ -29,16 +27,13 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         progress_bar.show()
     }
 
-    override fun onSuccess(loginResponse: LiveData<String>) {
-        loginResponse.observe(this, Observer {
-            progress_bar.hide()
-            toast(it)
-            Log.d(TAG, it)
-        })
+    override fun onSuccess(user: User) {
+        progress_bar.hide()
+        toast("$user")
     }
 
     override fun onFailure(message: String) {
-        progress_bar.show()
+        progress_bar.hide()
         toast(message)
     }
 }
