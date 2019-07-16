@@ -6,9 +6,9 @@ import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.data.network.LmsApi
 import retrofit2.Response
 
-class UserRepository() {
+class UserRepository(val lmsApi: LmsApi) {
     suspend fun userLogin(username: String, password: String): Response<BaseResponse<User>> {
         val credential=LoginRequest(username, password)
-        return LmsApi().userLogin(credential)
+        return lmsApi.userLogin(credential)
     }
 }
