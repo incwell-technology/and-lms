@@ -3,23 +3,28 @@ package com.incwelltechnology.lms.data.network
 import com.incwelltechnology.lms.data.model.BaseResponse
 import com.incwelltechnology.lms.data.model.LoginRequest
 import com.incwelltechnology.lms.data.model.User
-import retrofit2.Call
+import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface LmsApi {
-
     @POST("login")
-    fun userLogin(
+    suspend fun userLogin(
         @Body login: LoginRequest
-    ): Call<BaseResponse<User>>
+    ): Response<BaseResponse<User>>
 
-    companion object{
-        operator fun invoke():LmsApi{
+    companion object {
+        operator fun invoke(networkConnectionInterceptor: NetworkConnectionInterceptor): LmsApi {
+            val okHttpClient=OkHttpClient.Builder()
+                .addInterceptor(networkConnectionInterceptor)
+                .build()
+
             return Retrofit.Builder()
-                .baseUrl("http://192.168.1.103:8000/v1/api/")
+                .client(okHttpClient)
+                .baseUrl("http://192.168.1.100:8000/v1/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(LmsApi::class.java)

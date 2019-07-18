@@ -3,6 +3,9 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.incwelltechnology.lms">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:name=".App"
             android:allowBackup="true"
@@ -12,7 +15,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".base.BaseActivity">
+        <activity
+                android:name=".ui.home.DashboardActivity"
+                android:label="@string/title_activity_dashboard"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".ui.auth.LoginActivity">
             <intent-filter>

@@ -1,9 +1,9 @@
 package com.incwelltechnology.lms.ui.auth
 
-import androidx.lifecycle.LiveData
+import com.incwelltechnology.lms.data.model.User
 
 interface AuthListener {
     fun onStarted()
-    fun onSuccess(loginResponse: LiveData<String>)
-    fun onFailure(message:String)
+    fun onSuccess(user: User)
+    fun onFailure(code:Int,message:String)
 }
