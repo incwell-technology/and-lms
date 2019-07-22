@@ -1,5 +1,9 @@
 package com.incwelltechnology.lms.data.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class User(
     val full_name : String = "",
     val phone_number: String = "",
@@ -13,4 +17,4 @@ data class User(
     val date_of_birth:String = "",
     val joined_date:String = "",
     var id:Int=0
-)
+): Parcelable

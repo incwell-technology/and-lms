@@ -1,55 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
                 name="viewmodel"
                 type="com.incwelltechnology.lms.ui.auth.AuthViewModel"/>
     </data>
-    <androidx.core.widget.NestedScrollView
-            android:padding="20dp"
+
+    <RelativeLayout
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="match_parent"
+            android:padding="@dimen/dimen_8x2"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            tools:context=".activity.MainActivity">
+            android:fillViewport="true">
 
         <LinearLayout
-                android:id="@+id/l2"
+                android:id="@+id/upperLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="16dp">
+                android:paddingTop="@dimen/dimen_8x2">
             <ImageView
-                    android:layout_width="220dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/logo1"
+                    android:layout_width="@dimen/welcome_banner_size"
+                    android:layout_height="@dimen/welcome_banner_size"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_welcome"
                     android:contentDescription="@string/imageLogo"/>
-
-            <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="20dp"
-                    android:text="@string/inc"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="32sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                     android:focusableInTouchMode="false"
                     app:boxStrokeColor="@color/colorAccent"
-                    android:id="@+id/layout_username"
+                    android:id="@+id/til_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="@dimen/dimen_8x4"
+                    android:layout_marginStart="@dimen/dimen_8x2"
+                    android:layout_marginEnd="@dimen/dimen_8x2"
                     android:textColorHint="@color/colorTextSecondary"
                     app:errorEnabled="true"
-                    android:hint="@string/username">
+                    android:hint="@string/hint_username">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:text="@={viewmodel.username}"
@@ -62,15 +53,15 @@
             <com.google.android.material.textfield.TextInputLayout
                     android:focusableInTouchMode="false"
                     app:boxStrokeColor="@color/colorPrimary"
-                    android:id="@+id/layout_password"
+                    android:id="@+id/til_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="@dimen/dimen"
+                    android:layout_marginStart="@dimen/dimen_8x2"
+                    android:layout_marginEnd="@dimen/dimen_8x2"
                     android:textColorHint="@color/colorTextSecondary"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                    android:hint="@string/password"
+                    android:hint="@string/hint_password"
                     app:passwordToggleEnabled="true"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true">
@@ -85,14 +76,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
-                    android:id="@+id/l1"
+                    android:id="@+id/bottomLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <ProgressBar
                         android:id="@+id/progress_bar"
                         android:layout_marginTop="20dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="@dimen/dimen_8x2"
+                        android:layout_marginEnd="@dimen/dimen_8x2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -101,29 +92,30 @@
                 <com.google.android.material.button.MaterialButton
                         android:onClick="@{() -> viewmodel.onLoginButtonClick()}"
                         android:layout_centerInParent="true"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:id="@+id/login"
+                        android:paddingLeft="@dimen/dimen_5x4"
+                        android:paddingRight="@dimen/dimen_5x4"
+                        android:paddingTop="@dimen/dimen_5x2"
+                        android:paddingBottom="@dimen/dimen_5x2"
+                        android:id="@+id/login_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:textColor="@color/colorPrimaryVariant"
+                        app:cornerRadius="@dimen/dimen_5x4"
                         app:rippleColor="@color/colorTextSecondary"
-                        android:text="@string/signIn"/>
+                        android:text="@string/txt_login"/>
                 <com.google.android.material.button.MaterialButton
                         android:id="@+id/forgot_password"
-                        android:layout_below="@id/login"
-                        android:layout_marginTop="50dp"
+                        android:layout_below="@id/login_btn"
+                        android:layout_marginTop="@dimen/dimen_8x6"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorText"
                         app:rippleColor="@color/colorTextSecondary"
                         android:focusable="true"
-                        android:text="@string/forgot_password"/>
+                        android:text="@string/txt_forgot_password"/>
             </RelativeLayout>
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 </layout>

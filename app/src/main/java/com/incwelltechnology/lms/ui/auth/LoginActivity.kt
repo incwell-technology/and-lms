@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import com.incwelltechnology.lms.AppConstants
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.databinding.ActivityLoginBinding
+import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.home.DashboardActivity
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.hideErrorHint
@@ -19,22 +19,35 @@ import com.incwelltechnology.lms.util.snack
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginActivity : AppCompatActivity(), AuthListener {
-    private val authViewModel:AuthViewModel by viewModel()
+class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
+
+    private val authViewModel: AuthViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        binding.viewmodel=authViewModel
+        super.dataBinding.viewmodel=authViewModel
+
         authViewModel.authListener = this
 
-        //eliminating error hint when editext is started to fill
-        hideErrorHint(username,layout_username)
-        hideErrorHint(password,layout_password)
+        authViewModel.sharedPreference()
 
-        //translate animation for layout
-        loginPageAnimate(this,800L,l1)
-        loginPageAnimate(this,500L,l2)
+        if(authViewModel.isPresent!!){
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
+            finish()
+        }
+
+        //eliminating error hint when editext is started to fill
+        hideErrorHint(username, til_username)
+        hideErrorHint(password, til_password)
+
+        //translate layout
+        translateUp(this, 500L, upperLayout)
+        translateUp(this, 800L, bottomLayout)
+    }
+    override fun getLayout(): Int {
+        return R.layout.activity_login
     }
 
     override fun onStarted() {
@@ -43,34 +56,33 @@ class LoginActivity : AppCompatActivity(), AuthListener {
 
     override fun onSuccess(user: User) {
         progress_bar.hide()
-        val intent=Intent(this, DashboardActivity::class.java)
+        val intent = Intent(this, DashboardActivity::class.java)
         startActivity(intent)
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_in_left)
-//        toast("$user")
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
+        finish()
     }
 
-    override fun onFailure(code:Int,message: String) {
+    override fun onFailure(code: Int, message: String) {
         progress_bar.hide()
         when (code) {
-            0 -> {
-                layout_username.error=message
-                layout_username.requestFocus()
+            AppConstants.USERNAME_EMPTY -> {
+                til_username.error = message
+                til_username.requestFocus()
             }
-            1 -> {
-                layout_password.error=message
-                layout_password.requestFocus()
+            AppConstants.PASSWORD_EMPTY -> {
+                til_password.error = message
+                til_password.requestFocus()
             }
             else -> {
-                login.snack(message)
-//                toast(message)
+                login_btn.snack(message)
             }
         }
     }
 
-    //function to translate layout from down to up
-    private fun loginPageAnimate(context: Context, duration:Long, view:View){
-        val animation:Animation= AnimationUtils.loadAnimation(context, R.anim.downtoup)
-        animation.duration=duration
-        view.animation=animation
+    //translate layout
+    private fun translateUp(context: Context, duration: Long, view: View) {
+        val animation: Animation = AnimationUtils.loadAnimation(context, R.anim.downtoup)
+        animation.duration = duration
+        view.animation = animation
     }
 }
