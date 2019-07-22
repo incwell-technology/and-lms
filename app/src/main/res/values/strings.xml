@@ -29,4 +29,9 @@
     <string name="department">Department</string>
     <string name="phone">Phone</string>
     <string name="leave_issuer">Leave Issuer</string>
+    <string name="hint_startdate">Start Date</string>
+    <string name="hint_enddate">End Date</string>
+    <string name="hint_duration">Duration</string>
+    <string name="hint_tol">Type of leaveRequest</string>
+    <string name="hint_leavereason">Leave Reason</string>
 </resources>

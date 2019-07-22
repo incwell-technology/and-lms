@@ -1,4 +1,4 @@
-package com.incwelltechnology.lms.ui.employee
+package com.incwelltechnology.lms.data.repository
 
 import com.incwelltechnology.lms.data.network.LmsApi
 

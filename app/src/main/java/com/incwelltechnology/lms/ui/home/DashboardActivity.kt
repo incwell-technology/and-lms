@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.data.model.Birthday
 import com.incwelltechnology.lms.databinding.ActivityDashboardBinding
@@ -26,6 +25,7 @@ import com.incwelltechnology.lms.ui.auth.LoginActivity
 import com.incwelltechnology.lms.ui.employee.EmployeeActivity
 import com.incwelltechnology.lms.ui.home.birthday.BirthdayItem
 import com.incwelltechnology.lms.ui.home.fragment.ProfileFragment
+import com.incwelltechnology.lms.ui.leave.LeaveActivity
 import com.incwelltechnology.lms.util.toast
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
@@ -51,9 +51,10 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
 
         //sets color of fab
         fab.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        fab.setOnClickListener {
+            val intent = Intent(this, LeaveActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)

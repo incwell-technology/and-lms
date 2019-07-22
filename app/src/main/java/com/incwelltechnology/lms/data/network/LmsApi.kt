@@ -12,9 +12,7 @@ import retrofit2.http.POST
 
 interface LmsApi {
     @POST("login")
-    suspend fun userLogin(
-        @Body login: LoginRequest
-    ): Response<BaseResponse<User>>
+    suspend fun userLogin(@Body login: LoginRequest): Response<BaseResponse<User>>
 
     @GET("birthdays")
     suspend fun getBirthday():Response<BaseResponse<User_Birthday>>
@@ -25,6 +23,9 @@ interface LmsApi {
 
     @GET("users")
     suspend fun getEmployee() : Response<BaseResponse<List<Employee>>>
+
+    @POST("leaves/create")
+    suspend fun applyLeave(@Body leaveRequest: LeaveRequest):Response<BaseResponse<LeaveRequest>>
 
 
     companion object {

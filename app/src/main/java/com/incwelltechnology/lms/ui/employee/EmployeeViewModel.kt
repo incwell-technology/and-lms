@@ -3,6 +3,7 @@ package com.incwelltechnology.lms.ui.employee
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.incwelltechnology.lms.data.model.Employee
+import com.incwelltechnology.lms.data.repository.EmployeeRepository
 import com.incwelltechnology.lms.util.Coroutine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

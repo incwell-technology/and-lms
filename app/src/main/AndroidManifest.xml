@@ -15,6 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.incwelltechnology.lms.ui.leaveRequest.LeaveActivity">
+        </activity>
         <activity android:name=".ui.employee.EmployeeActivity">
         </activity>
         <activity
@@ -29,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.leave.LeaveActivity"/>
     </application>
 
 </manifest>
