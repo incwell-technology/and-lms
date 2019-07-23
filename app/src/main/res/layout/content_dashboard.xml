@@ -103,6 +103,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/company_holidays"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/dimen_8x3"
                     android:textSize="20sp"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_public_holidays"

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.GridLayout.HORIZONTAL
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -18,20 +19,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.data.model.Birthday
+import com.incwelltechnology.lms.data.model.Holiday
+import com.incwelltechnology.lms.data.model.Leave
 import com.incwelltechnology.lms.databinding.ActivityDashboardBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.auth.AuthViewModel
 import com.incwelltechnology.lms.ui.auth.LoginActivity
 import com.incwelltechnology.lms.ui.compensation.CompensationActivity
 import com.incwelltechnology.lms.ui.employee.EmployeeActivity
-import com.incwelltechnology.lms.ui.home.birthday.BirthdayItem
+import com.incwelltechnology.lms.ui.home.adapter.BirthdayAdapter
+import com.incwelltechnology.lms.ui.home.adapter.HolidayAdapter
+import com.incwelltechnology.lms.ui.home.adapter.LeaveAdapter
 import com.incwelltechnology.lms.ui.home.fragment.ProfileFragment
 import com.incwelltechnology.lms.ui.leave.LeaveActivity
+import com.incwelltechnology.lms.util.CompareHolidays
 import com.incwelltechnology.lms.util.toast
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.app_bar_dashboard.*
 import kotlinx.android.synthetic.main.content_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,6 +44,10 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
 
     private val authViewModel: AuthViewModel by viewModel()
     private val homeViewModel:HomeViewModel by viewModel()
+
+    val leave= ArrayList<Leave>()
+    val birthday = ArrayList<Birthday>()
+    val holiday = ArrayList<Holiday>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,42 +81,79 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
-            com.incwelltechnology.lms.R.string.navigation_drawer_open,
-            com.incwelltechnology.lms.R.string.navigation_drawer_close
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
 
-        homeViewModel.loadBirthday()
-        bindUi()
+        recycler_card_leave.layoutManager = LinearLayoutManager(this, HORIZONTAL, false)
+        recycler_card_birthday.layoutManager = LinearLayoutManager(this, HORIZONTAL, false)
+        recycler_public_holidays.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+        bindUI()
     }
 
     override fun getLayout(): Int {
         return R.layout.activity_dashboard
     }
 
-    private fun bindUi(){
-        homeViewModel.birthdayResponse.observe(this, Observer {
-            initRecyclerViewForBirthday(it.toBirthdayItem())
+    private fun bindUI() {
+        //user at leave recycler view
+        homeViewModel.loadUserAtLeave()
+        homeViewModel.usrLeaveResponse.observe(this,Observer{
+            val output= it
+            output.indices.forEach{index:Int ->
+                leave.add(
+                    Leave(
+                        leave[index].name,
+                        leave[index].image,
+                        leave[index].department,
+                        leave[index].leave_type,
+                        leave[index].half_day
+                    )
+                )
+            }
+            val leaveAdapter = LeaveAdapter(leave)
+            recycler_card_leave.adapter=leaveAdapter
         })
-    }
 
-    //birthday
-    private fun initRecyclerViewForBirthday(birthdayItem: List<BirthdayItem>) {
-        val birthdayAdapter = GroupAdapter<ViewHolder>().apply {
-            addAll(birthdayItem)
-        }
-        recycler_card_birthday.apply {
-            layoutManager=LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
-            setHasFixedSize(true)
-            adapter=birthdayAdapter
-        }
-    }
-    private fun List<Birthday>.toBirthdayItem() : List<BirthdayItem>{
-        return this.map {
-            BirthdayItem(it)
-        }
+        //birthday recycler view
+        homeViewModel.loadBirthday()
+        homeViewModel.birthdayResponse.observe(this,Observer{
+            val output = it
+            output.indices.forEach { index: Int ->
+                birthday.add(
+                    Birthday(
+                        birthday[index].full_name,
+                        birthday[index].image,
+                        birthday[index].department
+                    )
+                )
+            }
+            val birthdayAdapter = BirthdayAdapter(birthday)
+            recycler_card_birthday.adapter=birthdayAdapter
+        })
+
+        //holiday recycler view
+        homeViewModel.loadHoliday()
+        homeViewModel.holidayResponse.observe(this, Observer {
+            val output = it
+            output.indices.forEach { index: Int ->
+                val holidays=output.sortedWith(CompareHolidays)
+                holiday.add(
+                    Holiday(
+                        holidays[index].title,
+                        holidays[index].date,
+                        holidays[index].days,
+                        holidays[index].image
+                    )
+                )
+            }
+            val holidayAdapter = HolidayAdapter(holiday)
+            recycler_public_holidays.adapter=holidayAdapter
+        })
     }
 
     override fun onBackPressed() {

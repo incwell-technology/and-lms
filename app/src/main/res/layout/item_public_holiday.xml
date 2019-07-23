@@ -1,74 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-                name="holiday"
-                type="com.incwelltechnology.lms.data.model.Holiday"/>
-    </data>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dimen_8x1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
-                  android:orientation="vertical"
-                  android:layout_margin="@dimen/dimen_8x1"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/imageHoliday"
+                android:layout_width="@dimen/dimen_5x10"
+                android:layout_height="@dimen/dimen_5x10"
+                app:civ_border="true"
+                app:civ_border_width="@dimen/dimen_1"
+                app:civ_border_color="@color/colorTextSecondary"/>
         <LinearLayout
-                android:gravity="start"
-                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <com.mikhaellopez.circularimageview.CircularImageView
-                    android:src="@{holiday.image}"
-                    android:id="@+id/imageHoliday"
-                    android:layout_width="@dimen/dimen_5x10"
-                    android:layout_height="@dimen/dimen_5x10"
-                    app:civ_border="true"
-                    app:civ_border_width="@dimen/dimen_1"
-                    app:civ_border_color="@color/colorTextSecondary"/>
-            <LinearLayout
-                    android:layout_weight="1"
-                    android:gravity="center"
+                android:orientation="vertical">
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                        android:text="@{holiday.title}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/holiday_name"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                <TextView
-                        android:text="@{holiday.date}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dimen_5x4"
-                        android:id="@+id/holiday_date"
-                        android:textSize="16sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:id="@+id/holiday_name"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+            <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <TextView
-                        android:text="@{holiday.days}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/holiday_remaining_day"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                <TextView
-                        android:text="@string/days_remaining"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
-            </LinearLayout>
+                    android:layout_height="@dimen/dimen_5x4"
+                    android:id="@+id/holiday_date"
+                    android:textSize="16sp"/>
         </LinearLayout>
-        <View android:background="@color/colorTextSecondary"
-              android:layout_margin="15dp"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/dimen_1"/>
+
+        <LinearLayout
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/holiday_remaining_day"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text="@string/days_remaining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+        </LinearLayout>
     </LinearLayout>
-</layout>
+    <View android:background="@color/colorTextSecondary"
+          android:layout_margin="15dp"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_1"/>
+</LinearLayout>

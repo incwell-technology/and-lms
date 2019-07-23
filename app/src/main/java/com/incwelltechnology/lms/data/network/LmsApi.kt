@@ -14,6 +14,9 @@ interface LmsApi {
     @POST("login")
     suspend fun userLogin(@Body login: LoginRequest): Response<BaseResponse<User>>
 
+    @GET("leaves")
+    suspend fun getLeaveToday(): Response<BaseResponse<List<Leave>>>
+
     @GET("birthdays")
     suspend fun getBirthday():Response<BaseResponse<User_Birthday>>
 
