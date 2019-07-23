@@ -1,0 +1,29 @@
+<resources>
+    <dimen name="dimen">0dp</dimen>
+    <dimen name="dimen_1">1dp</dimen>
+    <dimen name="dimen_4">4dp</dimen>
+    <dimen name="dimen_8x1">8dp</dimen>
+    <dimen name="dimen_8x2">16dp</dimen>
+    <dimen name="dimen_8x3">24dp</dimen>
+    <dimen name="dimen_8x4">32dp</dimen>
+    <dimen name="dimen_8x5">40dp</dimen>
+    <dimen name="dimen_8x6">48dp</dimen>
+    <dimen name="dimen_8x7">56dp</dimen>
+    <dimen name="dimen_8x8">64dp</dimen>
+    <dimen name="dimen_8x9">72dp</dimen>
+
+    <dimen name="dimen_5x2">10dp</dimen>
+    <dimen name="dimen_5x4">20dp</dimen>
+    <dimen name="dimen_5x10">50dp</dimen>
+    <dimen name="dimen_10x10">100dp</dimen>
+    <dimen name="welcome_banner_size">200dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="birthday"
+                type="com.incwelltechnology.lms.data.model.Birthday"/>
+    </data>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+                android:src="@{birthday.image}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/imageBirthday"
+                android:contentDescription="@string/birthday"
+                app:civ_border_color="@color/colorTextSecondary"
+                app:civ_border_width="1dp"
+                app:civ_border="true"/>
+
+        <TextView
+                android:text="@{birthday.full_name}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_birthday_name"
+                android:layout_gravity="center"
+                android:textColor="@color/colorTextSecondary"/>
+
+    </LinearLayout>
+</layout>

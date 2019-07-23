@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="leave"
+                type="com.incwelltechnology.lms.ui.leave.LeaveViewModel"/>
+    </data>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".activity.LeaveActivity">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorTextSecondary"
+                    android:id="@+id/layout_start_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_startdate"
+                    android:elevation="@dimen/dimen_5x2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
+                    app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
+                    android:layout_marginTop="@dimen/dimen_8x4"
+                    android:layout_marginBottom="@dimen/dimen_8x2"
+                    android:layout_marginStart="@dimen/dimen_8x2"
+                    app:errorEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/start_date"
+                        android:textColor="@color/colorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    app:boxStrokeColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorTextSecondary"
+                    android:id="@+id/layout_end_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_enddate"
+                    android:elevation="@dimen/dimen_5x2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
+                    app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
+                    android:layout_marginBottom="@dimen/dimen_8x2"
+                    android:layout_marginStart="@dimen/dimen_8x2"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    app:errorEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/end_date"
+                        android:textColor="@color/colorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_duration"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorTextSecondary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_8x2"
+                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    android:layout_marginBottom="@dimen/dimen_8x2"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
+                    app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
+                    android:hint="@string/hint_duration"
+                    app:errorEnabled="true">
+
+                <AutoCompleteTextView
+                        android:labelFor="@+id/layout_duration"
+                        android:id="@+id/leave_dropdown"
+                        android:textColor="@color/colorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_type_of_leave"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorTextSecondary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_8x2"
+                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    android:layout_marginBottom="@dimen/dimen_8x2"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
+                    app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
+                    android:hint="@string/hint_tol"
+                    app:errorEnabled="true">
+
+                <AutoCompleteTextView
+                        android:id="@+id/type_of_leave_dropdown"
+                        android:textColor="@color/colorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_leave_reason"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorTextSecondary"
+                    android:layout_marginStart="@dimen/dimen_8x2"
+                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    android:layout_marginBottom="@dimen/dimen_8x4"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
+                    app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_leavereason"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    app:errorEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="textLongMessage|textMultiLine"
+                        android:height="200dp"
+                        android:gravity="start"
+                        android:textColor="@color/colorText"
+                        android:id="@+id/reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/apply_leave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_gravity="bottom|end"
+                app:srcCompat="@drawable/ic_check_black_24dp"
+                app:backgroundTint="@color/colorPrimary"/>
+
+        <ProgressBar
+                android:id="@+id/processing"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+    </FrameLayout>
+</layout>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/colorPrimaryVariant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <View
+                    android:layout_marginTop="@dimen/dimen_10x10"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/colorTextSecondary"/>
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                    android:layout_marginTop="@dimen/dimen_8x5"
+                    android:id="@+id/user_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    app:civ_border_color="@color/colorAccentVariant"
+                    app:civ_border_width="10dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="5"
+                    app:civ_shadow_color="@color/colorText"/>
+
+            <TextView
+                    android:id="@+id/edit_photo"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/user_image"
+                    android:gravity="bottom|center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Photo"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"/>
+
+            <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/user_name"
+                    android:layout_below="@+id/edit_photo"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:textSize="20sp"/>
+        </RelativeLayout>
+
+        <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <View android:layout_width="fill_parent"
+                  android:id="@+id/first_line"
+                  android:layout_height="1dp"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp"
+                  android:background="@color/colorTextSecondary"/>
+
+            <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/phone_number"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20sp"/>
+
+            <View android:layout_width="fill_parent"
+                  android:id="@+id/second_line"
+                  android:layout_height="1dp"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp"
+                  android:background="#cccccc"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
+            </Space>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <com.github.kalaganov.circular.ProgressView
+                        android:id="@+id/annual_leave"
+                        android:layout_margin="5dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:textColor="@color/colorPrimary"
+                        app:progressBackgroundStrokeWidth="10dp"
+                        app:progressStrokeWidth="8dp"/>
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Annual Leave"
+                        android:gravity="center"
+                        android:textColor="#cccccc"/>
+            </LinearLayout>
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
+            </Space>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <com.github.kalaganov.circular.ProgressView
+                        android:id="@+id/sick_leave"
+                        android:layout_margin="5dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:textColor="@color/colorPrimary"
+                        app:progressBackgroundStrokeWidth="10dp"
+                        app:progressStrokeWidth="8dp"/>
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Sick Leave"
+                        android:gravity="center"
+                        android:textColor="#cccccc"/>
+            </LinearLayout>
+
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
+            </Space>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <com.github.kalaganov.circular.ProgressView
+                        android:id="@+id/compensation_leave"
+                        android:layout_margin="5dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:textColor="@color/colorPrimary"
+                        app:progressBackgroundStrokeWidth="10dp"
+                        app:progressStrokeWidth="8dp"/>
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Compensation"
+                        android:gravity="center"
+                        android:textColor="#cccccc"/>
+            </LinearLayout>
+
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
+            </Space>
+        </LinearLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+            <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/layout_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                        android:id="@+id/date_of_birth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorText"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="20dp"
+                          android:text="Birthday"
+                          android:textColor="@color/colorTextSecondary"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/layout_joined"
+                    android:layout_below="@+id/layout_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                <TextView
+                        android:id="@+id/joined_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorText"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="20dp"
+                          android:text="Joined Date"
+                          android:textColor="@color/colorTextSecondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/layout_company"
+                    android:layout_below="@+id/layout_joined"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:textSize="18sp"
+                        android:text="@string/inc"
+                        android:textColor="@color/colorText"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="20dp"
+                          android:text="Company"
+                          android:textColor="@color/colorTextSecondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/layout_leave_issuer"
+                    android:layout_below="@+id/layout_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/leave_issuer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorText"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="20dp"
+                          android:text="Leave Issuer"
+                          android:textColor="@color/colorTextSecondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/layout_email_address"
+                    android:layout_below="@+id/layout_leave_issuer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorText"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="20dp"
+                          android:text="Email Addresss"
+                          android:textColor="@color/colorTextSecondary"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
