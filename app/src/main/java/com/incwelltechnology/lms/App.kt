@@ -14,7 +14,16 @@ class App:Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(listOf(lmsModule,networkModule, homeModule, employeeModule, leaveModule))
+            modules(
+                listOf(
+                    lmsModule,
+                    networkModule,
+                    homeModule,
+                    employeeModule,
+                    leaveModule,
+                    compensationModule
+                )
+            )
         }
     }
 }

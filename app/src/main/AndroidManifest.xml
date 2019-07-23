@@ -15,7 +15,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.incwelltechnology.lms.ui.leaveRequest.LeaveActivity">
+        <activity android:name=".ui.compensation.CompensationActivity">
+        </activity>
+        <activity android:name=".ui.leaveRequest.LeaveActivity">
         </activity>
         <activity android:name=".ui.employee.EmployeeActivity">
         </activity>

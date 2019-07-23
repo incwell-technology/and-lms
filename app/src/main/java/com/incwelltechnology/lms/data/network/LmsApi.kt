@@ -27,6 +27,9 @@ interface LmsApi {
     @POST("leaves/create")
     suspend fun applyLeave(@Body leaveRequest: LeaveRequest):Response<BaseResponse<LeaveRequest>>
 
+    @POST("compensation/create")
+    suspend fun createCompensation(@Body compensationApply: Compensation): Response<BaseResponse<Compensation>>
+
 
     companion object {
         operator fun invoke(userTokenInterceptor: UserTokenInterceptor,networkConnectionInterceptor: NetworkConnectionInterceptor): LmsApi {

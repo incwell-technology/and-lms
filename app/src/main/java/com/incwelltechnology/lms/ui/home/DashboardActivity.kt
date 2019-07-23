@@ -22,6 +22,7 @@ import com.incwelltechnology.lms.databinding.ActivityDashboardBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.auth.AuthViewModel
 import com.incwelltechnology.lms.ui.auth.LoginActivity
+import com.incwelltechnology.lms.ui.compensation.CompensationActivity
 import com.incwelltechnology.lms.ui.employee.EmployeeActivity
 import com.incwelltechnology.lms.ui.home.birthday.BirthdayItem
 import com.incwelltechnology.lms.ui.home.fragment.ProfileFragment
@@ -144,20 +145,19 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_my_profile -> {
-                // Handle the my profile action
                 addFragment(ProfileFragment(),true,"ProfileFragment")
                 toolbar.title="My Profile"
             }
             R.id.nav_users -> {
-                // Handle the my profile action
                 val intent = Intent(this, EmployeeActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
 
             }
             R.id.nav_apply_compensation -> {
-                // Handle the my profile action
-
+                val intent=Intent(this, CompensationActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

@@ -34,4 +34,6 @@
     <string name="hint_duration">Duration</string>
     <string name="hint_tol">Type of leaveRequest</string>
     <string name="hint_leavereason">Leave Reason</string>
+    <string name="hint_nod">Number of Days</string>
+    <string name="hint_compensation_for">Compensation For</string>
 </resources>
