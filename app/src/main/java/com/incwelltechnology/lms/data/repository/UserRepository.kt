@@ -22,8 +22,8 @@ class UserRepository(private val lmsApi: LmsApi) {
         return SharedPref.get(key)
     }
 
-    suspend fun userLogin(username: String, password: String): Response<BaseResponse<User>> {
-        val credential = LoginRequest(username, password)
+    suspend fun userLogin(username: String, password: String,fcm_token:String): Response<BaseResponse<User>> {
+        val credential = LoginRequest(username, password,fcm_token)
         return lmsApi.userLogin(credential)
     }
 }

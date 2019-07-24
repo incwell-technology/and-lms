@@ -45,13 +45,13 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
             changePasswordBtn.setOnClickListener {
                 when {
                     changePasswordViewModel.newPass.isNullOrEmpty() -> {
-                        return@setOnClickListener
+
                     }
                     changePasswordViewModel.confirmPass.isNullOrEmpty() -> {
-                        return@setOnClickListener
+
                     }
                     changePasswordViewModel.newPass != changePasswordViewModel.confirmPass -> {
-                        return@setOnClickListener
+
                     }
                     else -> {
                         p.show()

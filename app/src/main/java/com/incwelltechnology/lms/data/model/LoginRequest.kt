@@ -1,3 +1,7 @@
 package com.incwelltechnology.lms.data.model
 
-data class LoginRequest(val username:String, val password:String)
+data class LoginRequest(
+    val username:String,
+    val password:String,
+    var fcm_token:String
+)

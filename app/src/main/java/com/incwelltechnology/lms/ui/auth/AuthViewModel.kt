@@ -2,6 +2,7 @@ package com.incwelltechnology.lms.ui.auth
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.google.firebase.iid.FirebaseInstanceId
 import com.incwelltechnology.lms.AppConstants
 import com.incwelltechnology.lms.AppConstants.key
 import com.incwelltechnology.lms.data.model.User
@@ -13,20 +14,19 @@ import kotlinx.coroutines.withContext
 import java.net.SocketTimeoutException
 
 class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
+    var fcmToken:String =""
     var isPresent: Boolean? = false
     var user: User? = null
+    var username: String? = null
+    var password: String? = null
+    var authListener: AuthListener? = null
+
     fun sharedPreference() {
         isPresent = userRepository.checkCredential(key)
         if (isPresent == true) {
             user = userRepository.getCredential(key)
         }
     }
-
-    var username: String? = null
-    var password: String? = null
-
-    var authListener: AuthListener? = null
-
     fun onLoginButtonClick() {
         authListener!!.onStarted()
         when {
@@ -39,10 +39,21 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
                 return
             }
             else -> {
+                //retrieve current fcm token
+                FirebaseInstanceId
+                    .getInstance()
+                    .instanceId
+                    .addOnCompleteListener {
+                        if (!it.isSuccessful) {
+                            return@addOnCompleteListener
+                        }
+                        fcmToken = it.result!!.token
+                        Log.d("token", fcmToken)
+                    }
                 //when credential fields are not empty or null
                 Coroutine.io {
                     try {
-                        val loginResponse = userRepository.userLogin(username!!, password!!)
+                        val loginResponse = userRepository.userLogin(username!!, password!!,fcmToken)
                         if (loginResponse.body()?.status == true) {
 
                             //saving credentials when login is successfull
@@ -74,9 +85,7 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
             }
         }
     }
-
     fun onLogoutButtonClicked() {
         userRepository.deleteCredential(key)
     }
-
 }
