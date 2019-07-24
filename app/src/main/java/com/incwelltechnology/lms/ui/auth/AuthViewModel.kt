@@ -13,12 +13,12 @@ import kotlinx.coroutines.withContext
 import java.net.SocketTimeoutException
 
 class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
-    var isPresent:Boolean ?= false
-    var user: User?= null
-    fun sharedPreference(){
-        isPresent=userRepository.checkCredential(key)
-        if (isPresent==true){
-            user=userRepository.getCredential(key)
+    var isPresent: Boolean? = false
+    var user: User? = null
+    fun sharedPreference() {
+        isPresent = userRepository.checkCredential(key)
+        if (isPresent == true) {
+            user = userRepository.getCredential(key)
         }
     }
 
@@ -46,7 +46,7 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
                         if (loginResponse.body()?.status == true) {
 
                             //saving credentials when login is successfull
-                            userRepository.saveCredential(key,loginResponse.body()?.data!!)
+                            userRepository.saveCredential(key, loginResponse.body()?.data!!)
 
                             withContext(Dispatchers.Main) {
                                 authListener?.onSuccess(loginResponse.body()?.data!!)
@@ -64,14 +64,18 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
                         }
                     } catch (e: SocketTimeoutException) {
                         withContext(Dispatchers.Main) {
-                            authListener?.onFailure(AppConstants.OTHER_CASE, "Something went wrong! Please try again later.")
+                            authListener?.onFailure(
+                                AppConstants.OTHER_CASE,
+                                "Something went wrong! Please try again later."
+                            )
                         }
                     }
                 }
             }
         }
     }
-    fun onLogoutButtonClicked(){
+
+    fun onLogoutButtonClicked() {
         userRepository.deleteCredential(key)
     }
 

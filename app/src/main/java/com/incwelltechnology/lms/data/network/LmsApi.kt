@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface LmsApi {
     @POST("login")
@@ -32,6 +33,15 @@ interface LmsApi {
 
     @POST("compensation/create")
     suspend fun createCompensation(@Body compensationApply: Compensation): Response<BaseResponse<Compensation>>
+
+    @POST("users/password-reset")
+    suspend fun verifyEmail(@Body resetPassword: Email):Response<BaseResponse<Email>>
+
+    @GET("users/reset/{link}")
+    suspend fun checkLink(@Path("link") link:String):Response<BaseResponse<Link>>
+
+    @POST("users/password-reset-done/{userId}")
+    suspend fun changePassword(@Path("userId") userId:Int,@Body newPass:Password):Response<BaseResponse<Password>>
 
 
     companion object {

@@ -12,6 +12,7 @@ import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.databinding.ActivityLoginBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.home.DashboardActivity
+import com.incwelltechnology.lms.ui.reset.ResetActivity
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.hideErrorHint
 import com.incwelltechnology.lms.util.show
@@ -25,13 +26,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.dataBinding.viewmodel=authViewModel
+        super.dataBinding.viewmodel = authViewModel
 
         authViewModel.authListener = this
 
         authViewModel.sharedPreference()
 
-        if(authViewModel.isPresent!!){
+        if (authViewModel.isPresent!!) {
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
@@ -45,7 +46,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
         //translate layout
         translateUp(this, 500L, upperLayout)
         translateUp(this, 800L, bottomLayout)
+
+        mtrl_forgotPwdBtn.setOnClickListener {
+            val intent=Intent(this, ResetActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
+        }
     }
+
     override fun getLayout(): Int {
         return R.layout.activity_login
     }
@@ -74,7 +82,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
                 til_password.requestFocus()
             }
             else -> {
-                login_btn.snack(message)
+                mtrl_loginBtn.snack(message)
             }
         }
     }

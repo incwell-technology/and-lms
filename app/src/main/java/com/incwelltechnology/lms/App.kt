@@ -21,7 +21,9 @@ class App:Application() {
                     homeModule,
                     employeeModule,
                     leaveModule,
-                    compensationModule
+                    compensationModule,
+                    passwordResetModule,
+                    changePasswordModule
                 )
             )
         }

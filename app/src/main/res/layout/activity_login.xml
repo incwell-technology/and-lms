@@ -90,13 +90,13 @@
                         android:visibility="gone"
                         android:progress="30"/>
                 <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mtrl_loginBtn"
                         android:onClick="@{() -> viewmodel.onLoginButtonClick()}"
                         android:layout_centerInParent="true"
                         android:paddingLeft="@dimen/dimen_5x4"
                         android:paddingRight="@dimen/dimen_5x4"
                         android:paddingTop="@dimen/dimen_5x2"
                         android:paddingBottom="@dimen/dimen_5x2"
-                        android:id="@+id/login_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
@@ -105,8 +105,8 @@
                         app:rippleColor="@color/colorTextSecondary"
                         android:text="@string/txt_login"/>
                 <com.google.android.material.button.MaterialButton
-                        android:id="@+id/forgot_password"
-                        android:layout_below="@id/login_btn"
+                        android:id="@+id/mtrl_forgotPwdBtn"
+                        android:layout_below="@id/mtrl_loginBtn"
                         android:layout_marginTop="@dimen/dimen_8x6"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="match_parent"

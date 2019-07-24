@@ -36,4 +36,6 @@
     <string name="hint_leavereason">Leave Reason</string>
     <string name="hint_nod">Number of Days</string>
     <string name="hint_compensation_for">Compensation For</string>
+    <string name="hint_verified_email">Verified Email</string>
+    <string name="txt_submit">Submit</string>
 </resources>
