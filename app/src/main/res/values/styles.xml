@@ -9,6 +9,13 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
+
     <style name="Widget.lms.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/colorAccentVariant</item>
         <item name="android:theme">@style/AppTheme</item>

@@ -54,6 +54,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
         return R.layout.activity_login
     }
 
+
     override fun onStarted() {
         progress_bar.show()
     }

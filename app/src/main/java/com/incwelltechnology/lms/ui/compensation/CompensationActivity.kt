@@ -49,5 +49,6 @@ class CompensationActivity : BaseActivity<ActivityCompensationBinding>() {
 
     override fun getLayout(): Int {
         return R.layout.activity_compensation
+
     }
 }

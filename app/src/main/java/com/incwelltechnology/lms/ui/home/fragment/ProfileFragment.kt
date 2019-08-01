@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationView
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.ui.auth.AuthViewModel
 import com.squareup.picasso.Picasso
@@ -51,9 +52,15 @@ class ProfileFragment : Fragment() {
             .into(user_image)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val navView:NavigationView=activity!!.findViewById(R.id.nav_view)
+        navView.menu.getItem(1).isChecked=true
+    }
+
     //convert string of format "yyyy-MM-dd" to date of format "Jul 8, 2019"
     private fun dateFormatter(date:String):String{
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(date)
-        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(formatter)
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(formatter!!)
     }
 }
