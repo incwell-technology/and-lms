@@ -14,10 +14,7 @@
         <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/imageHoliday"
                 android:layout_width="@dimen/dimen_5x10"
-                android:layout_height="@dimen/dimen_5x10"
-                app:civ_border="true"
-                app:civ_border_width="@dimen/dimen_1"
-                app:civ_border_color="@color/colorTextSecondary"/>
+                android:layout_height="@dimen/dimen_5x10"/>
         <LinearLayout
                 android:layout_weight="1"
                 android:gravity="center"

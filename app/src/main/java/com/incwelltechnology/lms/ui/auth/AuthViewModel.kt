@@ -21,6 +21,7 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
     var password: String? = null
     var authListener: AuthListener? = null
 
+
     fun sharedPreference() {
         isPresent = userRepository.checkCredential(key)
         if (isPresent == true) {

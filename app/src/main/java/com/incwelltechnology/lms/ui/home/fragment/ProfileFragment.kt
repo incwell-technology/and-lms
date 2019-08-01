@@ -50,6 +50,7 @@ class ProfileFragment : Fragment() {
             .error(R.drawable.logo1)
             .into(user_image)
     }
+
     //convert string of format "yyyy-MM-dd" to date of format "Jul 8, 2019"
     private fun dateFormatter(date:String):String{
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(date)

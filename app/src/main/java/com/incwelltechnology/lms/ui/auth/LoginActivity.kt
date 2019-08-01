@@ -1,11 +1,7 @@
 package com.incwelltechnology.lms.ui.auth
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import com.incwelltechnology.lms.AppConstants
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.data.model.User
@@ -44,8 +40,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
         hideErrorHint(password, til_password)
 
         //translate layout
-        translateUp(this, 500L, upperLayout)
-        translateUp(this, 800L, bottomLayout)
+//        translateUp(this, 500L, upperLayout)
+//        translateUp(this, 800L, bottomLayout)
 
         mtrl_forgotPwdBtn.setOnClickListener {
             val intent=Intent(this, ResetActivity::class.java)
@@ -88,9 +84,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
     }
 
     //translate layout
-    private fun translateUp(context: Context, duration: Long, view: View) {
-        val animation: Animation = AnimationUtils.loadAnimation(context, R.anim.downtoup)
-        animation.duration = duration
-        view.animation = animation
-    }
+//    private fun translateUp(context: Context, duration: Long, view: View) {
+//        val animation: Animation = AnimationUtils.loadAnimation(context, R.anim.downtoup)
+//        animation.duration = duration
+//        view.animation = animation
+//    }
 }

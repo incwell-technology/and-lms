@@ -50,13 +50,10 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
                     changePasswordViewModel.confirmPass.isNullOrEmpty() -> {
 
                     }
-                    changePasswordViewModel.newPass != changePasswordViewModel.confirmPass -> {
-
-                    }
                     else -> {
                         p.show()
                         changePasswordViewModel.onChangePassBtnClick()
-                        val status: LiveData<String> = changePasswordViewModel.msg
+                        val status: LiveData<String> = changePasswordViewModel.res
                         status.observe(this, Observer {
                             p.hide()
                             changePasswordBtn.snack(status.value!!)

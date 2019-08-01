@@ -20,12 +20,10 @@
                 android:orientation="vertical">
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_days"
-                    app:boxStrokeColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorTextSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_nod"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    style="@style/Widget.lms.TextInputLayout"
                     android:layout_marginEnd="@dimen/dimen_8x2"
                     app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
                     app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
@@ -43,8 +41,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_reason"
-                    app:boxStrokeColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorTextSecondary"
                     android:layout_marginStart="@dimen/dimen_8x2"
                     android:layout_marginEnd="@dimen/dimen_8x2"
                     android:layout_marginBottom="@dimen/dimen_8x4"
@@ -54,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_compensation_for"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+                    style="@style/Widget.lms.TextInputLayout">
                 <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/compReason"
                         android:text="@={cvm.compensationReason}"
@@ -75,7 +71,8 @@
                 android:layout_margin="@dimen/fab_margin"
                 android:layout_gravity="bottom|end"
                 app:srcCompat="@drawable/ic_check_black_24dp"
-                app:backgroundTint="@color/colorPrimary"/>
+                app:backgroundTint="@color/colorAccent"
+                app:tint="@null"/>
 
         <ProgressBar
                 android:id="@+id/circular_progress"

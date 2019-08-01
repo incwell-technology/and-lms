@@ -1,6 +1,5 @@
 package com.incwelltechnology.lms.ui.employee
 
-import android.Manifest
 import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -24,11 +24,14 @@ import com.incwelltechnology.lms.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_employee.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
+    private lateinit var adapter: EmployeeAdapter
     private lateinit var messageIcon: Drawable
     private lateinit var callIcon: Drawable
-    private var swipeBackgroundColorRight: ColorDrawable = ColorDrawable(Color.parseColor("#0099ff"))
-    private var swipeBackgroundColorLeft: ColorDrawable = ColorDrawable(Color.parseColor("#0099ff"))
+    private lateinit var phoneNumber: String
+    private var swipeBackgroundColorRight: ColorDrawable = ColorDrawable(Color.parseColor("#E0E0E0"))
+    private var swipeBackgroundColorLeft: ColorDrawable = ColorDrawable(Color.parseColor("#E0E0E0"))
     val employee = ArrayList<Employee>()
     private val employeeViewModel: EmployeeViewModel by viewModel()
 
@@ -57,6 +60,7 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
                 ): Boolean {
                     return false
                 }
+
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     //viewHolder.adapterPosition for identifying employee
                     val pos = viewHolder.adapterPosition
@@ -65,9 +69,12 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
                         sendMail(employee[pos].email)
                     } else {
                         //for calling
-                        call(employee[pos].phone)
+                        phoneNumber = employee[pos].phone
+                        call(phoneNumber)
                     }
+                    adapter.updateUI()
                 }
+
                 override fun onChildDraw(
                     c: Canvas,
                     recyclerView: RecyclerView,
@@ -135,10 +142,12 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
                     )
                 )
             }
-            val adapter = EmployeeAdapter(employee)
+            adapter = EmployeeAdapter(employee)
             recycler_card_employee.adapter = adapter
+
         })
     }
+
     private fun sendMail(mail: String) {
         val aEmailList = arrayOf(mail)
         val emailIntent = Intent(Intent.ACTION_SEND)
@@ -152,41 +161,29 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
     private fun call(number: String) {
         val callIntent = Intent(Intent.ACTION_CALL)
         callIntent.data = Uri.parse("tel:$number")
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(
-                this,
-                CALL_PHONE
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-
+        if (ContextCompat.checkSelfPermission(this, CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, CALL_PHONE)) {
+                ActivityCompat.requestPermissions(
                     this,
-                    CALL_PHONE
+                    arrayOf(CALL_PHONE),
+                    AppConstants.PHONE
                 )
-            ) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.READ_CONTACTS),
+                    arrayOf(CALL_PHONE),
                     AppConstants.PHONE
                 )
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         } else {
             // Permission has already been granted
             startActivity(callIntent)
         }
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
@@ -195,19 +192,19 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
             AppConstants.PHONE -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
+                    // permission was granted
+                    call(phoneNumber)
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show()
                 }
                 return
             }
             // Add other 'when' lines to check for other
             // permissions this app might request.
             else -> {
-                // Ignore all other requests.
+                //ignore all requests
             }
         }
     }

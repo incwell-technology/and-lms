@@ -8,10 +8,11 @@ import com.incwelltechnology.lms.util.Coroutine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ChangePasswordViewModel(val changePasswordRepository: ChangePasswordRepository) : ViewModel() {
+class ChangePasswordViewModel(private val changePasswordRepository: ChangePasswordRepository) : ViewModel() {
 
-    val userId:MutableLiveData<Int> = MutableLiveData()
-    val msg:MutableLiveData<String> = MutableLiveData()
+    var userId:MutableLiveData<Int> = MutableLiveData()
+    var msg:MutableLiveData<String> = MutableLiveData()
+    var res:MutableLiveData<String> = MutableLiveData()
 
     var newPass:String ?=null
     var confirmPass:String ?= null
@@ -44,7 +45,12 @@ class ChangePasswordViewModel(val changePasswordRepository: ChangePasswordReposi
             val passwords=changePasswordRepository.changePassword(newPass!!,confirmPass!!,userId.value!!)
             if(passwords.body()!!.status){
                 withContext(Dispatchers.Main){
-                    msg.value="Password Changed Successfully!"
+                    Log.d("status1","${passwords.body()?.status}")
+                    res.value="Password Changed Successfully!"
+                }
+            }else{
+                withContext(Dispatchers.Main){
+                    res.value="Error occurred while resetting your password!"
                 }
             }
         }

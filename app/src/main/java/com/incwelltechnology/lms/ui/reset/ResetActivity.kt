@@ -1,11 +1,14 @@
 package com.incwelltechnology.lms.ui.reset
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityResetBinding
 import com.incwelltechnology.lms.ui.BaseActivity
+import com.incwelltechnology.lms.ui.auth.LoginActivity
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.snack
@@ -39,6 +42,22 @@ class ResetActivity : BaseActivity<ActivityResetBinding>(){
                     })
                 }
             }
+        }
+
+        // Clear the error once key is typed
+        verifiedEmail.setOnKeyListener { _, _, _ ->
+            if (!resetViewModel.verifiedEmailAddress.isNullOrEmpty()) {
+                // Clear the error.
+                til_email.error = null
+            }
+            false
+        }
+
+
+        mtrl_back.setOnClickListener {
+            val intent= Intent(this, LoginActivity::class.java)
+            intent.flags= FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
     }
 }

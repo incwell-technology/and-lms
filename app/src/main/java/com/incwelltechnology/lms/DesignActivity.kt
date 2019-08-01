@@ -1,7 +1,7 @@
 package com.incwelltechnology.lms
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class DesignActivity : AppCompatActivity() {
 

@@ -22,7 +22,7 @@
     <string name="show_all">Show All</string>
     <string name="leave_today">Leave Today</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="birthday">Birthday</string>
     <string name="days_remaining">Days Remaining</string>
@@ -32,7 +32,7 @@
     <string name="hint_startdate">Start Date</string>
     <string name="hint_enddate">End Date</string>
     <string name="hint_duration">Duration</string>
-    <string name="hint_tol">Type of leaveRequest</string>
+    <string name="hint_tol">Type of leave request</string>
     <string name="hint_leavereason">Leave Reason</string>
     <string name="hint_nod">Number of Days</string>
     <string name="hint_compensation_for">Compensation For</string>
@@ -40,4 +40,8 @@
     <string name="txt_submit">Submit</string>
 
     <string name="default_notification_channel_id"></string>
+    <string name="enter_your_email_address_to_receive_n_your_password_reset_link">Enter your email address to receive
+        your\n password reset link
+    </string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

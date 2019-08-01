@@ -59,5 +59,10 @@ class EmployeeAdapter(private val employeeList: ArrayList<Employee>) :
             }
         }
     }
+    fun updateUI(){
+        this.notifyDataSetChanged()
+    }
+
+
 }
 

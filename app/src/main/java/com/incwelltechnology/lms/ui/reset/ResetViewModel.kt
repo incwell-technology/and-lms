@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 class ResetViewModel(private val resetRepository: ResetRepository) :ViewModel() {
 
     var message:MutableLiveData<String> = MutableLiveData()
-    var verifiedEmailAddress:String?=null
+    var verifiedEmailAddress:String ?= null
 
     fun onSubmitBtnClick(){
         Coroutine.io {

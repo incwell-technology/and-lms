@@ -3,6 +3,7 @@ package com.incwelltechnology.lms.ui.home
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,23 +45,22 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
     private val authViewModel: AuthViewModel by viewModel()
-    private val homeViewModel:HomeViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
 
-    val leave= ArrayList<Leave>()
-    val birthday = ArrayList<Birthday>()
-    val holiday = ArrayList<Holiday>()
+    val leave = ArrayList<Leave>()
+    private val birthday = ArrayList<Birthday>()
+    private val holiday = ArrayList<Holiday>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.dataBinding.homeViewModel=homeViewModel
-
+        super.dataBinding.homeViewModel = homeViewModel
         authViewModel.sharedPreference()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         //sets color of fab
-        fab.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
+        fab.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorAccent))
         fab.setOnClickListener {
             val intent = Intent(this, LeaveActivity::class.java)
             startActivity(intent)
@@ -69,7 +70,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         //done to get access to view of drawable navigation
-        val v: View =navView.getHeaderView(0)
+        val v: View = navView.getHeaderView(0)
         v.findViewById<TextView>(R.id.nav_user_name).text = authViewModel.user?.full_name
         v.findViewById<TextView>(R.id.nav_user_email).text = authViewModel.user?.email
         val image = v.findViewById<CircularImageView>(R.id.nav_user_image)
@@ -102,9 +103,9 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
     private fun bindUI() {
         //user at leave recycler view
         homeViewModel.loadUserAtLeave()
-        homeViewModel.usrLeaveResponse.observe(this,Observer{
-            val output= it
-            output.indices.forEach{index:Int ->
+        homeViewModel.usrLeaveResponse.observe(this, Observer {
+            val output = it
+            output.indices.forEach { index: Int ->
                 leave.add(
                     Leave(
                         leave[index].name,
@@ -115,13 +116,24 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
                     )
                 )
             }
-            val leaveAdapter = LeaveAdapter(leave)
-            recycler_card_leave.adapter=leaveAdapter
+            if(leave.size < 1){
+                Log.d("size","Size is zero")
+                recycler_card_leave.visibility=View.GONE
+//                val imageView=ImageView(this)
+//                imageView.setImageResource(R.drawable.forgot)
+//                cv_leave.addView(imageView)
+            }else{
+                Log.d("size","there is data")
+                val leaveAdapter = LeaveAdapter(leave)
+                recycler_card_leave.adapter = leaveAdapter
+            }
+
+
         })
 
         //birthday recycler view
         homeViewModel.loadBirthday()
-        homeViewModel.birthdayResponse.observe(this,Observer{
+        homeViewModel.birthdayResponse.observe(this, Observer {
             val output = it
             output.indices.forEach { index: Int ->
                 birthday.add(
@@ -133,7 +145,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
                 )
             }
             val birthdayAdapter = BirthdayAdapter(birthday)
-            recycler_card_birthday.adapter=birthdayAdapter
+            recycler_card_birthday.adapter = birthdayAdapter
         })
 
         //holiday recycler view
@@ -141,7 +153,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         homeViewModel.holidayResponse.observe(this, Observer {
             val output = it
             output.indices.forEach { index: Int ->
-                val holidays=output.sortedWith(CompareHolidays)
+                val holidays = output.sortedWith(CompareHolidays)
                 holiday.add(
                     Holiday(
                         holidays[index].title,
@@ -152,7 +164,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
                 )
             }
             val holidayAdapter = HolidayAdapter(holiday)
-            recycler_public_holidays.adapter=holidayAdapter
+            recycler_public_holidays.adapter = holidayAdapter
         })
     }
 
@@ -161,7 +173,16 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            val manager: FragmentManager = supportFragmentManager
+            val navView: NavigationView = findViewById(R.id.nav_view)
+            if (manager.backStackEntryCount > 0) {
+                super.onBackPressed()
+                val currentFragment = manager.findFragmentById(R.id.replaceFragments)
+                navView.menu.getItem(0).isChecked = currentFragment is ProfileFragment
+                toolbar.title="Home"
+            }else{
+                this.finish()
+            }
         }
     }
 
@@ -172,10 +193,11 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {R.id.action_settings -> {
+        when (item.itemId) {
+            R.id.action_settings -> {
                 toast("Settings")
             }
-            R.id.action_logout ->{
+            R.id.action_logout -> {
                 authViewModel.onLogoutButtonClicked()
                 this.finish()
                 val intent = Intent(this, LoginActivity::class.java)
@@ -190,17 +212,18 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_my_profile -> {
-                addFragment(ProfileFragment(),true,"ProfileFragment")
-                toolbar.title="My Profile"
+                replaceFragment(ProfileFragment(), true, "ProfileFragment")
+                item.isChecked=true
+                toolbar.title = "My Profile"
+
             }
             R.id.nav_users -> {
                 val intent = Intent(this, EmployeeActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
-
             }
             R.id.nav_apply_compensation -> {
-                val intent=Intent(this, CompensationActivity::class.java)
+                val intent = Intent(this, CompensationActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             }
@@ -210,14 +233,23 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         return true
     }
 
+    override fun onResume() {
+        super.onResume()
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        for(i in 1..2){
+            navView.menu.getItem(i).isChecked = false
+        }
+    }
+
     //adds fragment to stack allowing push and pop
-    private fun addFragment(fragment: Fragment, addToBackStack: Boolean, tag: String) {
+    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean, tag: String) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(tag)
         }
-        fragmentTransaction.add(R.id.replaceFragments, fragment, tag)
+        fragmentTransaction.replace(R.id.replaceFragments, fragment, tag)
         fragmentTransaction.commit()
     }
 }
+

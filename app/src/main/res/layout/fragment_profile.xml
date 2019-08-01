@@ -2,99 +2,73 @@
 <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@color/colorPrimaryVariant"
+        android:background="@color/profilePageBackGroundColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <LinearLayout
+            android:layout_marginTop="@dimen/dimen_8x3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-            <View
-                    android:layout_marginTop="@dimen/dimen_10x10"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@color/colorTextSecondary"/>
-
             <com.mikhaellopez.circularimageview.CircularImageView
-                    android:layout_marginTop="@dimen/dimen_8x5"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/dimen_8x6"
                     android:id="@+id/user_image"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     app:civ_border_color="@color/colorAccentVariant"
                     app:civ_border_width="10dp"
                     app:civ_shadow="true"
                     app:civ_shadow_radius="5"
                     app:civ_shadow_color="@color/colorText"/>
 
-            <TextView
-                    android:id="@+id/edit_photo"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/user_image"
-                    android:gravity="bottom|center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Edit Photo"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"/>
-
-            <TextView
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/user_name"
-                    android:layout_below="@+id/edit_photo"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorText"
-                    android:textSize="20sp"/>
-        </RelativeLayout>
-
-        <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <View android:layout_width="fill_parent"
-                  android:id="@+id/first_line"
-                  android:layout_height="1dp"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginRight="20dp"
-                  android:background="@color/colorTextSecondary"/>
-
-            <TextView
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/phone_number"
-                    android:layout_gravity="center"
+            <LinearLayout
+                    android:layout_toEndOf="@+id/user_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorText"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="20sp"/>
+                    android:padding="@dimen/dimen_8x1"
+                    android:orientation="vertical">
+                <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorText"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/dimen_8x1"/>
+                <TextView
+                        android:id="@+id/phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_phone_black_24dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorText"
+                        android:layout_marginBottom="@dimen/dimen_8x1"/>
+                <com.google.android.material.chip.Chip
+                        android:id="@+id/edit_photo"
+                        android:text="@string/edit_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorAccent"
+                        app:chipStrokeWidth="@dimen/dimen_1"
+                        app:chipStrokeColor="@color/colorAccent"
+                        app:chipBackgroundColor="@color/colorAccentVariant"
+                        app:chipIcon="@drawable/ic_edit"
+                        app:chipIconTint="@color/colorAccent"/>
 
-            <View android:layout_width="fill_parent"
-                  android:id="@+id/second_line"
-                  android:layout_height="1dp"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginRight="20dp"
-                  android:background="#cccccc"/>
+            </LinearLayout>
 
-        </LinearLayout>
-
+        </RelativeLayout>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="12dp"
+                android:layout_margin="12dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
             <Space
@@ -110,17 +84,18 @@
                 <com.github.kalaganov.circular.ProgressView
                         android:id="@+id/annual_leave"
                         android:layout_margin="5dp"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:textColor="@color/colorPrimary"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:textColor="@color/colorText"
                         app:progressBackgroundStrokeWidth="10dp"
+                        app:progressColor="@color/colorAccent"
                         app:progressStrokeWidth="8dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Annual Leave"
                         android:gravity="center"
-                        android:textColor="#cccccc"/>
+                        android:textColor="@color/colorTextSecondary"/>
             </LinearLayout>
             <Space
                     android:layout_width="0dp"
@@ -135,9 +110,10 @@
                 <com.github.kalaganov.circular.ProgressView
                         android:id="@+id/sick_leave"
                         android:layout_margin="5dp"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:textColor="@color/colorPrimary"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:textColor="@color/colorText"
+                        app:progressColor="@color/colorAccent"
                         app:progressBackgroundStrokeWidth="10dp"
                         app:progressStrokeWidth="8dp"/>
                 <TextView
@@ -145,7 +121,7 @@
                         android:layout_height="match_parent"
                         android:text="Sick Leave"
                         android:gravity="center"
-                        android:textColor="#cccccc"/>
+                        android:textColor="@color/colorTextSecondary"/>
             </LinearLayout>
 
             <Space
@@ -160,9 +136,10 @@
                 <com.github.kalaganov.circular.ProgressView
                         android:id="@+id/compensation_leave"
                         android:layout_margin="5dp"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:textColor="@color/colorPrimary"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:textColor="@color/colorText"
+                        app:progressColor="@color/colorAccent"
                         app:progressBackgroundStrokeWidth="10dp"
                         app:progressStrokeWidth="8dp"/>
                 <TextView
@@ -170,7 +147,7 @@
                         android:layout_height="match_parent"
                         android:text="Compensation"
                         android:gravity="center"
-                        android:textColor="#cccccc"/>
+                        android:textColor="@color/colorTextSecondary"/>
             </LinearLayout>
 
             <Space
@@ -179,6 +156,11 @@
                     android:layout_weight="1">
             </Space>
         </LinearLayout>
+
+        <View android:layout_margin="@dimen/dimen_8x3"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dimen_1"
+              android:background="@color/colorTextSecondary"/>
 
         <RelativeLayout
                 android:layout_width="match_parent"
