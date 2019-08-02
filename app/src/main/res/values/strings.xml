@@ -45,4 +45,8 @@
     </string>
     <string name="edit_profile">Edit Profile</string>
     <string name="home">Home</string>
+
+    <!--Messages-->
+    <string name="no_internet">No Internet Connection!</string>
+    <string name="server_down">Something went wrong!</string>
 </resources>

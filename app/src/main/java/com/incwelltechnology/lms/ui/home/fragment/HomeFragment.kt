@@ -22,6 +22,8 @@ import com.incwelltechnology.lms.ui.home.adapter.BirthdayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.HolidayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.LeaveAdapter
 import com.incwelltechnology.lms.util.CompareHolidays
+import com.incwelltechnology.lms.util.hide
+import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.toast
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -55,7 +57,12 @@ class HomeFragment : Fragment() {
         recycler_card_birthday.layoutManager = LinearLayoutManager(context, GridLayout.HORIZONTAL, false)
         recycler_public_holidays.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
+        //bind data from viewmodel to activity UI
         bindUI()
+
+        srl_home.setOnRefreshListener {
+            bindUI()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -76,7 +83,6 @@ class HomeFragment : Fragment() {
             }
         }
         return true
-
     }
 
     override fun onResume() {
@@ -86,9 +92,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindUI() {
+        loading.show()
+        homeViewModel.loadData()
         //user at leave recycler view
-        homeViewModel.loadUserAtLeave()
+        leave.clear()
         homeViewModel.usrLeaveResponse.observe(this, Observer {
+            loading.hide()
+            errorMessage.visibility=View.GONE
+            srl_home.isRefreshing=false
             val output = it
             output.indices.forEach { index: Int ->
                 leave.add(
@@ -109,13 +120,11 @@ class HomeFragment : Fragment() {
                 val leaveAdapter = LeaveAdapter(leave)
                 recycler_card_leave.adapter = leaveAdapter
             }
-
-
         })
-
         //birthday recycler view
-        homeViewModel.loadBirthday()
+        birthday.clear()
         homeViewModel.birthdayResponse.observe(this, Observer {
+            errorMessage.visibility=View.GONE
             val output = it
             output.indices.forEach { index: Int ->
                 birthday.add(
@@ -137,8 +146,9 @@ class HomeFragment : Fragment() {
         })
 
         //holiday recycler view
-        homeViewModel.loadHoliday()
+        holiday.clear()
         homeViewModel.holidayResponse.observe(this, Observer {
+            errorMessage.visibility=View.GONE
             val output = it
             output.indices.forEach { index: Int ->
                 val holidays = output.sortedWith(CompareHolidays)
@@ -159,6 +169,14 @@ class HomeFragment : Fragment() {
                 val holidayAdapter = HolidayAdapter(holiday)
                 recycler_public_holidays.adapter = holidayAdapter
             }
+        })
+
+        //update UI with error message
+        homeViewModel.errorResponse.observe(this, Observer {
+            loading.hide()
+            srl_home.isRefreshing=false
+            errorMessage.visibility=View.VISIBLE
+            errorMessage.text=it
         })
     }
 

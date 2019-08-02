@@ -16,57 +16,39 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
     var usrLeaveResponse: MutableLiveData<List<Leave>> = MutableLiveData()
     var birthdayResponse: MutableLiveData<List<Birthday>> = MutableLiveData()
     var holidayResponse: MutableLiveData<List<Holiday>> = MutableLiveData()
+    var errorResponse:MutableLiveData<String> = MutableLiveData()
 
-    fun loadUserAtLeave() {
+    fun loadData(){
         Coroutine.io {
             try {
-                val res = dashboardRepository.getUserAtLeave()
-                if (res.body()!!.status) {
+                val userAtLeaveResponse = dashboardRepository.getUserAtLeave()
+                if (userAtLeaveResponse.body()!!.status) {
                     withContext(Dispatchers.Main) {
-                        usrLeaveResponse.value = res.body()!!.data
+                        usrLeaveResponse.value = userAtLeaveResponse.body()!!.data
+                    }
+                }
+                val userBirthdayResponse = dashboardRepository.getBirthday()
+                if (userBirthdayResponse.body()?.status == true) {
+                    withContext(Dispatchers.Main) {
+                        birthdayResponse.value = userBirthdayResponse.body()!!.data?.birthdays
+                    }
+                }
+                val publicHolidayResponse = dashboardRepository.getPublicHolidays()
+                if (publicHolidayResponse.body()?.status == true) {
+                    withContext(Dispatchers.Main) {
+                        holidayResponse.value = publicHolidayResponse.body()!!.data
                     }
                 }
             } catch (e: NoInternetException) {
-
-            } catch (e: SocketTimeoutException) {
-
-            }
-        }
-    }
-
-    fun loadBirthday() {
-        Coroutine.io {
-            try {
-                val res = dashboardRepository.getBirthday()
-                if (res.body()?.status == true) {
-                    withContext(Dispatchers.Main) {
-                        birthdayResponse.value = res.body()!!.data?.birthdays
-                    }
+                withContext(Dispatchers.Main){
+                    errorResponse.value= "No Internet Connection!"
                 }
-            } catch (e: NoInternetException) {
 
             } catch (e: SocketTimeoutException) {
-
-            }
-
-        }
-    }
-
-    fun loadHoliday() {
-        Coroutine.io {
-            try {
-                val res = dashboardRepository.getPublicHolidays()
-                if (res.body()?.status == true) {
-                    withContext(Dispatchers.Main) {
-                        holidayResponse.value = res.body()!!.data
-                    }
+                withContext(Dispatchers.Main){
+                    errorResponse.value="Something went wrong!"
                 }
-            } catch (e: NoInternetException) {
-
-            } catch (e: SocketTimeoutException) {
-
             }
         }
     }
-
 }

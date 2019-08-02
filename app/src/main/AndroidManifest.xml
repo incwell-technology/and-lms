@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                        android:host="192.168.1.102"
+                        android:host="192.168.1.101"
                         android:pathPrefix="/v1"
                         android:port="8000"
                         android:scheme="http"/>

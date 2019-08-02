@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -20,6 +21,8 @@ import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.data.model.Employee
 import com.incwelltechnology.lms.databinding.ActivityEmployeeBinding
 import com.incwelltechnology.lms.ui.BaseActivity
+import com.incwelltechnology.lms.util.hide
+import com.incwelltechnology.lms.util.show
 import kotlinx.android.synthetic.main.activity_employee.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,7 +35,7 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
     private lateinit var phoneNumber: String
 //    private var swipeBackgroundColorRight: ColorDrawable = ColorDrawable(Color.parseColor("#E0E0E0"))
 //    private var swipeBackgroundColorLeft: ColorDrawable = ColorDrawable(Color.parseColor("#E0E0E0"))
-    val employee = ArrayList<Employee>()
+    var employee = ArrayList<Employee>()
     private val employeeViewModel: EmployeeViewModel by viewModel()
 
     override fun getLayout(): Int {
@@ -50,6 +53,11 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
         recycler_card_employee.layoutManager = layoutManager
 
         bindUI()
+
+        //swipe down to re-load data
+        srl_employee.setOnRefreshListener {
+            bindUI()
+        }
 
         search_employee.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -139,9 +147,15 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
     }
 
     private fun bindUI() {
+        pb_emp.show()
         employeeViewModel.loadEmployee()
         employeeViewModel.employeeResponse.observe(this, Observer {
+            pb_emp.hide()
+            tv_emp_err.visibility= View.GONE
+            srl_employee.isRefreshing=false
             val output = it
+//          clear the list before calling this function prevents redundant data to be added in ArrayList
+            employee.clear()
             output.indices.forEach { index: Int ->
                 employee.add(
                     Employee(
@@ -158,6 +172,13 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
             adapter = EmployeeAdapter(employee,employee)
             recycler_card_employee.adapter = adapter
 
+        })
+        //update UI with error message
+        employeeViewModel.errorResponse.observe(this, Observer {
+            pb_emp.hide()
+            srl_employee.isRefreshing=false
+            tv_emp_err.visibility= View.VISIBLE
+            tv_emp_err.text=it
         })
     }
 
