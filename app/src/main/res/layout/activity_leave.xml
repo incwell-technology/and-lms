@@ -18,16 +18,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+            <include layout="@layout/custom_toolbar"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Duration"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginTop="@dimen/dimen_8x3"
+                    android:layout_marginStart="@dimen/dimen_8x4"
+                    android:layout_marginEnd="@dimen/dimen_8x4"/>
+
             <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.lms.TextInputLayout"
                     android:id="@+id/layout_start_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_startdate"
-                    android:layout_marginEnd="@dimen/dimen_8x2"
-                    android:layout_marginTop="@dimen/dimen_8x4"
-                    android:layout_marginBottom="@dimen/dimen_8x2"
-                    android:layout_marginStart="@dimen/dimen_8x2"
+                    android:layout_marginEnd="@dimen/dimen_8x4"
+                    android:layout_marginStart="@dimen/dimen_8x4"
                     app:endIconDrawable="@drawable/ic_date_range"
                     app:endIconMode="custom"
                     app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
@@ -40,7 +51,6 @@
                         android:layout_height="wrap_content"
                         android:focusable="false"
                         android:focusableInTouchMode="false"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -49,10 +59,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_enddate"
-                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    android:layout_marginEnd="@dimen/dimen_8x4"
+                    android:layout_marginStart="@dimen/dimen_8x4"
                     android:layout_marginBottom="@dimen/dimen_8x2"
-                    android:layout_marginStart="@dimen/dimen_8x2"
-                    android:layout_marginTop="@dimen/dimen_4"
                     app:endIconDrawable="@drawable/ic_date_range"
                     app:endIconMode="custom"
                     app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
@@ -67,39 +76,57 @@
                         android:focusableInTouchMode="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layout_duration"
-                    style="@style/Widget.lms.TextInputLayout.ExposedDropdownMenu"
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time Period"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:layout_marginStart="@dimen/dimen_8x4"
+                    android:layout_marginEnd="@dimen/dimen_8x4"/>
+            <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_8x2"
-                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/dimen_8x4"
+                    android:layout_marginEnd="@dimen/dimen_8x4"
                     android:layout_marginBottom="@dimen/dimen_8x2"
+                    android:layout_gravity="center">
+                <RadioButton android:id="@+id/radio_halfDay"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/half_day"
+                             android:checked="true"
+                             android:textSize="18sp"
+                             android:layout_marginEnd="@dimen/dimen_8x2"
+                             android:onClick="onRadioButtonClicked"/>
+                <RadioButton android:id="@+id/radio_fullDay"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="@string/full_day"
+                             android:textSize="18sp"
+                             android:layout_marginStart="@dimen/dimen_8x2"
+                             android:onClick="onRadioButtonClicked"/>
+            </RadioGroup>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/leave_type"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
                     android:layout_marginTop="@dimen/dimen_4"
-                    app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
-                    app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
-                    android:hint="@string/hint_duration"
-                    app:errorEnabled="true">
-
-                <AutoCompleteTextView
-                        android:labelFor="@+id/layout_duration"
-                        android:id="@+id/leave_dropdown"
-                        android:textColor="@color/colorText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="@dimen/dimen_8x4"
+                    android:layout_marginEnd="@dimen/dimen_8x4"/>
 
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_type_of_leave"
                     style="@style/Widget.lms.TextInputLayout.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_8x2"
-                    android:layout_marginEnd="@dimen/dimen_8x2"
-                    android:layout_marginBottom="@dimen/dimen_8x2"
+                    android:layout_marginStart="@dimen/dimen_8x4"
+                    android:layout_marginEnd="@dimen/dimen_8x4"
                     android:layout_marginTop="@dimen/dimen_4"
                     app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
                     app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
@@ -113,15 +140,13 @@
                         android:layout_height="wrap_content"
                         android:focusable="false"
                         android:focusableInTouchMode="false"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_leave_reason"
-                    android:layout_marginStart="@dimen/dimen_8x2"
-                    android:layout_marginEnd="@dimen/dimen_8x2"
+                    android:layout_marginStart="@dimen/dimen_8x4"
+                    android:layout_marginEnd="@dimen/dimen_8x4"
                     android:layout_marginBottom="@dimen/dimen_8x4"
-                    android:layout_marginTop="@dimen/dimen_4"
                     app:boxCornerRadiusTopEnd="@dimen/dimen_5x2"
                     app:boxCornerRadiusTopStart="@dimen/dimen_5x2"
                     android:layout_width="match_parent"
@@ -138,6 +163,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
+
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

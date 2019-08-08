@@ -9,7 +9,7 @@
               android:title="@string/home"/>
         <item
                 android:id="@+id/nav_my_profile"
-                android:icon="@drawable/ic_my_profile"
+                android:icon="@drawable/ic_profile"
                 android:title="@string/my_profile"/>
         <item
                 android:id="@+id/nav_users"
@@ -17,7 +17,7 @@
                 android:title="@string/users"/>
         <item
                 android:id="@+id/nav_apply_compensation"
-                android:icon="@drawable/ic_apply_compensation"
+                android:icon="@drawable/ic_add"
                 android:title="@string/apply_compensation"/>
     </group>
 </menu>

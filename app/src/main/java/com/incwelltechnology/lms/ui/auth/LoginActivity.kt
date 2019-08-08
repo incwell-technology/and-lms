@@ -8,6 +8,7 @@ import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.databinding.ActivityLoginBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.home.DashboardActivity
+import com.incwelltechnology.lms.ui.home.HomeViewModel
 import com.incwelltechnology.lms.ui.reset.ResetActivity
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.hideErrorHint
@@ -19,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LoginActivity : BaseActivity<ActivityLoginBinding>(), AuthListener {
 
     private val authViewModel: AuthViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

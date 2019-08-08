@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.incwelltechnology.lms.AppConstants
-import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityChangePasswordBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.auth.LoginActivity
@@ -18,6 +17,8 @@ import com.incwelltechnology.lms.util.snack
 import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+
 
 class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
     private val changePasswordViewModel: ChangePasswordViewModel by viewModel()
@@ -60,10 +61,11 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
                             Coroutine.io {
                                 delay(2000L)
                                 val intent = Intent(this, LoginActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
+                                this.finish()
                             }
                         })
-                        this.finish()
                     }
                 }
             }
@@ -71,7 +73,7 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
     }
 
     override fun getLayout(): Int {
-        return R.layout.activity_change_password
+        return com.incwelltechnology.lms.R.layout.activity_change_password
     }
 
     //extract path from url

@@ -43,10 +43,17 @@
     <string name="enter_your_email_address_to_receive_n_your_password_reset_link">Enter your email address to receive
         your\n password reset link
     </string>
-    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_profile">Edit Photo</string>
     <string name="home">Home</string>
 
     <!--Messages-->
     <string name="no_internet">No Internet Connection!</string>
     <string name="server_down">Something went wrong!</string>
+    <string name="email">Email</string>
+    <string name="half_day">Half Day</string>
+    <string name="full_day">Full Day</string>
+    <string name="leave_type">Leave Type</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="reset">Reset</string>
 </resources>

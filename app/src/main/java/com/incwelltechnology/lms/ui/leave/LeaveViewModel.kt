@@ -16,15 +16,11 @@ class LeaveViewModel(private val leaveRepository: LeaveRepository) : ViewModel()
 
     var message: MutableLiveData<String> = MutableLiveData()
 
-    fun getValues(type: String, from_date: String, to_date: String, leave: String, leave_reason: String){
+    fun getValues(type: String, from_date: String, to_date: String, leaveType: Boolean, leave_reason: String){
         this.type = type
         startDate = from_date
         endDate = to_date
-        halfDay = when (leave) {
-            "Half Day" -> true
-            "Full Day" -> false
-            else -> return
-        }
+        halfDay = leaveType
         leaveReason = leave_reason
     }
 

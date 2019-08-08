@@ -16,5 +16,6 @@ data class User(
     var compensation_leaves: Int,
     val date_of_birth:String = "",
     val joined_date:String = "",
-    var id:Int=0
+    var id:Int=0,
+    var token:String=""
 ): Parcelable

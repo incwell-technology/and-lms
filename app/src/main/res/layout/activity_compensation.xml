@@ -16,8 +16,9 @@
         <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?attr/actionBarSize"
                 android:orientation="vertical">
+            <include layout="@layout/custom_toolbar"/>
+
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_days"
                     android:layout_width="match_parent"
@@ -33,6 +34,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                         android:text="@={cvm.days}"
                         android:id="@+id/days"
+                        android:inputType="number"
                         android:textColor="@color/colorText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>

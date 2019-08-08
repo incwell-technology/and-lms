@@ -4,9 +4,11 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
+import android.widget.RadioButton
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LiveData
 import com.incwelltechnology.lms.R
@@ -17,12 +19,14 @@ import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.snack
 import kotlinx.android.synthetic.main.activity_leave.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnDateSetListener {
 
     var tagNumber: Int = 1
+    var half: Boolean = true
     private val leaveViewModel: LeaveViewModel by viewModel()
 
 
@@ -30,9 +34,14 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
         super.onCreate(savedInstanceState)
         super.dataBinding.leave = leaveViewModel
 
-        val holiday = arrayOf("Half Day", "Full Day")
-        val type = arrayOf("Annual Leave", "Sick Leave", "CompensationActivity Leave", "Unpaid Leave")
-        dropDown(this, holiday, leave_dropdown)
+        //custom toolbar
+        setSupportActionBar(custom_toolbar)
+        custom_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        custom_toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        val type = arrayOf("Annual Leave", "Sick Leave", "Compensation Activity Leave", "Unpaid Leave")
         dropDown(this, type, type_of_leave_dropdown)
 
         start_date.setOnClickListener {
@@ -50,7 +59,7 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
             val type = type_of_leave_dropdown.text.toString()
             val from_date = start_date.text.toString()
             val to_date = end_date.text.toString()
-            val leave = leave_dropdown.text.toString()
+            val leave = half
             val leave_reason = reason.text.toString()
 
             when {
@@ -62,11 +71,6 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
                 to_date.isEmpty() -> {
                     layout_end_date.error = "End Date Field is Empty"
                     layout_end_date.requestFocus()
-                    return@setOnClickListener
-                }
-                leave.isEmpty() -> {
-                    layout_duration.error = "Duration Field is Empty"
-                    layout_duration.requestFocus()
                     return@setOnClickListener
                 }
                 type.isEmpty() -> {
@@ -94,6 +98,27 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
         }
     }
 
+    fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
+            // Is the button now checked?
+            val checked = view.isChecked
+
+            // Check which radio button was clicked
+            when (view.getId()) {
+                R.id.radio_halfDay ->
+                    if (checked) {
+                        half = true
+                        radio_fullDay.isChecked=false
+                    }
+                R.id.radio_fullDay ->
+                    if (checked) {
+                        half = false
+                        radio_halfDay.isChecked=false
+                    }
+            }
+        }
+    }
+
     override fun getLayout(): Int {
         return R.layout.activity_leave
     }
@@ -116,11 +141,10 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
         id.setAdapter(ArrayAdapter(context, R.layout.dropdown_menu_popup_item, objects))
     }
 
-    private fun clearField(){
+    private fun clearField() {
         type_of_leave_dropdown.text.clear()
         start_date.text?.clear()
         end_date.text?.clear()
-        leave_dropdown.text.clear()
         reason.text?.clear()
     }
 }

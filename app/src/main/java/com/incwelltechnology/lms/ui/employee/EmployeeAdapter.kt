@@ -34,7 +34,7 @@ class EmployeeAdapter( private var employeeList:ArrayList<Employee>, private var
     inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setData(employee: Employee?) {
             itemView.employee_name.text=employee!!.full_name
-            itemView.employee_email.text= employee.email
+            itemView.employee_department.text= employee.department
             Picasso.get()
                 .load(employee.image)
                 .placeholder(R.drawable.logo1)
@@ -43,7 +43,9 @@ class EmployeeAdapter( private var employeeList:ArrayList<Employee>, private var
 
             itemView.list_employee.setOnClickListener {
                 val employeeDetailDialog = BottomSheetDialog(it.context)
-                val view = employeeDetailDialog.layoutInflater.inflate(R.layout.activity_employee_detail,null,false)
+                val view = employeeDetailDialog
+                    .layoutInflater
+                    .inflate(R.layout.activity_employee_detail,null,false)
                 //populating data in bottomsheet
                 Picasso.get()
                     .load(employee.image)

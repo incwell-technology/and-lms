@@ -21,7 +21,6 @@ import com.incwelltechnology.lms.ui.home.HomeViewModel
 import com.incwelltechnology.lms.ui.home.adapter.BirthdayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.HolidayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.LeaveAdapter
-import com.incwelltechnology.lms.util.CompareHolidays
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.toast
@@ -32,9 +31,9 @@ class HomeFragment : Fragment() {
     private val authViewModel: AuthViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
 
-    val leave = ArrayList<Leave>()
-    private val birthday = ArrayList<Birthday>()
-    private val holiday = ArrayList<Holiday>()
+    private var leave = ArrayList<Leave>()
+    private var birthday = ArrayList<Birthday>()
+    private var holiday = ArrayList<Holiday>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +78,10 @@ class HomeFragment : Fragment() {
             R.id.action_logout -> {
                 authViewModel.onLogoutButtonClicked()
                 val intent = Intent(context, LoginActivity::class.java)
-                startActivity (intent)
+                Log.d("context","$context")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                activity!!.finish()
             }
         }
         return true
@@ -95,25 +97,24 @@ class HomeFragment : Fragment() {
         loading.show()
         homeViewModel.loadData()
         //user at leave recycler view
-        leave.clear()
         homeViewModel.usrLeaveResponse.observe(this, Observer {
             loading.hide()
-            errorMessage.visibility=View.GONE
-            srl_home.isRefreshing=false
-            val output = it
-            output.indices.forEach { index: Int ->
+            errorMessage.visibility = View.GONE
+            srl_home.isRefreshing = false
+            leave.clear()
+            for (userLeave in it) {
                 leave.add(
                     Leave(
-                        leave[index].name,
-                        leave[index].image,
-                        leave[index].department,
-                        leave[index].leave_type,
-                        leave[index].half_day
+                        userLeave.image,
+                        userLeave.name,
+                        userLeave.department,
+                        userLeave.leave_type,
+                        userLeave.half_day
                     )
                 )
             }
             if (leave.size < 1) {
-                Log.d("size", "Size is zero")
+                Log.d("size1", "Size is zero")
                 recycler_card_leave.visibility = View.GONE
             } else {
                 Log.d("size", "there is data")
@@ -122,50 +123,44 @@ class HomeFragment : Fragment() {
             }
         })
         //birthday recycler view
-        birthday.clear()
         homeViewModel.birthdayResponse.observe(this, Observer {
-            errorMessage.visibility=View.GONE
-            val output = it
-            output.indices.forEach { index: Int ->
+            errorMessage.visibility = View.GONE
+            birthday.clear()
+            for (userBirthday in it) {
                 birthday.add(
                     Birthday(
-                        birthday[index].full_name,
-                        birthday[index].image,
-                        birthday[index].department
+                        userBirthday.full_name,
+                        userBirthday.image,
+                        userBirthday.department
                     )
                 )
             }
-            if (leave.size < 1) {
-                Log.d("size", "Size is zero")
-                recycler_card_birthday.visibility = View.GONE
-            } else {
-                Log.d("size", "there is data")
+            if(birthday.size < 0){
+                recycler_card_birthday.visibility=View.GONE
+            }else{
                 val birthdayAdapter = BirthdayAdapter(birthday)
                 recycler_card_birthday.adapter = birthdayAdapter
             }
+
         })
 
         //holiday recycler view
-        holiday.clear()
         homeViewModel.holidayResponse.observe(this, Observer {
-            errorMessage.visibility=View.GONE
-            val output = it
-            output.indices.forEach { index: Int ->
-                val holidays = output.sortedWith(CompareHolidays)
+            errorMessage.visibility = View.GONE
+            holiday.clear()
+            for (publicHolidays in it) {
                 holiday.add(
                     Holiday(
-                        holidays[index].title,
-                        holidays[index].date,
-                        holidays[index].days,
-                        holidays[index].image
+                        publicHolidays.title,
+                        publicHolidays.date,
+                        publicHolidays.days,
+                        publicHolidays.image
                     )
                 )
             }
-            if (leave.size < 1) {
-                Log.d("size", "Size is zero")
-                recycler_public_holidays.visibility = View.GONE
-            } else {
-                Log.d("size", "there is data")
+            if(holiday.size < 0){
+                recycler_public_holidays.visibility=View.GONE
+            }else{
                 val holidayAdapter = HolidayAdapter(holiday)
                 recycler_public_holidays.adapter = holidayAdapter
             }
@@ -174,9 +169,9 @@ class HomeFragment : Fragment() {
         //update UI with error message
         homeViewModel.errorResponse.observe(this, Observer {
             loading.hide()
-            srl_home.isRefreshing=false
-            errorMessage.visibility=View.VISIBLE
-            errorMessage.text=it
+            srl_home.isRefreshing = false
+            errorMessage.visibility = View.VISIBLE
+            errorMessage.text = it
         })
     }
 

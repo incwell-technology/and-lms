@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
             android:name=".App"
@@ -27,7 +28,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                        android:host="192.168.1.101"
+                        android:host="192.168.1.100"
                         android:pathPrefix="/v1"
                         android:port="8000"
                         android:scheme="http"/>
@@ -35,9 +36,10 @@
         </activity>
         <activity android:name=".ui.reset.ResetActivity">
         </activity>
-        <activity android:name=".ui.compensation.CompensationActivity">
+        <activity android:name=".ui.compensation.CompensationActivity" android:label="Apply Compensation">
         </activity>
-        <activity android:name=".ui.employee.EmployeeActivity">
+        <activity android:name=".ui.employee.EmployeeActivity" android:label="Employee">
+
         </activity>
         <activity
                 android:name=".ui.home.DashboardActivity"
@@ -51,7 +53,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.leave.LeaveActivity"/>
+        <activity android:name=".ui.leave.LeaveActivity" android:label="Apply Leave"/>
 
         <service
                 android:name=".firebase.FirebaseService"

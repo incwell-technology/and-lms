@@ -2,18 +2,14 @@ package com.incwelltechnology.lms.data.network
 
 import com.incwelltechnology.lms.AppConstants
 import com.incwelltechnology.lms.data.model.*
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface LmsApi {
-    @POST("login")
-    suspend fun userLogin(@Body login: LoginRequest): Response<BaseResponse<User>>
 
     @GET("leaves")
     suspend fun getLeaveToday(): Response<BaseResponse<List<Leave>>>
@@ -34,14 +30,12 @@ interface LmsApi {
     @POST("compensation/create")
     suspend fun createCompensation(@Body compensationApply: Compensation): Response<BaseResponse<Compensation>>
 
-    @POST("users/password-reset")
-    suspend fun verifyEmail(@Body resetPassword: Email):Response<BaseResponse<Email>>
-
-    @GET("users/reset/{link}")
-    suspend fun checkLink(@Path("link") link:String):Response<BaseResponse<Link>>
-
-    @POST("users/password-reset-done/{userId}")
-    suspend fun changePassword(@Path("userId") userId:Int,@Body newPass:Password):Response<BaseResponse<Password>>
+    @Multipart
+    @POST("users/change-photo/{userId}")
+    suspend fun changeProfilePicture(
+        @Path("userId") userId: Int,
+        @Part image: MultipartBody.Part
+    ):Response<BaseResponse<ProfileImage>>
 
 
     companion object {

@@ -14,13 +14,13 @@
 
     <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_marginTop="@dimen/dimen_8x5"
-            android:layout_width="@dimen/dimen_10x10"
-            android:layout_height="@dimen/dimen_10x10"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_gravity="center"
             android:contentDescription="@string/nav_header_desc"
             android:id="@+id/nav_user_image"
             app:civ_border_color="@color/colorAccentVariant"
-            app:civ_border_width="@dimen/dimen_5x2"
+            app:civ_border_width="@dimen/dimen_4"
             app:civ_shadow="true"
             app:civ_shadow_radius="5"
             app:civ_shadow_color="@color/colorText"/>

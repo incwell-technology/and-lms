@@ -24,6 +24,7 @@ import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.show
 import kotlinx.android.synthetic.main.activity_employee.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -44,6 +45,13 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //custom toolbar
+        setSupportActionBar(custom_toolbar)
+        custom_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        custom_toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
         callIcon = ContextCompat.getDrawable(this, R.drawable.ic_phone_black_24dp)!!
         messageIcon = ContextCompat.getDrawable(this, R.drawable.ic_email_black_24dp)!!
@@ -151,6 +159,7 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
         employeeViewModel.loadEmployee()
         employeeViewModel.employeeResponse.observe(this, Observer {
             pb_emp.hide()
+            search_employee.visibility=View.VISIBLE
             tv_emp_err.visibility= View.GONE
             srl_employee.isRefreshing=false
             val output = it
@@ -176,6 +185,7 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
         //update UI with error message
         employeeViewModel.errorResponse.observe(this, Observer {
             pb_emp.hide()
+            search_employee.visibility=View.GONE
             srl_employee.isRefreshing=false
             tv_emp_err.visibility= View.VISIBLE
             tv_emp_err.text=it

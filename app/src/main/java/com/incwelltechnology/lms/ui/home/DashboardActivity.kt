@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.material.navigation.NavigationView
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityDashboardBinding
@@ -83,16 +82,8 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            val manager: FragmentManager = supportFragmentManager
-            val navView: NavigationView = findViewById(R.id.nav_view)
-            if (manager.backStackEntryCount > 0) {
-                super.onBackPressed()
-                val currentFragment = manager.findFragmentById(R.id.replaceFragments)
-                navView.menu.getItem(0).isChecked = currentFragment is HomeFragment
-                toolbar.title="Home"
-            }else{
-                this.finish()
-            }
+            super.onBackPressed()
+            toolbar.title="Home"
         }
     }
 

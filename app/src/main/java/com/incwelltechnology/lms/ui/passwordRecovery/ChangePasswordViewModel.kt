@@ -16,11 +16,11 @@ class ChangePasswordViewModel(private val changePasswordRepository: ChangePasswo
 
     var newPass:String ?=null
     var confirmPass:String ?= null
-
     var linkFromMail: String? = null
+
     fun getLink(link: String) {
         linkFromMail = link
-        Log.d("data2",linkFromMail)
+        Log.d("data2",linkFromMail!!)
     }
 
     fun passLink() {

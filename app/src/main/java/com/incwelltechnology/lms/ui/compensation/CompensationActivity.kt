@@ -10,7 +10,9 @@ import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.snack
 import kotlinx.android.synthetic.main.activity_compensation.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class CompensationActivity : BaseActivity<ActivityCompensationBinding>() {
 
@@ -19,6 +21,13 @@ class CompensationActivity : BaseActivity<ActivityCompensationBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.dataBinding.cvm = compensationViewModel
+
+        //custom toolbar
+        setSupportActionBar(custom_toolbar)
+        custom_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        custom_toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
         apply_compensation.setOnClickListener {
             when {
@@ -49,6 +58,6 @@ class CompensationActivity : BaseActivity<ActivityCompensationBinding>() {
 
     override fun getLayout(): Int {
         return R.layout.activity_compensation
-
     }
+
 }
