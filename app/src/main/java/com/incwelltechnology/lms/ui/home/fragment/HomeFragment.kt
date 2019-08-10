@@ -1,6 +1,5 @@
 package com.incwelltechnology.lms.ui.home.fragment
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -30,7 +29,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment() {
     private val authViewModel: AuthViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
-
     private var leave = ArrayList<Leave>()
     private var birthday = ArrayList<Birthday>()
     private var holiday = ArrayList<Holiday>()
@@ -44,7 +42,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -58,7 +55,7 @@ class HomeFragment : Fragment() {
 
         //bind data from viewmodel to activity UI
         bindUI()
-
+        //on pull down refresh the content
         srl_home.setOnRefreshListener {
             bindUI()
         }
@@ -78,7 +75,7 @@ class HomeFragment : Fragment() {
             R.id.action_logout -> {
                 authViewModel.onLogoutButtonClicked()
                 val intent = Intent(context, LoginActivity::class.java)
-                Log.d("context","$context")
+                Log.d("context", "$context")
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 activity!!.finish()
@@ -90,17 +87,20 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val navView: NavigationView = activity!!.findViewById(R.id.nav_view)
+        //sets the first item of navigation menu always higlighted on resume
         navView.menu.getItem(0).isChecked = true
     }
 
     private fun bindUI() {
-        loading.show()
+        pb_dashboard_loading.show()
+        //call function to load data from HomeViewModel
         homeViewModel.loadData()
         //user at leave recycler view
         homeViewModel.usrLeaveResponse.observe(this, Observer {
-            loading.hide()
-            errorMessage.visibility = View.GONE
+            tv_error_message.visibility = View.GONE
+            pb_dashboard_loading.hide()
             srl_home.isRefreshing = false
+            //clear the ArrayList to prevent duplicate same items
             leave.clear()
             for (userLeave in it) {
                 leave.add(
@@ -124,7 +124,6 @@ class HomeFragment : Fragment() {
         })
         //birthday recycler view
         homeViewModel.birthdayResponse.observe(this, Observer {
-            errorMessage.visibility = View.GONE
             birthday.clear()
             for (userBirthday in it) {
                 birthday.add(
@@ -135,18 +134,15 @@ class HomeFragment : Fragment() {
                     )
                 )
             }
-            if(birthday.size < 0){
-                recycler_card_birthday.visibility=View.GONE
-            }else{
+            if (birthday.size < 0) {
+                recycler_card_birthday.visibility = View.GONE
+            } else {
                 val birthdayAdapter = BirthdayAdapter(birthday)
                 recycler_card_birthday.adapter = birthdayAdapter
             }
-
         })
-
         //holiday recycler view
         homeViewModel.holidayResponse.observe(this, Observer {
-            errorMessage.visibility = View.GONE
             holiday.clear()
             for (publicHolidays in it) {
                 holiday.add(
@@ -158,22 +154,19 @@ class HomeFragment : Fragment() {
                     )
                 )
             }
-            if(holiday.size < 0){
-                recycler_public_holidays.visibility=View.GONE
-            }else{
+            if (holiday.size < 0) {
+                recycler_public_holidays.visibility = View.GONE
+            } else {
                 val holidayAdapter = HolidayAdapter(holiday)
                 recycler_public_holidays.adapter = holidayAdapter
             }
         })
-
-        //update UI with error message
+        //update UI when error occurs with error message
         homeViewModel.errorResponse.observe(this, Observer {
-            loading.hide()
+            pb_dashboard_loading.hide()
             srl_home.isRefreshing = false
-            errorMessage.visibility = View.VISIBLE
-            errorMessage.text = it
+            tv_error_message.visibility = View.VISIBLE
+            tv_error_message.text = it
         })
     }
-
-
 }

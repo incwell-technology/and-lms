@@ -75,3 +75,4 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
         userRepository.deleteCredential(key)
     }
 }
+

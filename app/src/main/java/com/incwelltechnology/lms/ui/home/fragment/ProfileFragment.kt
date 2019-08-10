@@ -1,13 +1,11 @@
 package com.incwelltechnology.lms.ui.home.fragment
 
-
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +31,6 @@ import java.util.*
 class ProfileFragment : Fragment() {
     private lateinit var birthDate: String
     private lateinit var joinedDate: String
-
     private val authViewModel: AuthViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
 
@@ -55,17 +52,22 @@ class ProfileFragment : Fragment() {
         annual_leave.progress = "${authViewModel.user!!.annual_leaves}".toFloat()
         compensation_leave.progress = "${authViewModel.user!!.compensation_leaves}".toFloat()
         sick_leave.progress = "${authViewModel.user!!.sick_leaves}".toFloat()
+
         user_name.text = authViewModel.user!!.full_name
         phone_number.text = authViewModel.user!!.phone_number
         email.text = authViewModel.user!!.email
         date_of_birth.text = dateFormatter(birthDate)
         joined_date.text = dateFormatter(joinedDate)
         leave_issuer.text = authViewModel.user!!.leave_issuer
-        Picasso.get()
-            .load(authViewModel.user!!.image)
-            .placeholder(com.incwelltechnology.lms.R.drawable.logo1)
-            .error(com.incwelltechnology.lms.R.drawable.logo1)
-            .into(user_image)
+        //live data to observe change in profile picture
+        homeViewModel.usrProImage.observe(this, androidx.lifecycle.Observer {
+            Picasso.get()
+                .load(it)
+                .placeholder(com.incwelltechnology.lms.R.drawable.logo1)
+                .error(com.incwelltechnology.lms.R.drawable.logo1)
+                .into(user_image)
+        })
+
 
         edit_photo.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -104,14 +106,12 @@ class ProfileFragment : Fragment() {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // permission was granted
                     changeDp()
-
                 } else {
                     Toast.makeText(context, "Permission Denied", Toast.LENGTH_LONG).show()
                 }
                 return
             }
             else -> {
-
             }
         }
     }
@@ -119,18 +119,21 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == AppConstants.IMAGEPICK_CODE && data != null && data.data != null) {
             val uri = data.data
-            val fileActualPath=getRealPathFromURI(context!!,uri!!)
-            val file=File(fileActualPath)
+            val fileActualPath = getRealPathFromURI(context!!, uri!!) //retrieve actual path of data from uri
+            val file = File(fileActualPath) //build object from actual path
             // create RequestBody instance from file
             val requestFile = RequestBody.create(
-                MediaType.parse(context!!.contentResolver.getType(uri)!!), file)
-            val multipartBody=MultipartBody.Part.createFormData("image",file.name,requestFile)
-            homeViewModel.uploadProfile(multipartBody,authViewModel.user!!.id)
-            Log.d("img", "$file")
+                MediaType.parse(context!!.contentResolver.getType(uri)!!), file
+            )
+            //Build multipartbody from request body
+            val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
+            //call 'uploadProfile()' from homeViewModel and pass necessary parameters
+            homeViewModel.uploadProfile(multipartBody, authViewModel.user!!.id)
         }
     }
 
-    fun changeDp() {
+    //function to change profile picture
+    private fun changeDp() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, AppConstants.IMAGEPICK_CODE)

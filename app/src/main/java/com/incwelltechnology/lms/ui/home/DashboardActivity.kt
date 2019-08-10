@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityDashboardBinding
@@ -55,11 +56,15 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         v.findViewById<TextView>(R.id.nav_user_name).text = authViewModel.user?.full_name
         v.findViewById<TextView>(R.id.nav_user_email).text = authViewModel.user?.email
         val image = v.findViewById<CircularImageView>(R.id.nav_user_image)
-        Picasso.get()
-            .load(authViewModel.user?.image)
-            .placeholder(R.drawable.logo1)
-            .error(R.drawable.logo1)
-            .into(image)
+
+        homeViewModel.usrProImage.observe(this, Observer {
+            Picasso.get()
+                .load(it)
+                .placeholder(R.drawable.logo1)
+                .error(R.drawable.logo1)
+                .into(image)
+        })
+
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
