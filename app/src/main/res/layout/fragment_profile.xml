@@ -94,7 +94,7 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Annual Leave"
+                        android:text="@string/annual_leave"
                         android:gravity="center"
                         android:textColor="@color/colorTextSecondary"/>
             </LinearLayout>
@@ -120,7 +120,7 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Sick Leave"
+                        android:text="@string/sick_leave"
                         android:gravity="center"
                         android:textColor="@color/colorTextSecondary"/>
             </LinearLayout>
@@ -146,7 +146,7 @@
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Compensation"
+                        android:text="@string/compensation"
                         android:gravity="center"
                         android:textColor="@color/colorTextSecondary"/>
             </LinearLayout>

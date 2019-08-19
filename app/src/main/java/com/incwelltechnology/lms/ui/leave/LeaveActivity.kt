@@ -15,9 +15,7 @@ import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityLeaveBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.home.fragment.DatePickerFragment
-import com.incwelltechnology.lms.util.hide
-import com.incwelltechnology.lms.util.show
-import com.incwelltechnology.lms.util.snack
+import com.incwelltechnology.lms.util.*
 import kotlinx.android.synthetic.main.activity_leave.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -96,6 +94,11 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
                 }
             }
         }
+        //hide error Hint once text field is filled
+        hideErrorHint(start_date,layout_start_date)
+        hideErrorHint(end_date,layout_end_date)
+        hideErrorHintAutoCompleteTextView(type_of_leave_dropdown,layout_type_of_leave)
+        hideErrorHint(reason,layout_leave_reason)
     }
 
     fun onRadioButtonClicked(view: View) {
@@ -129,7 +132,7 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 //        val currentDate = DateFormat.getDateInstance().format(calendar.time)
-        val currentDate = "$year-$month-$dayOfMonth"
+        val currentDate = "$year-${month+1}-$dayOfMonth"
         if (tagNumber == 0) {
             start_date.text = Editable.Factory.getInstance().newEditable(currentDate)
         } else {

@@ -4,8 +4,10 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -40,5 +42,21 @@ fun hideErrorHint(textInputEditText: TextInputEditText,textInputLayout: TextInpu
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             textInputLayout.error = null
         }
+    })
+}
+
+fun hideErrorHintAutoCompleteTextView(autoCompleteTextView: AutoCompleteTextView,textInputLayout: TextInputLayout){
+    autoCompleteTextView.addTextChangedListener(object : TextWatcher{
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            textInputLayout.error = null
+        }
+
     })
 }

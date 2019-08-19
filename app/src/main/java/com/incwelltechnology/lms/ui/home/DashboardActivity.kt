@@ -13,7 +13,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
+import com.incwelltechnology.lms.AppConstants
 import com.incwelltechnology.lms.R
+import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.databinding.ActivityDashboardBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.auth.AuthViewModel
@@ -23,8 +25,11 @@ import com.incwelltechnology.lms.ui.home.fragment.HomeFragment
 import com.incwelltechnology.lms.ui.home.fragment.ProfileFragment
 import com.incwelltechnology.lms.ui.leave.LeaveActivity
 import com.mikhaellopez.circularimageview.CircularImageView
+import com.orhanobut.hawk.Hawk
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.app_bar_dashboard.*
+import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.nav_header_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationView.OnNavigationItemSelectedListener {
@@ -57,13 +62,11 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         v.findViewById<TextView>(R.id.nav_user_email).text = authViewModel.user?.email
         val image = v.findViewById<CircularImageView>(R.id.nav_user_image)
 
-        homeViewModel.usrProImage.observe(this, Observer {
-            Picasso.get()
-                .load(it)
-                .placeholder(R.drawable.logo1)
-                .error(R.drawable.logo1)
-                .into(image)
-        })
+        Picasso.get()
+            .load(authViewModel.user!!.image)
+            .placeholder(R.drawable.logo1)
+            .error(R.drawable.logo1)
+            .into(image)
 
 
         val toggle = ActionBarDrawerToggle(
@@ -74,21 +77,19 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
-        navView.menu.getItem(0).isChecked=true
+        navView.menu.getItem(0).isChecked = true
     }
 
     override fun getLayout(): Int {
         return R.layout.activity_dashboard
     }
-
-
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
-            toolbar.title="Home"
+            toolbar.title = "Home"
         }
     }
 
@@ -96,15 +97,15 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_home ->{
+            R.id.nav_home -> {
                 replaceFragment(HomeFragment(), false, "HomeFragment")
-                item.isChecked=true
+                item.isChecked = true
                 toolbar.title = "Home"
             }
 
             R.id.nav_my_profile -> {
                 replaceFragment(ProfileFragment(), true, "ProfileFragment")
-                item.isChecked=true
+                item.isChecked = true
                 toolbar.title = "My Profile"
 
             }

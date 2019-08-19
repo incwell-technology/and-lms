@@ -37,6 +37,9 @@ interface LmsApi {
         @Part image: MultipartBody.Part
     ):Response<BaseResponse<ProfileImage>>
 
+    @GET("notifications")
+    suspend fun getNotifications():Response<BaseResponse<List<Notifications>>>
+
 
     companion object {
         operator fun invoke(userTokenInterceptor: UserTokenInterceptor,networkConnectionInterceptor: NetworkConnectionInterceptor): LmsApi {

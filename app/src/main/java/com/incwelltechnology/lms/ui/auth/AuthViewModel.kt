@@ -8,6 +8,7 @@ import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.data.repository.UserRepository
 import com.incwelltechnology.lms.util.Coroutine
 import com.incwelltechnology.lms.util.NoInternetException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -65,6 +66,10 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
                     authListener?.onFailure(
                         AppConstants.OTHER_CASE,
                         "Something went wrong! Please try again later."
+                    )
+                } catch (e:ConnectException){
+                    authListener?.onFailure(
+                        AppConstants.OTHER_CASE, "Something went wrong! Please try again later."
                     )
                 }
             }

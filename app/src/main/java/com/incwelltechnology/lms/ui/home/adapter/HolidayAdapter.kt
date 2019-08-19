@@ -27,7 +27,7 @@ class HolidayAdapter(private val holidayList: ArrayList<Holiday>): RecyclerView.
         //convert string to date and format
         val dateInString = holidayList[position].date
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(dateInString)
-        festivalDate = DateFormat.getDateInstance(DateFormat.FULL).format(formatter)
+        festivalDate = DateFormat.getDateInstance(DateFormat.FULL).format(formatter!!)
 
         val holidayList = holidayList[position]
         holder.setData(holidayList)
