@@ -101,5 +101,8 @@ dependencies {
     implementation 'com.github.kalaganov:circularprogressview:1.0.16'
 
     //Cloud Messaging Android library
-    implementation 'com.google.firebase:firebase-messaging:19.0.1'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+
+    //for cropping image
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 }

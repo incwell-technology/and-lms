@@ -19,8 +19,8 @@
                 app:srcCompat="@drawable/ic_bell"
                 android:id="@+id/notificationBadge"/>
         <TextView
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_alignTop="@+id/notificationBadge"
                 android:layout_alignEnd="@+id/notificationBadge"
                 android:background="@drawable/badge"

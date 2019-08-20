@@ -39,7 +39,7 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
             finish()
         }
 
-        val type = arrayOf("Annual Leave", "Sick Leave", "Compensation Activity Leave", "Unpaid Leave")
+        val type = arrayOf("Annual Leave", "Sick Leave", "Compensation Leave", "Unpaid Leave")
         dropDown(this, type, type_of_leave_dropdown)
 
         start_date.setOnClickListener {

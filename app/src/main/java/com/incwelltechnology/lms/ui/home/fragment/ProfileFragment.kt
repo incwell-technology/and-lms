@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -34,6 +35,16 @@ class ProfileFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+    //hide menu items declared in activity
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +81,7 @@ class ProfileFragment : Fragment() {
                 .into(user_image)
 
             authViewModel.user!!.image = it
-            Hawk.put(AppConstants.key,authViewModel.user)
+            Hawk.put(AppConstants.key, authViewModel.user)
         })
 
         edit_photo.setOnClickListener {
@@ -132,9 +143,7 @@ class ProfileFragment : Fragment() {
             val fileActualPath = getRealPathFromURI(context!!, uri!!) //retrieve actual path of data from uri
             val file = File(fileActualPath) //build object from actual path
             // create RequestBody instance from file
-            val requestFile = RequestBody.create(
-                MediaType.parse(context!!.contentResolver.getType(uri)!!), file
-            )
+            val requestFile = RequestBody.create(MediaType.parse(context!!.contentResolver.getType(uri)!!), file)
             //Build multi-part body from request body
             val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
             //call 'uploadProfile()' from homeViewModel and pass necessary parameters

@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                        android:host="192.168.1.101"
+                        android:host="192.168.1.102"
                         android:pathPrefix="/v1"
                         android:port="8000"
                         android:scheme="http"/>
@@ -63,6 +63,9 @@
         <activity
                 android:name=".ui.leave.LeaveActivity"
                 android:label="Apply Leave"/>
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                  android:theme="@style/Base.Theme.AppCompat"/>
 
         <service
                 android:name=".firebase.FirebaseService"

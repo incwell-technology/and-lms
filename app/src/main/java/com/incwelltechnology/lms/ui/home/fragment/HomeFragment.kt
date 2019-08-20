@@ -1,83 +1,39 @@
 package com.incwelltechnology.lms.ui.home.fragment
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.GridLayout
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.incwelltechnology.lms.AppConstants
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.data.model.Birthday
 import com.incwelltechnology.lms.data.model.Holiday
 import com.incwelltechnology.lms.data.model.Leave
 import com.incwelltechnology.lms.ui.auth.AuthViewModel
-import com.incwelltechnology.lms.ui.auth.LoginActivity
 import com.incwelltechnology.lms.ui.home.HomeViewModel
-import com.incwelltechnology.lms.ui.home.NotificationActivity
 import com.incwelltechnology.lms.ui.home.adapter.BirthdayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.HolidayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.LeaveAdapter
 import com.incwelltechnology.lms.util.CompareHolidays
 import com.incwelltechnology.lms.util.hide
 import com.incwelltechnology.lms.util.show
-import com.incwelltechnology.lms.util.toast
-import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.notification_badge.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : Fragment() {
-    private lateinit var image: ImageView
-    private lateinit var txtCounter: TextView
-
-    private var status:Boolean = false
-    private var newNotification:Boolean = false
-
     private val authViewModel: AuthViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
 
     private var leave = ArrayList<Leave>()
     private var birthday = ArrayList<Birthday>()
     private var holiday = ArrayList<Holiday>()
-
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            try {
-                val extras = intent.extras
-                val state = extras?.getBoolean(AppConstants.key)
-                status = if (state!!) {
-                    txtCounter.visibility = View.VISIBLE
-                    true
-
-                } else {
-                    false
-                }
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -100,51 +56,6 @@ class HomeFragment : Fragment() {
         srl_home.setOnRefreshListener {
             bindUI()
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.dashboard, menu)
-        //allows image of menu actionLayout attribute to be clicked
-        val menuItem: MenuItem = menu.findItem(R.id.action_notification)
-        if (menuItem.actionView != null) {
-            image = menuItem.actionView.findViewById(R.id.notificationBadge)
-            txtCounter = menuItem.actionView.findViewById(R.id.txtCount)
-        }
-        image.setOnClickListener {
-            displayNotificationStack()
-            txtCounter.visibility = View.GONE
-            Hawk.delete(AppConstants.NOTIFICATION_KEY)
-        }
-        if (Hawk.contains(AppConstants.NOTIFICATION_KEY)) {
-            newNotification = Hawk.get(AppConstants.NOTIFICATION_KEY)
-            if(newNotification){
-                setNotification()
-            }
-        }
-        super.onCreateOptionsMenu(menu, menuInflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> {
-                context!!.toast("Setting")
-            }
-            R.id.action_logout -> {
-                authViewModel.onLogoutButtonClicked()
-                val intent = Intent(context, LoginActivity::class.java)
-                Log.d("context", "$context")
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                activity!!.finish()
-            }
-        }
-        return true
-    }
-
-    override fun onStart() {
-        super.onStart()
-        LocalBroadcastManager.getInstance(context!!).registerReceiver(receiver, IntentFilter(AppConstants.NOTIFICATION_STATE))
     }
 
     override fun onResume() {
@@ -232,14 +143,5 @@ class HomeFragment : Fragment() {
             tv_error_message.visibility = View.VISIBLE
             tv_error_message.text = it
         })
-    }
-
-    private fun displayNotificationStack() {
-        val intent = Intent(context, NotificationActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun setNotification(){
-        txtCounter.visibility=View.VISIBLE
     }
 }
