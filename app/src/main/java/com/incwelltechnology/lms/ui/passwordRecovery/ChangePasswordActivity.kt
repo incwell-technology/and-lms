@@ -18,8 +18,6 @@ import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-
 class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
     private val changePasswordViewModel: ChangePasswordViewModel by viewModel()
 
@@ -39,29 +37,31 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
         //calling function that passes link to repo
         changePasswordViewModel.passLink()
 
-        val dataFromUrl: LiveData<Int> = changePasswordViewModel.userId
-        dataFromUrl.observe(this, Observer {
-            Log.d("data1", "${dataFromUrl.value}")
-//            val userIdObtained=dataFromUrl.value
+        changePasswordViewModel.userId.observe(this, Observer {
             changePasswordBtn.setOnClickListener {
                 when {
                     changePasswordViewModel.newPass.isNullOrEmpty() -> {
-
+                        til_new_password.error = "Password Field is Empty"
+                        til_new_password.requestFocus()
                     }
                     changePasswordViewModel.confirmPass.isNullOrEmpty() -> {
-
+                        til_confirm_password.error = "Password Field is Empty"
+                        til_confirm_password.requestFocus()
+                    }
+                    changePasswordViewModel.newPass != changePasswordViewModel.confirmPass -> {
+                        changePasswordBtn.snack("Passwords do not match!")
                     }
                     else -> {
                         p.show()
                         changePasswordViewModel.onChangePassBtnClick()
-                        val status: LiveData<String> = changePasswordViewModel.res
-                        status.observe(this, Observer {
+                        changePasswordViewModel.res.observe(this, Observer {
                             p.hide()
-                            changePasswordBtn.snack(status.value!!)
+                            changePasswordBtn.snack(it)
                             Coroutine.io {
                                 delay(2000L)
                                 val intent = Intent(this, LoginActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
                                 this.finish()
                             }

@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
+
     //hide menu items declared in activity
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
@@ -140,10 +141,12 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == AppConstants.IMAGE_CODE && data != null && data.data != null) {
             val uri = data.data
-            val fileActualPath = getRealPathFromURI(context!!, uri!!) //retrieve actual path of data from uri
+            val fileActualPath =
+                getRealPathFromURI(context!!, uri!!) //retrieve actual path of data from uri
             val file = File(fileActualPath) //build object from actual path
             // create RequestBody instance from file
-            val requestFile = RequestBody.create(MediaType.parse(context!!.contentResolver.getType(uri)!!), file)
+            val requestFile =
+                RequestBody.create(MediaType.parse(context!!.contentResolver.getType(uri)!!), file)
             //Build multi-part body from request body
             val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
             //call 'uploadProfile()' from homeViewModel and pass necessary parameters

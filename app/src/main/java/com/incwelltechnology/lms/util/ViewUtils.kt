@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -11,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.incwelltechnology.lms.R
 
 fun Context.toast(message:String){
     Toast.makeText(this,message, Toast.LENGTH_LONG).show()
@@ -59,4 +61,8 @@ fun hideErrorHintAutoCompleteTextView(autoCompleteTextView: AutoCompleteTextView
         }
 
     })
+}
+
+fun dropDown(context: Context, objects: Array<String>, id: AutoCompleteTextView) {
+    id.setAdapter(ArrayAdapter(context, R.layout.dropdown_menu_popup_item, objects))
 }

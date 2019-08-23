@@ -1,5 +1,7 @@
 package com.incwelltechnology.lms.ui.reset
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.incwelltechnology.lms.data.repository.ResetRepository
@@ -11,40 +13,46 @@ import java.lang.reflect.UndeclaredThrowableException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
-class ResetViewModel(private val resetRepository: ResetRepository) :ViewModel() {
+class ResetViewModel(private val resetRepository: ResetRepository) : ViewModel() {
 
-    var message:MutableLiveData<String> = MutableLiveData()
-    var verifiedEmailAddress:String ?= null
+    var verifiedEmailAddress: String? = null
 
-    fun onSubmitBtnClick(){
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String>
+        get() = _message
+
+    fun onSubmitBtnClick() {
         Coroutine.io {
             try {
-                val emailResponse=resetRepository.submitEmail(verifiedEmailAddress!!)
-                if(emailResponse.body()!!.status){
-                    withContext(Dispatchers.Main){
-                        message.value="Check your email for password reset link!"
+                val emailResponse = resetRepository.submitEmail(verifiedEmailAddress!!)
+                Log.d("emailResponse", "$emailResponse")
+                when {
+                    emailResponse.body()?.status == true -> withContext(Dispatchers.Main) {
+                        _message.value = "Check your email for password reset link!"
                     }
-                }else{
-                    withContext(Dispatchers.Main){
-                        message.value="Something went wrong!"
+                    emailResponse.body()?.status == false -> withContext(Dispatchers.Main) {
+                        _message.value = "Invalid Email Address!"
+                    }
+                    else -> withContext(Dispatchers.Main) {
+                        _message.value = "Something went wrong!"
                     }
                 }
-            }catch (e: NoInternetException) {
+            } catch (e: NoInternetException) {
                 withContext(Dispatchers.Main) {
-                    message.value = "No Internet Connection!"
+                    _message.value = "No Internet Connection!"
                 }
 
             } catch (e: SocketTimeoutException) {
                 withContext(Dispatchers.Main) {
-                    message.value = "Something went wrong!"
+                    _message.value = "Something went wrong!"
                 }
             } catch (e: UndeclaredThrowableException) {
                 withContext(Dispatchers.Main) {
-                    message.value = "No Internet Connection!"
+                    _message.value = "No Internet Connection!"
                 }
-            }catch (e: ConnectException){
+            } catch (e: ConnectException) {
                 withContext(Dispatchers.Main) {
-                    message.value = "Something went wrong!"
+                    _message.value = "Something went wrong!"
                 }
             }
         }

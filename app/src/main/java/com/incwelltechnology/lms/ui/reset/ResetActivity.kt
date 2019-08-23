@@ -10,6 +10,7 @@ import com.incwelltechnology.lms.databinding.ActivityResetBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.auth.LoginActivity
 import com.incwelltechnology.lms.util.hide
+import com.incwelltechnology.lms.util.hideErrorHint
 import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.snack
 import kotlinx.android.synthetic.main.activity_reset.*
@@ -34,10 +35,9 @@ class ResetActivity : BaseActivity<ActivityResetBinding>(){
                 else ->{
                     cpb.show()
                     resetViewModel.onSubmitBtnClick()
-                    val mail:LiveData<String> =  resetViewModel.message
-                    mail.observe(this, Observer {
+                    resetViewModel.message.observe(this, Observer {
                         cpb.hide()
-                        verifyEmailBtn.snack("${mail.value}")
+                        verifyEmailBtn.snack(it)
                         verifiedEmail.text?.clear()
                     })
                 }
@@ -59,5 +59,7 @@ class ResetActivity : BaseActivity<ActivityResetBinding>(){
             intent.flags= FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
+
+        hideErrorHint(verifiedEmail,til_email)
     }
 }

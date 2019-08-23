@@ -4,6 +4,8 @@ import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -34,8 +36,8 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
     private lateinit var messageIcon: Drawable
     private lateinit var callIcon: Drawable
     private lateinit var phoneNumber: String
-//    private var swipeBackgroundColorRight: ColorDrawable = ColorDrawable(Color.parseColor("#E0E0E0"))
-//    private var swipeBackgroundColorLeft: ColorDrawable = ColorDrawable(Color.parseColor("#E0E0E0"))
+    private var swipeBackgroundColorRight: ColorDrawable = ColorDrawable(Color.parseColor("#3bbedb"))
+    private var swipeBackgroundColorLeft: ColorDrawable = ColorDrawable(Color.parseColor("#3bbedb"))
     var employee = ArrayList<Employee>()
     private val employeeViewModel: EmployeeViewModel by viewModel()
 
@@ -45,7 +47,6 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //custom toolbar
         setSupportActionBar(custom_toolbar)
         custom_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
@@ -53,7 +54,7 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
             finish()
         }
 
-        callIcon = ContextCompat.getDrawable(this, R.drawable.ic_phone_black_24dp)!!
+        callIcon = ContextCompat.getDrawable(this, R.drawable.ic_call)!!
         messageIcon = ContextCompat.getDrawable(this, R.drawable.ic_email_black_24dp)!!
 
         val layoutManager = LinearLayoutManager(this)
@@ -62,10 +63,6 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
 
         bindUI()
 
-        //swipe down to re-load data
-        srl_employee.setOnRefreshListener {
-            bindUI()
-        }
 
         search_employee.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -116,7 +113,7 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
                     val itemView = viewHolder.itemView
                     val iconMargin = (itemView.height - messageIcon.intrinsicHeight) / 2
                     if (dX > 0) {
-//                        swipeBackgroundColorLeft.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+                        swipeBackgroundColorLeft.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
                         messageIcon.setBounds(
                             itemView.left + iconMargin,
                             itemView.top + iconMargin,
@@ -124,12 +121,12 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
                             itemView.bottom - iconMargin
                         )
                     } else {
-//                        swipeBackgroundColorRight.setBounds(
-//                            itemView.right + dX.toInt(),
-//                            itemView.top,
-//                            itemView.right,
-//                            itemView.bottom
-//                        )
+                        swipeBackgroundColorRight.setBounds(
+                            itemView.right + dX.toInt(),
+                            itemView.top,
+                            itemView.right,
+                            itemView.bottom
+                        )
                         callIcon.setBounds(
                             itemView.right - iconMargin - callIcon.intrinsicWidth,
                             itemView.top + iconMargin,
@@ -137,8 +134,8 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
                             itemView.bottom - iconMargin
                         )
                     }
-//                    swipeBackgroundColorLeft.draw(c)
-//                    swipeBackgroundColorRight.draw(c)
+                    swipeBackgroundColorLeft.draw(c)
+                    swipeBackgroundColorRight.draw(c)
                     c.save()
                     if (dX > 0) {
                         c.clipRect(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
@@ -161,7 +158,6 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
             pb_emp.hide()
             search_employee.visibility=View.VISIBLE
             tv_emp_err.visibility= View.GONE
-            srl_employee.isRefreshing=false
             val output = it
 //          clear the list before calling this function prevents redundant data to be added in ArrayList
             employee.clear()
@@ -186,7 +182,6 @@ class EmployeeActivity : BaseActivity<ActivityEmployeeBinding>() {
         employeeViewModel.errorResponse.observe(this, Observer {
             pb_emp.hide()
             search_employee.visibility=View.GONE
-            srl_employee.isRefreshing=false
             tv_emp_err.visibility= View.VISIBLE
             tv_emp_err.text=it
         })

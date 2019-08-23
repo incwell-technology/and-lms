@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="userRegistration"
+                type="com.incwelltechnology.lms.ui.userRegistration.UserRegistrationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.userRegistration.UserRegistrationActivity">
+
+        <include
+                android:id="@+id/include"
+                layout="@layout/custom_toolbar" />
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_firstname"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/dimen_8x1"
+                android:hint="First name"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toStartOf="@+id/til_lastname"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@{userRegistration.firstName}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_lastname"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8x1"
+                android:layout_marginEnd="16dp"
+                android:hint="Last name"
+                app:errorEnabled="true"
+                app:layout_constraintBottom_toBottomOf="@+id/til_firstname"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/til_firstname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@{userRegistration.lastName}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_birthdate"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/dimen_8x1"
+                android:hint="Birth Date"
+                app:endIconDrawable="@drawable/ic_date_range"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toStartOf="@+id/til_joindate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_firstname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:text="@{userRegistration.birthDate}"
+                    android:textColor="@color/colorText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_joindate"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_8x1"
+                android:layout_marginEnd="16dp"
+                android:hint="Joined Date"
+                app:endIconDrawable="@drawable/ic_date_range"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:layout_constraintBottom_toBottomOf="@+id/til_birthdate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/til_birthdate">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/joindate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:text="@{userRegistration.joinDate}"
+                    android:textColor="@color/colorText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_phonenumber"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:hint="Phone"
+                app:endIconDrawable="@drawable/ic_call"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toStartOf="@+id/til_department"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_birthdate">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usrphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:text="@{userRegistration.phoneNumber}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_department"
+                style="@style/Widget.lms.TextInputLayout.ExposedDropdownMenu"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="Department"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/til_phonenumber"
+                app:layout_constraintTop_toBottomOf="@+id/til_joindate">
+
+            <AutoCompleteTextView
+                    android:id="@+id/usrdepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:text="@{userRegistration.userDepartment}"
+                    android:textColor="@color/colorText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_usremail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="Email Address"
+                app:endIconDrawable="@drawable/ic_email_black_24dp"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_phonenumber">
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usremail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:text="@{userRegistration.userEmail}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_username"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/hint_username"
+                app:endIconDrawable="@drawable/ic_profile"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_usremail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usrName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@{userRegistration.userName}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_userpassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/hint_password"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_username"
+                app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usrPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:text="@{userRegistration.passWord}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_register_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_usr_register"
+                app:tint="@null" />
+        <!--        android:onClick="@{userRegistration::onRegisterBtnClicked}"-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

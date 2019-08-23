@@ -23,7 +23,8 @@ class App:Application() {
                     leaveModule,
                     compensationModule,
                     passwordResetModule,
-                    changePasswordModule
+                    changePasswordModule,
+                    adminModule
                 )
             )
         }

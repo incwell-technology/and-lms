@@ -13,7 +13,10 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_employee_detail.view.*
 import kotlinx.android.synthetic.main.item_employee.view.*
 
-class EmployeeAdapter( private var employeeList:ArrayList<Employee>, private var employeeListFiltered: ArrayList<Employee>) :
+class EmployeeAdapter(
+    private var employeeList:ArrayList<Employee>,
+    private var employeeListFiltered: ArrayList<Employee>) :
+
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>(), Filterable{
 
 
@@ -86,13 +89,12 @@ class EmployeeAdapter( private var employeeList:ArrayList<Employee>, private var
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                employeeListFiltered= results?.values as ArrayList<Employee>
+                employeeListFiltered = results!!.values as ArrayList<Employee>
                 notifyDataSetChanged()
             }
 
         }
     }
-
 
     fun updateUI(){
         this.notifyDataSetChanged()

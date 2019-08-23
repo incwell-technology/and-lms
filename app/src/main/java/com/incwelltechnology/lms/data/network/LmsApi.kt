@@ -40,6 +40,12 @@ interface LmsApi {
     @GET("notifications")
     suspend fun getNotifications():Response<BaseResponse<List<Notifications>>>
 
+    @POST("create-notice")
+    suspend fun postNotice(@Body notice: Notice ):Response<BaseResponse<Notice>>
+
+    @POST("register")
+    suspend fun createUser(@Body registration: Registration): Response<BaseResponse<Registration>>
+
 
     companion object {
         operator fun invoke(userTokenInterceptor: UserTokenInterceptor,networkConnectionInterceptor: NetworkConnectionInterceptor): LmsApi {

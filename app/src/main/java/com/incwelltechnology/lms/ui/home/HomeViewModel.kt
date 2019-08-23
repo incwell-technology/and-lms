@@ -23,10 +23,21 @@ import java.net.SocketTimeoutException
 
 class HomeViewModel(private val dashboardRepository: DashboardRepository) : ViewModel() {
 
-    var usrLeaveResponse: MutableLiveData<List<Leave>> = MutableLiveData()
-    var birthdayResponse: MutableLiveData<List<Birthday>> = MutableLiveData()
-    var holidayResponse: MutableLiveData<List<Holiday>> = MutableLiveData()
-    var errorResponse: MutableLiveData<String> = MutableLiveData()
+    private val _usrLeaveResponse = MutableLiveData<List<Leave>>()
+    val usrLeaveResponse: LiveData<List<Leave>>
+        get() = _usrLeaveResponse
+
+    private val _birthdayResponse = MutableLiveData<List<Birthday>>()
+    val birthdayResponse: LiveData<List<Birthday>>
+        get() = _birthdayResponse
+
+    private val _holidayResponse = MutableLiveData<List<Holiday>>()
+    val holidayResponse: LiveData<List<Holiday>>
+        get() = _holidayResponse
+
+    private val _errorResponse = MutableLiveData<String>()
+    val errorResponse: LiveData<String>
+        get() = _errorResponse
 
     private val _usrProImage = MutableLiveData<String>()
     val usrProImage: LiveData<String>
@@ -36,10 +47,6 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
     val notificationList: LiveData<List<Notifications>>
         get() = _notificationList
 
-//    private val _notificationState = MutableLiveData<Boolean>()
-//    val notificationState: LiveData<Boolean>
-//        get() = _notificationState
-
     //1. will be called from HomeFragment
     fun loadData() {
         Coroutine.io {
@@ -47,45 +54,41 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
                 val userAtLeaveResponse = dashboardRepository.getUserAtLeave()
                 if (userAtLeaveResponse.body()!!.status) {
                     withContext(Dispatchers.Main) {
-                        usrLeaveResponse.value = userAtLeaveResponse.body()!!.data
+                        _usrLeaveResponse.value = userAtLeaveResponse.body()!!.data
                     }
                 }
                 val userBirthdayResponse = dashboardRepository.getBirthday()
                 if (userBirthdayResponse.body()?.status == true) {
                     withContext(Dispatchers.Main) {
-                        birthdayResponse.value = userBirthdayResponse.body()!!.data?.birthdays
+                        _birthdayResponse.value = userBirthdayResponse.body()!!.data?.birthdays
                     }
                 }
                 val publicHolidayResponse = dashboardRepository.getPublicHolidays()
                 if (publicHolidayResponse.body()?.status == true) {
                     withContext(Dispatchers.Main) {
-                        holidayResponse.value = publicHolidayResponse.body()!!.data
+                        _holidayResponse.value = publicHolidayResponse.body()!!.data
                     }
                 }
             } catch (e: NoInternetException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "No Internet Connection!"
+                    _errorResponse.value = "No Internet Connection!"
                 }
 
             } catch (e: SocketTimeoutException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "Something went wrong!"
+                    _errorResponse.value = "Something went wrong!"
                 }
             } catch (e: UndeclaredThrowableException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "No Internet Connection!"
+                    _errorResponse.value = "No Internet Connection!"
                 }
-            }catch (e: ConnectException){
+            } catch (e: ConnectException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "Something went wrong!"
+                    _errorResponse.value = "Something went wrong!"
                 }
             }
         }
     }
-
-//    fun setNotificationState() {
-//        _notificationState.value = dashboardRepository.getNotificationState()
-//    }
 
     //2. will be called from ProfileFragment
     fun uploadProfile(imageData: MultipartBody.Part, userId: Int) {
@@ -95,10 +98,7 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
                 if (myResponse.body()!!.status) {
                     withContext(Dispatchers.Main) {
                         //hit api request to reload
-//                        _usrProImage.value=myResponse.body()?.data?.image
                         _usrProImage.postValue(myResponse.body()?.data?.image)
-
-                        Log.d("img1", myResponse.body()!!.data!!.image)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -107,20 +107,20 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
                 }
             } catch (e: NoInternetException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "No Internet Connection!"
+                    _errorResponse.value = "No Internet Connection!"
                 }
 
             } catch (e: SocketTimeoutException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "Something went wrong!"
+                    _errorResponse.value = "Something went wrong!"
                 }
             } catch (e: UndeclaredThrowableException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "No Internet Connection!"
+                    _errorResponse.value = "No Internet Connection!"
                 }
-            } catch (e: ConnectException){
+            } catch (e: ConnectException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "Something went wrong!"
+                    _errorResponse.value = "Something went wrong!"
                 }
             }
         }
@@ -142,20 +142,20 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
                 }
             } catch (e: NoInternetException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "No Internet Connection!"
+                    _errorResponse.value = "No Internet Connection!"
                 }
 
             } catch (e: SocketTimeoutException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "Something went wrong!"
+                    _errorResponse.value = "Something went wrong!"
                 }
             } catch (e: UndeclaredThrowableException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "No Internet Connection!"
+                    _errorResponse.value = "No Internet Connection!"
                 }
-            }catch (e: ConnectException){
+            } catch (e: ConnectException) {
                 withContext(Dispatchers.Main) {
-                    errorResponse.value = "Something went wrong!"
+                    _errorResponse.value = "Something went wrong!"
                 }
             }
         }

@@ -9,42 +9,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/srl_employee"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+        <include layout="@layout/custom_toolbar"/>
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="?attr/actionBarSize"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp" android:id="@+id/linearLayout">
-                <include layout="@layout/custom_toolbar"/>
+                    android:id="@+id/linearLayout">
                 <androidx.appcompat.widget.SearchView
                         android:id="@+id/search_employee"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/search_input_style"
                         android:layout_margin="@dimen/dimen_8x2"/>
-
                 <androidx.recyclerview.widget.RecyclerView
-                        android:layout_marginTop="10dp"
+                        android:layout_margin="@dimen/dimen_8x1"
                         android:id="@+id/recycler_card_employee"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                 </androidx.recyclerview.widget.RecyclerView>
-
             </LinearLayout>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <ProgressBar
                 android:id="@+id/pb_emp"
                 android:layout_width="wrap_content"

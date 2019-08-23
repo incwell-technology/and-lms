@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.incwelltechnology.lms">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.incwelltechnology.lms">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
             android:name=".App"
@@ -18,78 +18,90 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.home.NotificationActivity"
-                  android:label="Notifications">
 
-        </activity>
-        <activity android:name=".DesignActivity">
-        </activity>
+        <activity
+                android:name=".ui.userRegistration.UserRegistrationActivity"
+                android:label="Register User" />
+
+        <activity
+                android:name=".ui.noticeCreation.CreateNoticeActivity"
+                android:label="Create Notice" />
+
+        <activity android:name=".ui.setting.SettingActivity" />
+
+        <activity
+                android:name=".ui.home.NotificationActivity"
+                android:label="Notifications" />
+
+        <activity android:name=".DesignActivity" />
+
         <activity android:name=".ui.passwordRecovery.ChangePasswordActivity">
             <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                        android:host="192.168.1.102"
+                        android:host="192.168.1.81"
                         android:pathPrefix="/v1"
                         android:port="8000"
-                        android:scheme="http"/>
+                        android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.reset.ResetActivity">
-        </activity>
+
+        <activity android:name=".ui.reset.ResetActivity" />
+
         <activity
                 android:name=".ui.compensation.CompensationActivity"
-                android:label="Apply Compensation">
-        </activity>
+                android:label="Apply Compensation" />
+
         <activity
                 android:name=".ui.employee.EmployeeActivity"
-                android:label="Employee">
-        </activity>
+                android:label="Employee" />
+
         <activity
                 android:name=".ui.home.DashboardActivity"
                 android:label="@string/title_activity_dashboard"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".ui.auth.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
                 android:name=".ui.leave.LeaveActivity"
-                android:label="Apply Leave"/>
+                android:label="Apply Leave" />
 
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                  android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                android:theme="@style/Base.Theme.AppCompat" />
 
         <service
                 android:name=".firebase.FirebaseService"
                 android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@drawable/logo1"/>
+                android:resource="@drawable/logo1" />
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
-                android:resource="@color/colorAccent"/>
+                android:resource="@color/colorAccent" />
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
-                android:value="@string/default_notification_channel_id"/>
+                android:value="@string/default_notification_channel_id" />
         <meta-data
                 android:name="firebase_messaging_auto_init_enabled"
-                android:value="false"/>
+                android:value="false" />
         <meta-data
                 android:name="firebase_analytics_collection_enabled"
-                android:value="false"/>
+                android:value="false" />
     </application>
 
 </manifest>

@@ -6,9 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -18,12 +16,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.navigation.NavigationView
 import com.incwelltechnology.lms.AppConstants
+import com.incwelltechnology.lms.ui.noticeCreation.CreateNoticeActivity
 import com.incwelltechnology.lms.R
-import com.incwelltechnology.lms.data.model.User
 import com.incwelltechnology.lms.databinding.ActivityDashboardBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.auth.AuthViewModel
@@ -33,21 +30,21 @@ import com.incwelltechnology.lms.ui.employee.EmployeeActivity
 import com.incwelltechnology.lms.ui.home.fragment.HomeFragment
 import com.incwelltechnology.lms.ui.home.fragment.ProfileFragment
 import com.incwelltechnology.lms.ui.leave.LeaveActivity
+import com.incwelltechnology.lms.ui.userRegistration.UserRegistrationActivity
 import com.incwelltechnology.lms.util.toast
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.orhanobut.hawk.Hawk
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.app_bar_dashboard.*
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.nav_header_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationView.OnNavigationItemSelectedListener {
+class DashboardActivity : BaseActivity<ActivityDashboardBinding>(),
+    NavigationView.OnNavigationItemSelectedListener {
     private lateinit var image: ImageView
     private lateinit var txtCounter: TextView
 
-    private var status:Boolean = false
-    private var newNotification:Boolean = false
+    private var status: Boolean = false
+    private var newNotification: Boolean = false
 
     private val authViewModel: AuthViewModel by viewModel()
     private val homeViewModel: HomeViewModel by viewModel()
@@ -119,22 +116,23 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
     override fun getLayout(): Int {
         return R.layout.activity_dashboard
     }
+
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
-            toolbar.title = "Home"
         }
     }
 
     override fun onStart() {
         super.onStart()
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter(AppConstants.NOTIFICATION_STATE))
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(receiver, IntentFilter(AppConstants.NOTIFICATION_STATE))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu):Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.dashboard, menu)
         //allows image of menu actionLayout attribute to be clicked
@@ -150,7 +148,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         }
         if (Hawk.contains(AppConstants.NOTIFICATION_KEY)) {
             newNotification = Hawk.get(AppConstants.NOTIFICATION_KEY)
-            if(newNotification){
+            if (newNotification) {
                 setNotification()
             }
         }
@@ -199,6 +197,18 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             }
+
+            R.id.nav_register_user -> {
+                val intent = Intent(this,UserRegistrationActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_in_left)
+            }
+            R.id.nav_create_notice -> {
+                val intent=Intent(this,
+                    CreateNoticeActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
+            }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -210,8 +220,8 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), NavigationVi
         startActivity(intent)
     }
 
-    private fun setNotification(){
-        txtCounter.visibility=View.VISIBLE
+    private fun setNotification() {
+        txtCounter.visibility = View.VISIBLE
     }
 
     //adds fragment to stack allowing push and pop

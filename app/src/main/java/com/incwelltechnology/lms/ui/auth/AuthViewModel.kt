@@ -39,38 +39,47 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
             }
             else -> {
                 //when credential fields are not empty or null
-                try {
-                    //retrieve current fcm token
-                    FirebaseInstanceId
-                        .getInstance()
-                        .instanceId
-                        .addOnCompleteListener {
-                            if (!it.isSuccessful) {
-                                return@addOnCompleteListener
-                            }
-                            Coroutine.main {
-                                fcmToken = it.result!!.token
-                                val loginResponse = userRepository.userLogin(username!!, password!!, fcmToken)
-                                if (loginResponse.body()?.status == true) {
-                                    //saving credentials when login is successfull
-                                    userRepository.saveCredential(key, loginResponse.body()?.data!!)
-                                    authListener?.onSuccess(loginResponse.body()?.data!!)
-                                } else {
-                                    authListener?.onFailure(AppConstants.OTHER_CASE, "Invalid Credentials!")
+                Coroutine.io {
+                    try {
+                        //retrieve current fcm token
+                        FirebaseInstanceId
+                            .getInstance()
+                            .instanceId
+                            .addOnCompleteListener {
+                                if (!it.isSuccessful) {
+                                    return@addOnCompleteListener
+                                }
+                                Coroutine.main {
+                                    fcmToken = it.result!!.token
+                                    val loginResponse =
+                                        userRepository.userLogin(username!!, password!!, fcmToken)
+                                    if (loginResponse.body()?.status == true) {
+                                        //saving credentials when login is successfull
+                                        userRepository.saveCredential(
+                                            key,
+                                            loginResponse.body()?.data!!
+                                        )
+                                        authListener?.onSuccess(loginResponse.body()?.data!!)
+                                    } else {
+                                        authListener?.onFailure(
+                                            AppConstants.OTHER_CASE,
+                                            "Invalid Credentials!"
+                                        )
+                                    }
                                 }
                             }
-                        }
-                } catch (e: NoInternetException) {
-                    authListener?.onFailure(AppConstants.OTHER_CASE, e.message!!)
-                } catch (e: SocketTimeoutException) {
-                    authListener?.onFailure(
-                        AppConstants.OTHER_CASE,
-                        "Something went wrong! Please try again later."
-                    )
-                } catch (e:ConnectException){
-                    authListener?.onFailure(
-                        AppConstants.OTHER_CASE, "Something went wrong! Please try again later."
-                    )
+                    } catch (e: NoInternetException) {
+                        authListener?.onFailure(AppConstants.OTHER_CASE, e.message!!)
+                    } catch (e: SocketTimeoutException) {
+                        authListener?.onFailure(
+                            AppConstants.OTHER_CASE,
+                            "Something went wrong! Please try again later."
+                        )
+                    } catch (e: ConnectException) {
+                        authListener?.onFailure(
+                            AppConstants.OTHER_CASE, "Something went wrong! Please try again later."
+                        )
+                    }
                 }
             }
         }

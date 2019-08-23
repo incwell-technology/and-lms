@@ -11,6 +11,7 @@ import android.widget.DatePicker
 import android.widget.RadioButton
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LiveData
+import com.incwelltechnology.lms.AppConstants
 import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityLeaveBinding
 import com.incwelltechnology.lms.ui.BaseActivity
@@ -39,8 +40,8 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
             finish()
         }
 
-        val type = arrayOf("Annual Leave", "Sick Leave", "Compensation Leave", "Unpaid Leave")
-        dropDown(this, type, type_of_leave_dropdown)
+
+        dropDown(this, AppConstants.leaveType, type_of_leave_dropdown)
 
         start_date.setOnClickListener {
             val datePicker: DialogFragment = DatePickerFragment()
@@ -54,7 +55,7 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
         }
 
         apply_leave.setOnClickListener {
-            val type = type_of_leave_dropdown.text.toString()
+            val leave_type = type_of_leave_dropdown.text.toString()
             val from_date = start_date.text.toString()
             val to_date = end_date.text.toString()
             val leave = half
@@ -71,7 +72,7 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
                     layout_end_date.requestFocus()
                     return@setOnClickListener
                 }
-                type.isEmpty() -> {
+                leave_type.isEmpty() -> {
                     layout_type_of_leave.error = "Leave Type Field is Empty"
                     layout_type_of_leave.requestFocus()
                     return@setOnClickListener
@@ -82,13 +83,12 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
                     return@setOnClickListener
                 }
                 else -> {
-                    leaveViewModel.getValues(type, from_date, to_date, leave, leave_reason)
+                    leaveViewModel.getValues(leave_type, from_date, to_date, leave, leave_reason)
                     leaveViewModel.onApplyButtonClick()
                     processing.show()
-                    val message: LiveData<String> = leaveViewModel.message
-                    message.observe(this, androidx.lifecycle.Observer {
+                    leaveViewModel.message.observe(this, androidx.lifecycle.Observer {
                         processing.hide()
-                        apply_leave.snack("${message.value}")
+                        apply_leave.snack(it)
                         clearField()
                     })
                 }
@@ -138,10 +138,6 @@ class LeaveActivity : BaseActivity<ActivityLeaveBinding>(), DatePickerDialog.OnD
         } else {
             end_date.text = Editable.Factory.getInstance().newEditable(currentDate)
         }
-    }
-
-    private fun dropDown(context: Context, objects: Array<String>, id: AutoCompleteTextView) {
-        id.setAdapter(ArrayAdapter(context, R.layout.dropdown_menu_popup_item, objects))
     }
 
     private fun clearField() {

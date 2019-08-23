@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,9 +46,12 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         authViewModel.sharedPreference()
 
-        recycler_card_leave.layoutManager = LinearLayoutManager(context, GridLayout.HORIZONTAL, false)
-        recycler_card_birthday.layoutManager = LinearLayoutManager(context, GridLayout.HORIZONTAL, false)
-        recycler_public_holidays.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recycler_card_leave.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recycler_card_birthday.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recycler_public_holidays.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         //bind data from viewmodel to activity UI
         bindUI()
@@ -67,11 +70,13 @@ class HomeFragment : Fragment() {
 
     private fun bindUI() {
         pb_dashboard_loading.show()
-        //call function to load data from HomeViewModel
-        homeViewModel.loadData()
+
+        homeViewModel.loadData() //call function to load data from HomeViewModel
         //user at leave recycler view
         homeViewModel.usrLeaveResponse.observe(this, Observer {
-            tv_error_message.visibility = View.GONE
+            if(tv_error_message.visibility == View.VISIBLE){
+                tv_error_message.visibility = View.GONE
+            }
             pb_dashboard_loading.hide()
             srl_home.isRefreshing = false
             //clear the ArrayList to prevent duplicate same items
@@ -88,14 +93,13 @@ class HomeFragment : Fragment() {
                 )
             }
             if (leave.size < 1) {
-                Log.d("size1", "Size is zero")
                 recycler_card_leave.visibility = View.GONE
             } else {
-                Log.d("size", "there is data")
                 val leaveAdapter = LeaveAdapter(leave)
                 recycler_card_leave.adapter = leaveAdapter
             }
         })
+
         //birthday recycler view
         homeViewModel.birthdayResponse.observe(this, Observer {
             birthday.clear()
@@ -115,6 +119,7 @@ class HomeFragment : Fragment() {
                 recycler_card_birthday.adapter = birthdayAdapter
             }
         })
+
         //holiday recycler view
         homeViewModel.holidayResponse.observe(this, Observer {
             holiday.clear()

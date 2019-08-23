@@ -4,7 +4,7 @@
 
     <item android:id="@+id/action_notification"
           android:title="@string/notification"
-          app:showAsAction="always"
+          app:showAsAction="ifRoom"
           app:actionLayout="@layout/notification_badge"/>
 
     <item android:id="@+id/action_profile"

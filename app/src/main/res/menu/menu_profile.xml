@@ -3,7 +3,7 @@
     <item android:id="@+id/action_profile"
           android:icon="@drawable/ic_profile"
           android:orderInCategory="100"
-          app:showAsAction="always"
+          app:showAsAction="ifRoom"
           android:title="@string/inc">
         <menu>
             <item android:id="@+id/action_settings"

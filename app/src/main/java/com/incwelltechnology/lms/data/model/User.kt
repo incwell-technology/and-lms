@@ -13,5 +13,6 @@ data class User(
     val date_of_birth:String = "",
     val joined_date:String = "",
     var id:Int=0,
+    var is_admin:Boolean=false,
     var token:String=""
 )

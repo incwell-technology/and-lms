@@ -4,6 +4,7 @@ import android.util.Log
 import com.incwelltechnology.lms.data.model.BaseResponse
 import com.incwelltechnology.lms.data.model.LoginRequest
 import com.incwelltechnology.lms.data.model.User
+import com.incwelltechnology.lms.data.model.Notice
 import com.incwelltechnology.lms.data.network.LoginApi
 import com.incwelltechnology.lms.data.storage.SharedPref
 import retrofit2.Response
@@ -28,4 +29,5 @@ class UserRepository(private val loginApi: LoginApi) {
         Log.d("response1","$credential")
         return loginApi.userLogin(credential)
     }
+
 }
