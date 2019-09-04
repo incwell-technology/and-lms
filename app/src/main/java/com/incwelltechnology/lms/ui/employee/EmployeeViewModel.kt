@@ -9,6 +9,7 @@ import com.incwelltechnology.lms.util.NoInternetException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.reflect.UndeclaredThrowableException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 class EmployeeViewModel(private val employeeRepository: EmployeeRepository):ViewModel() {
@@ -35,7 +36,11 @@ class EmployeeViewModel(private val employeeRepository: EmployeeRepository):View
                 }
             }catch (e: UndeclaredThrowableException){
                 withContext(Dispatchers.Main){
-                    errorResponse.value= "No Internet Connection!"
+                    errorResponse.value= "Something went wrong!"
+                }
+            }catch (e:ConnectException){
+                withContext(Dispatchers.Main){
+                    errorResponse.value= "Server seems down. Please have patience till it gets recover!"
                 }
             }
         }

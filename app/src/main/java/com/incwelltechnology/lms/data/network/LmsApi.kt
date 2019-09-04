@@ -17,9 +17,11 @@ interface LmsApi {
     @GET("birthdays")
     suspend fun getBirthday():Response<BaseResponse<User_Birthday>>
 
-
     @GET("holidays")
     suspend fun getHoliday(): Response<BaseResponse<List<Holiday>>>
+
+    @GET("leaves-request")
+    suspend fun getLeaveRequest() : Response<BaseResponse<List<RequestLeave>>>
 
     @GET("users")
     suspend fun getEmployee() : Response<BaseResponse<List<Employee>>>
@@ -46,13 +48,16 @@ interface LmsApi {
     @POST("register")
     suspend fun createUser(@Body registration: Registration): Response<BaseResponse<Registration>>
 
+    @POST("leaves-request/{leaveId}")
+    suspend fun responseForLeaveRequest(@Path("leaveId") leaveId:Int, @Body leaveRequestResponse: LeaveRequestResponse):Response<BaseResponse<LeaveRequestResponse>>
+
 
     companion object {
         operator fun invoke(userTokenInterceptor: UserTokenInterceptor,networkConnectionInterceptor: NetworkConnectionInterceptor): LmsApi {
 
             val okHttpClient=OkHttpClient.Builder()
-                .addInterceptor (userTokenInterceptor)
                 .addInterceptor(networkConnectionInterceptor)
+                .addInterceptor (userTokenInterceptor)
                 .build()
 
             return Retrofit.Builder()

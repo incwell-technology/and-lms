@@ -82,4 +82,11 @@
 
 
     <string name="empty_field">Field is Empty!</string>
+    <string name="comment">Comment</string>
+    <string name="department1">Department:</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="from">From:</string>
+    <string name="technology">Technology</string>
+    <string name="to">To:</string>
 </resources>

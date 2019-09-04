@@ -106,4 +106,7 @@ dependencies {
 
     //for cropping image
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+    //for infinite cycler viewpager
+    implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
 }

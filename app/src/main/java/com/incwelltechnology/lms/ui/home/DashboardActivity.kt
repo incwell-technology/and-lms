@@ -35,6 +35,7 @@ import com.incwelltechnology.lms.util.toast
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.orhanobut.hawk.Hawk
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_dashboard.view.*
 import kotlinx.android.synthetic.main.app_bar_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -89,6 +90,13 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(),
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
+        //enable admin feature only for admins
+        val menu = navView.menu
+        val adminFeature = menu.findItem(R.id.nav_admin)
+        if(authViewModel.user?.is_admin!!){
+            adminFeature.isVisible = true
+        }
+
         //done to get access to view of drawable navigation
         val v: View = navView.getHeaderView(0)
         v.findViewById<TextView>(R.id.nav_user_name).text = authViewModel.user?.full_name
@@ -101,7 +109,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(),
             .error(R.drawable.logo1)
             .into(image)
 
-
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             R.string.navigation_drawer_open,
@@ -111,6 +118,8 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(),
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
         navView.menu.getItem(0).isChecked = true
+
+
     }
 
     override fun getLayout(): Int {
@@ -123,6 +132,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(),
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            toolbar.title = "Home"
         }
     }
 
@@ -152,6 +162,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(),
                 setNotification()
             }
         }
+
         super.onCreateOptionsMenu(menu)
         return true
     }
@@ -199,13 +210,15 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(),
             }
 
             R.id.nav_register_user -> {
-                val intent = Intent(this,UserRegistrationActivity::class.java)
+                val intent = Intent(this, UserRegistrationActivity::class.java)
                 startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_in_left)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             }
             R.id.nav_create_notice -> {
-                val intent=Intent(this,
-                    CreateNoticeActivity::class.java)
+                val intent = Intent(
+                    this,
+                    CreateNoticeActivity::class.java
+                )
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             }

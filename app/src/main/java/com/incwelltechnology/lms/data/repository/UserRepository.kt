@@ -1,10 +1,8 @@
 package com.incwelltechnology.lms.data.repository
 
-import android.util.Log
 import com.incwelltechnology.lms.data.model.BaseResponse
 import com.incwelltechnology.lms.data.model.LoginRequest
 import com.incwelltechnology.lms.data.model.User
-import com.incwelltechnology.lms.data.model.Notice
 import com.incwelltechnology.lms.data.network.LoginApi
 import com.incwelltechnology.lms.data.storage.SharedPref
 import retrofit2.Response
@@ -26,7 +24,6 @@ class UserRepository(private val loginApi: LoginApi) {
 
     suspend fun userLogin(username: String, password: String,fcm_token:String): Response<BaseResponse<User>> {
         val credential = LoginRequest(username, password, fcm_token)
-        Log.d("response1","$credential")
         return loginApi.userLogin(credential)
     }
 

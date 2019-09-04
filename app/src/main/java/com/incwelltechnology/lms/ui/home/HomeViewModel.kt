@@ -4,24 +4,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.incwelltechnology.lms.data.model.Birthday
-import com.incwelltechnology.lms.data.model.Holiday
-import com.incwelltechnology.lms.data.model.Leave
-import com.incwelltechnology.lms.data.model.Notifications
+import com.incwelltechnology.lms.data.model.*
 import com.incwelltechnology.lms.data.repository.DashboardRepository
-import com.incwelltechnology.lms.firebase.FirebaseService
 import com.incwelltechnology.lms.util.Coroutine
 import com.incwelltechnology.lms.util.NoInternetException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 import java.lang.reflect.UndeclaredThrowableException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 class HomeViewModel(private val dashboardRepository: DashboardRepository) : ViewModel() {
+
+    private val _usrLeaveRequest = MutableLiveData<List<RequestLeave>>()
+    val usrLeaveRequest: LiveData<List<RequestLeave>>
+        get() = _usrLeaveRequest
 
     private val _usrLeaveResponse = MutableLiveData<List<Leave>>()
     val usrLeaveResponse: LiveData<List<Leave>>
@@ -47,12 +45,31 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
     val notificationList: LiveData<List<Notifications>>
         get() = _notificationList
 
+    private val _messageResponse = MutableLiveData<String>()
+    val messageResponse: LiveData<String>
+        get() = _messageResponse
+
+    var leaveId:Int ?= null
+
     //1. will be called from HomeFragment
     fun loadData() {
         Coroutine.io {
             try {
+                val leaveRequest = dashboardRepository.getLeaveRequest()
+                when {
+                    leaveRequest.body()?.status == true -> withContext(Dispatchers.Main) {
+                        _usrLeaveRequest.value = leaveRequest.body()!!.data
+                    }
+                    leaveRequest.body()?.status == false -> withContext(Dispatchers.Main) {
+                        _usrLeaveRequest.value = leaveRequest.body()!!.data
+                    }
+                    else -> withContext(Dispatchers.Main) {
+                        _errorResponse.value = "No registered User"
+                    }
+                }
+
                 val userAtLeaveResponse = dashboardRepository.getUserAtLeave()
-                if (userAtLeaveResponse.body()!!.status) {
+                if (userAtLeaveResponse.body()?.status == true) {
                     withContext(Dispatchers.Main) {
                         _usrLeaveResponse.value = userAtLeaveResponse.body()!!.data
                     }
@@ -157,6 +174,52 @@ class HomeViewModel(private val dashboardRepository: DashboardRepository) : View
                 withContext(Dispatchers.Main) {
                     _errorResponse.value = "Something went wrong!"
                 }
+            }
+        }
+    }
+
+    fun onAcceptBtnClicked() {
+        Coroutine.io {
+            try {
+                val responseForLeaveRequest = dashboardRepository.responseLeaveRequest(leaveId!!,"1")
+                when {
+                    responseForLeaveRequest.body()?.status == true -> {
+                        withContext(Dispatchers.Main) {
+                            _messageResponse.value="Approval Success"
+                        }
+                    }
+                    responseForLeaveRequest.body()?.status == false -> {
+                        withContext(Dispatchers.Main) {
+                            _messageResponse.value="Error occurred!"
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+
+    fun onRejectBtnClicked() {
+        Coroutine.io {
+            try {
+                val responseForLeaveRequest = dashboardRepository.responseLeaveRequest(leaveId!!,"2")
+                when {
+                    responseForLeaveRequest.body()?.status == true -> {
+                        withContext(Dispatchers.Main) {
+                            _messageResponse.value="Rejection Successful"
+
+                        }
+                    }
+                    responseForLeaveRequest.body()?.status == false -> {
+                        withContext(Dispatchers.Main) {
+                            _messageResponse.value="Error occurred!"
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+
             }
         }
     }

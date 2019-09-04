@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -34,77 +33,77 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                 <!--for showing Notice if present -->
-                <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cv_notice"
+                <include layout="@layout/notice_layout" />
+
+                <!--for showing leave request if present -->
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_leave_request"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_8x1"
-                        android:layout_marginTop="@dimen/dimen_8x2"
-                        android:layout_marginEnd="@dimen/dimen_8x1"
-                        android:layout_marginBottom="@dimen/dimen_8x2"
-                        app:cardElevation="@dimen/dimen_5"
-                        app:cardBackgroundColor="#7ed4e7">
+                        android:padding="@dimen/dimen_8x1" />
+
+                <!--for showing users at leave-->
+                <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mtrlCard_Leave"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_8x1"
+                        app:cardCornerRadius="@dimen/dimen_8x1">
                     <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/dimen_8x1"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
-
                         <TextView
+                                android:id="@+id/tv_leave"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="start|top"
-                                android:text="Notice!!!"
-                                android:textColor="#fff"
-                                android:textSize="20sp"/>
+                                android:layout_marginStart="@dimen/dimen_5x2"
+                                android:layout_marginTop="@dimen/dimen_5x2"
+                                android:text="@string/leave_today"
+                                android:textSize="@dimen/txt_5x4" />
 
-                        <TextView
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_card_leave"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:textSize="16sp"
-                                android:textColor="#fff"
-                                android:text="Description, this is to notify etc......" />
+                                android:padding="@dimen/dimen_8x1" />
                     </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
 
-                <!--for showing leaveRequest-->
-                <TextView
-                        android:id="@+id/tv_leave"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_8x1"
-                        android:layout_marginStart="@dimen/dimen_5x2"
-                        android:text="@string/leave_today"
-                        android:textSize="@dimen/txt_5x4" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_card_leave"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/dimen_8x1"/>
-
                 <!--for showing birthday-->
-                <TextView
-                        android:id="@+id/tv_birthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="@dimen/dimen_5x2"
-                        android:text="@string/birthdays"
-                        android:textSize="@dimen/txt_5x4" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_card_birthday"
+                <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mtrlCard_birthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dimen_8x1"/>
+                        android:layout_margin="@dimen/dimen_8x1"
+                        app:cardCornerRadius="@dimen/dimen_8x1">
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                        <TextView
+                                android:id="@+id/tv_birthday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_5x2"
+                                android:layout_marginTop="@dimen/dimen_5x2"
+                                android:text="@string/birthdays"
+                                android:textSize="@dimen/txt_5x4" />
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_card_birthday"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dimen_8x1" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!--for showing company holidays-->
                 <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/dimen_8x1"
+                        android:layout_marginTop="@dimen/dimen_8x2"
                         app:cardCornerRadius="@dimen/dimen_8x1">
 
                     <RelativeLayout
@@ -112,6 +111,7 @@
                             android:layout_height="match_parent">
 
                         <TextView
+                                android:id="@+id/more_holidays"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/dimen_8x1"
@@ -124,7 +124,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_public_holidays"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="300dp"
                                 android:layout_marginTop="@dimen/dimen_5x10">
 
                         </androidx.recyclerview.widget.RecyclerView>

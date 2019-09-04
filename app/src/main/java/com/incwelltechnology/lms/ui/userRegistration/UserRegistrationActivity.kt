@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -13,12 +14,10 @@ import com.incwelltechnology.lms.databinding.ActivityUserRegistrationBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.ui.employee.EmployeeActivity
 import com.incwelltechnology.lms.ui.home.fragment.DatePickerFragment
-import com.incwelltechnology.lms.util.dropDown
-import com.incwelltechnology.lms.util.hideErrorHint
-import com.incwelltechnology.lms.util.hideErrorHintAutoCompleteTextView
-import com.incwelltechnology.lms.util.snack
+import com.incwelltechnology.lms.util.*
 import kotlinx.android.synthetic.main.activity_user_registration.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
+import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -63,7 +62,12 @@ class UserRegistrationActivity : BaseActivity<ActivityUserRegistrationBinding>()
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        val currentDate = "$year-${month + 1}-$dayOfMonth"
+        val currentDate:String = if(month < 10 && dayOfMonth < 10){
+            "$year-0${month + 1}-0$dayOfMonth"
+        }else{
+            "$year-${month + 1}-$dayOfMonth"
+        }
+
         if (flag == 0) {
             birthdate.text = Editable.Factory.getInstance().newEditable(currentDate)
         } else {
@@ -73,6 +77,16 @@ class UserRegistrationActivity : BaseActivity<ActivityUserRegistrationBinding>()
 
     private fun bindData() {
         fab_register_user.setOnClickListener {
+            pb_register_user.show()
+            val mFirstname = firstname.text.toString()
+            val mLastname = lastname.text.toString()
+            val mUsrname = usrName.text.toString()
+            val mUsrpassword = usrPassword.text.toString()
+            val mUsremail = usremail.text.toString()
+            var mUsrdepartment: String
+            val mUsrphone = usrphone.text.toString()
+            val mBirthdate = birthdate.text.toString()
+            val mJoineddate = joindate.text.toString()
             when {
                 firstname.text!!.isEmpty() -> {
                     til_firstname.error = getString(R.string.empty_field)
@@ -120,19 +134,26 @@ class UserRegistrationActivity : BaseActivity<ActivityUserRegistrationBinding>()
                     return@setOnClickListener
                 }
                 else -> {
+                    mUsrdepartment = when {
+                        usrdepartment.text.toString() == "Technology" -> "1"
+                        usrdepartment.text.toString() == "Administration" -> "2"
+                        usrdepartment.text.toString() == "Graphics" -> "3"
+                        else -> "4"
+                    }
                     userRegistrationViewModel.getUserForRegistration(
-                        firstname.text.toString(),
-                        lastname.text.toString(),
-                        usrName.text.toString(),
-                        usrPassword.text.toString(),
-                        usremail.text.toString(),
-                        usrdepartment.text.toString(),
-                        usrphone.text.toString(),
-                        birthdate.text.toString(),
-                        joindate.text.toString()
+                        mFirstname,
+                        mLastname,
+                        mUsrname,
+                        mUsrpassword,
+                        mUsremail,
+                        mUsrdepartment,
+                        mUsrphone,
+                        mBirthdate,
+                        mJoineddate
                     )
                     userRegistrationViewModel.onRegisterBtnClicked()
                     userRegistrationViewModel.userCreationRespone.observe(this, Observer {
+                        pb_register_user.hide()
                         if (it) {
                             val intent = Intent(this, EmployeeActivity::class.java)
                             startActivity(intent)
@@ -153,7 +174,7 @@ class UserRegistrationActivity : BaseActivity<ActivityUserRegistrationBinding>()
         hideErrorHint(joindate, til_joindate)
         hideErrorHint(usrphone, til_phonenumber)
         hideErrorHintAutoCompleteTextView(usrdepartment, til_department)
-        hideErrorHint(usremail,til_usremail)
+        hideErrorHint(usremail, til_usremail)
         hideErrorHint(usrName, til_username)
         hideErrorHint(usrPassword, til_userpassword)
     }

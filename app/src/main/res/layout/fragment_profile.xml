@@ -88,6 +88,7 @@
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:textColor="@color/colorText"
+                        app:maxProgressValue="12.0"
                         app:progressBackgroundStrokeWidth="10dp"
                         app:progressColor="@color/colorAccent"
                         app:progressStrokeWidth="8dp"/>
@@ -114,6 +115,7 @@
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:textColor="@color/colorText"
+                        app:maxProgressValue="7.0"
                         app:progressColor="@color/colorAccent"
                         app:progressBackgroundStrokeWidth="10dp"
                         app:progressStrokeWidth="8dp"/>

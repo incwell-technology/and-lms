@@ -1,5 +1,6 @@
 package com.incwelltechnology.lms.data.repository
 
+import android.util.Log
 import com.incwelltechnology.lms.data.model.BaseResponse
 import com.incwelltechnology.lms.data.model.Notice
 import com.incwelltechnology.lms.data.model.Registration
@@ -12,17 +13,8 @@ class AdminRepository(private val lmsApi: LmsApi) {
         return lmsApi.postNotice(mNotice)
     }
 
-    suspend fun registerUser(
-        first_name: String,
-        last_name: String,
-        username: String,
-        password: String,
-        email: String,
-        department: String,
-        phone_number: String,
-        date_of_birth: String,
-        joined_date: String
-    ): Response<BaseResponse<Registration>> {
+    suspend fun registerUser(first_name: String, last_name: String, username: String, password: String, email: String, department: String, phone_number: String, date_of_birth: String, joined_date: String): Response<BaseResponse<Registration>> {
+        Log.d("register","$date_of_birth and $joined_date")
         val mRegistration = Registration(
             first_name,
             last_name,

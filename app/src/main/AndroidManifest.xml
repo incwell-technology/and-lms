@@ -33,17 +33,15 @@
                 android:name=".ui.home.NotificationActivity"
                 android:label="Notifications" />
 
-        <activity android:name=".DesignActivity" />
-
         <activity android:name=".ui.passwordRecovery.ChangePasswordActivity">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                        android:host="192.168.1.81"
-                        android:pathPrefix="/v1"
+                        android:host="192.168.1.125"
                         android:port="8000"
+                        android:pathPrefix="/v1"
                         android:scheme="http" />
             </intent-filter>
         </activity>
