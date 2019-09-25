@@ -150,7 +150,7 @@ class ProfileFragment : Fragment() {
             //Build multi-part body from request body
             val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
             //call 'uploadProfile()' from homeViewModel and pass necessary parameters
-            homeViewModel.uploadProfile(multipartBody, authViewModel.user!!.id)
+            homeViewModel.uploadProfile(multipartBody, authViewModel.user!!.id,edit_photo)
         }
     }
 

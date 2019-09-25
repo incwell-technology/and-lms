@@ -138,7 +138,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
+                android:id="@+id/til_comment"
                 style="@style/Widget.lms.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -151,6 +151,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/leave_reason">
 
             <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/commentForRejection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -194,7 +195,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/acceptBtn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/til_comment" />
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/acceptBtn"
@@ -208,6 +209,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/declineBtn"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/til_comment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

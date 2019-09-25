@@ -7,6 +7,7 @@ import com.incwelltechnology.lms.R
 import com.incwelltechnology.lms.databinding.ActivityCompensationBinding
 import com.incwelltechnology.lms.ui.BaseActivity
 import com.incwelltechnology.lms.util.hide
+import com.incwelltechnology.lms.util.hideErrorHint
 import com.incwelltechnology.lms.util.show
 import com.incwelltechnology.lms.util.snack
 import kotlinx.android.synthetic.main.activity_compensation.*
@@ -29,6 +30,9 @@ class CompensationActivity : BaseActivity<ActivityCompensationBinding>() {
             finish()
         }
 
+        hideErrorHint(days, til_days)
+        hideErrorHint(compReason, til_reason)
+
         apply_compensation.setOnClickListener {
             when {
                 compensationViewModel.days.isNullOrEmpty() -> {
@@ -42,6 +46,8 @@ class CompensationActivity : BaseActivity<ActivityCompensationBinding>() {
                     return@setOnClickListener
                 }
                 else -> {
+
+
                     compensationViewModel.onApplyCompensationButtonClick()
                     circular_progress.show()
                     val message: LiveData<String> = compensationViewModel.message

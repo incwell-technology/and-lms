@@ -49,10 +49,12 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dimen_8x1"
                         app:cardCornerRadius="@dimen/dimen_8x1">
+
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
                         <TextView
                                 android:id="@+id/tv_leave"
                                 android:layout_width="wrap_content"
@@ -78,10 +80,12 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dimen_8x1"
                         app:cardCornerRadius="@dimen/dimen_8x1">
+
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
                         <TextView
                                 android:id="@+id/tv_birthday"
                                 android:layout_width="wrap_content"
@@ -90,10 +94,11 @@
                                 android:layout_marginTop="@dimen/dimen_5x2"
                                 android:text="@string/birthdays"
                                 android:textSize="@dimen/txt_5x4" />
+
                         <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_card_birthday"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:padding="@dimen/dimen_8x1" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -124,7 +129,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recycler_public_holidays"
                                 android:layout_width="match_parent"
-                                android:layout_height="300dp"
+                                android:layout_height="match_parent"
                                 android:layout_marginTop="@dimen/dimen_5x10">
 
                         </androidx.recyclerview.widget.RecyclerView>
@@ -144,13 +149,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-            android:id="@+id/tv_error_message"
+    <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_error_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+                android:id="@+id/tv_error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp" />
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

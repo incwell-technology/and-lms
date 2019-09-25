@@ -49,7 +49,7 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
                         til_confirm_password.requestFocus()
                     }
                     changePasswordViewModel.newPass != changePasswordViewModel.confirmPass -> {
-                        changePasswordBtn.snack("Passwords do not match!")
+                        changePasswordBtn.snack("Passwords did not match!")
                     }
                     else -> {
                         p.show()

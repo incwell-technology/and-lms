@@ -1,6 +1,5 @@
 package com.incwelltechnology.lms.ui.leave
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +13,7 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 class LeaveViewModel(private val leaveRepository: LeaveRepository) : ViewModel() {
+
     private var type: String? = null
     private var startDate: String? = null
     private var endDate: String? = null
@@ -24,7 +24,13 @@ class LeaveViewModel(private val leaveRepository: LeaveRepository) : ViewModel()
     val message: LiveData<String>
         get() = _message
 
-    fun getValues(type: String, from_date: String, to_date: String, leaveType: Boolean, leave_reason: String) {
+    fun getValues(
+        type: String,
+        from_date: String,
+        to_date: String,
+        leaveType: Boolean,
+        leave_reason: String
+    ) {
         this.type = type
         startDate = from_date
         endDate = to_date
@@ -35,8 +41,13 @@ class LeaveViewModel(private val leaveRepository: LeaveRepository) : ViewModel()
     fun onApplyButtonClick() {
         Coroutine.io {
             try {
-                val leaveResponse = leaveRepository.applyLeave(type!!, startDate!!, endDate!!, halfDay!!, leaveReason!!)
-                Log.d("leaveResponse", "$leaveResponse")
+                val leaveResponse = leaveRepository.applyLeave(
+                    type!!,
+                    startDate!!,
+                    endDate!!,
+                    halfDay!!,
+                    leaveReason!!
+                )
                 when {
                     leaveResponse.body()?.status == true -> withContext(Dispatchers.Main) {
                         _message.value = "Leave Request sent successfully"
@@ -51,7 +62,7 @@ class LeaveViewModel(private val leaveRepository: LeaveRepository) : ViewModel()
                 }
             } catch (e: NoInternetException) {
                 withContext(Dispatchers.Main) {
-                    _message.value = "No Internet Connection!"
+                    _message.value = e.message
                 }
 
             } catch (e: SocketTimeoutException) {
@@ -60,11 +71,7 @@ class LeaveViewModel(private val leaveRepository: LeaveRepository) : ViewModel()
                 }
             } catch (e: UndeclaredThrowableException) {
                 withContext(Dispatchers.Main) {
-                    _message.value = "No Internet Connection!"
-                }
-            } catch (e: ConnectException) {
-                withContext(Dispatchers.Main) {
-                    _message.value = "Something went wrong!"
+                    _message.value = e.undeclaredThrowable.message
                 }
             }
         }

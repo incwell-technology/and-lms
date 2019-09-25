@@ -1,3 +1,6 @@
 package com.incwelltechnology.lms.util
 
-class NoInternetException(message:String) : Exception(message)
+import java.io.IOException
+
+class NoInternetException(message:String) : IOException(message)
+

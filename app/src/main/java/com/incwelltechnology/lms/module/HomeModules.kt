@@ -9,6 +9,6 @@ import org.koin.dsl.module
 
 val homeModule:Module= module {
     viewModel { HomeViewModel(get()) }
-    single { DashboardRepository(get(),get()) }
+    single { DashboardRepository(get()) }
     single { HomeFragment() }
 }

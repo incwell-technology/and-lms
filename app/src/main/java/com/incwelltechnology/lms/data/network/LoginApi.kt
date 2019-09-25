@@ -16,18 +16,17 @@ interface LoginApi {
     suspend fun userLogin(@Body login: LoginRequest): Response<BaseResponse<User>>
 
     @POST("users/password-reset")
-    suspend fun verifyEmail(@Body resetPassword: Email):Response<BaseResponse<Email>>
+    suspend fun verifyEmail(@Body resetPassword: Email): Response<BaseResponse<Email>>
 
     @GET("users/reset/{link}")
-    suspend fun checkLink(@Path("link") link:String):Response<BaseResponse<Link>>
+    suspend fun checkLink(@Path("link") link: String): Response<BaseResponse<Link>>
 
     @POST("users/password-reset-done/{userId}")
-    suspend fun changePassword(@Path("userId") userId:Int,@Body newPass: Password):Response<BaseResponse<Password>>
+    suspend fun changePassword(@Path("userId") userId: Int, @Body newPass: Password): Response<BaseResponse<Password>>
 
     companion object {
         operator fun invoke(networkConnectionInterceptor: NetworkConnectionInterceptor): LoginApi {
-
-            val okHttpClient= OkHttpClient.Builder()
+            val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(networkConnectionInterceptor)
                 .build()
 

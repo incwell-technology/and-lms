@@ -21,11 +21,9 @@ import com.incwelltechnology.lms.ui.home.adapter.BirthdayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.HolidayAdapter
 import com.incwelltechnology.lms.ui.home.adapter.LeaveAdapter
 import com.incwelltechnology.lms.ui.home.adapter.LeaveRequestAdapter
-import com.incwelltechnology.lms.util.CompareHolidays
-import com.incwelltechnology.lms.util.Coroutine
-import com.incwelltechnology.lms.util.hide
-import com.incwelltechnology.lms.util.show
+import com.incwelltechnology.lms.util.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_leave_request.*
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -120,16 +118,21 @@ class HomeFragment : Fragment() {
                         }
 
                         override fun reject(p: Int) {
-                            homeViewModel.leaveId = it[p].id
-                            homeViewModel.onRejectBtnClicked()
-                            pb_dashboard_loading.show()
-                            homeViewModel.messageResponse.observe(
-                                this@HomeFragment,
-                                Observer { message ->
-                                    pb_dashboard_loading.hide()
-                                    Snackbar.make(view!!, message, Snackbar.LENGTH_LONG).show()
-                                })
-                            refreshFragment()
+                            if (commentForRejection.text.isNullOrEmpty()) {
+                                til_comment.error = "Reason for rejecting is required!"
+                                til_comment.requestFocus()
+                            } else {
+                                homeViewModel.onRejectBtnClicked()
+                                pb_dashboard_loading.show()
+                                homeViewModel.messageResponse.observe(
+                                    this@HomeFragment,
+                                    Observer { message ->
+                                        pb_dashboard_loading.hide()
+                                        Snackbar.make(view!!, message, Snackbar.LENGTH_LONG).show()
+                                    })
+                                refreshFragment()
+                            }
+                            hideErrorHint(commentForRejection, til_comment)
                         }
                     })
                 recycler_leave_request.adapter = leaveRequestAdapter
@@ -206,10 +209,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun showStatus() {
-        if (tv_error_message.visibility == View.VISIBLE) {
-            tv_error_message.visibility = View.GONE
-        } else {
-            tv_error_message.visibility = View.VISIBLE
+        if (cv_error_message.visibility == View.VISIBLE) {
+            cv_error_message.visibility = View.GONE
         }
         pb_dashboard_loading.hide()
         srl_home.isRefreshing = false

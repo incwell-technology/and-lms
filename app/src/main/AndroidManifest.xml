@@ -3,8 +3,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="com.incwelltechnology.lms">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -39,9 +41,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                        android:host="192.168.1.125"
-                        android:port="8000"
-                        android:pathPrefix="/v1"
+                        android:host="lms.incwell.com.np"
+                        android:pathPrefix="/v1/api/users/reset/"
                         android:scheme="http" />
             </intent-filter>
         </activity>
@@ -59,7 +60,17 @@
         <activity
                 android:name=".ui.home.DashboardActivity"
                 android:label="@string/title_activity_dashboard"
-                android:theme="@style/AppTheme.NoActionBar" />
+                android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                        android:host="lms.incwell.com.np"
+                        android:scheme="http" />
+            </intent-filter>
+
+        </activity>
 
         <activity android:name=".ui.auth.LoginActivity">
             <intent-filter>
